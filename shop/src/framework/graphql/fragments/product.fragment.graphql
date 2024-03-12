@@ -1,0 +1,143 @@
+fragment ProductParts on Product {
+  id
+  name
+  slug
+  type {
+    id
+    name
+    slug
+    settings {
+      productCard
+    }
+  }
+  product_type
+  price
+  sale_price
+  min_price
+  max_price
+  quantity
+  unit
+  sku
+  is_digital
+  is_external
+  ratings
+  image {
+    id
+    thumbnail
+    original
+  }
+  video {
+    url
+  }
+  tags {
+    id
+    name
+    slug
+  }
+  status
+  external_product_url
+  external_product_button_text
+  in_flash_sale
+   variation_options {
+                id
+                title
+                language
+                price
+                blocked_dates
+                sku
+                is_disable
+                is_digital
+                sale_price
+                quantity
+                sold_quantity
+                image {
+                    thumbnail
+                    original
+                    id
+                }
+                product {
+                    id
+                    name
+                    slug
+                    language
+                    translated_languages
+                    product_type
+                    shop_id
+                    author_id
+                    manufacturer_id
+                    blocked_dates
+                    description
+                    in_stock
+                    is_taxable
+                    is_digital
+                    is_external
+                    external_product_url
+                    external_product_button_text
+                    sale_price
+                    max_price
+                    min_price
+                    ratings
+                    total_reviews
+                    in_wishlist
+                    sku
+                    status
+                    height
+                    length
+                    width
+                    price
+                    quantity
+                    unit
+                    sold_quantity
+                    in_flash_sale
+                    qtn
+                    created_at
+                    updated_at
+                    image {
+                        thumbnail
+                        original
+                        id
+                    }
+                    variations {
+                    id
+                    value
+                    meta
+                    attribute_id
+                    language
+                    attribute {
+                        id
+                        name
+                        language
+                        translated_languages
+                        slug
+                        shop_id
+                        created_at
+                        updated_at
+                    }
+                }
+                }
+            }
+            variations {
+                id
+                value
+                meta
+                attribute_id
+                language
+                attribute {
+                    id
+                    name
+                    language
+                    translated_languages
+                    slug
+                    shop_id
+                    created_at
+                    updated_at
+                    values {
+                        id
+                        value
+                        meta
+                        attribute_id
+                        language
+                    }
+                }
+            }
+}

@@ -1,0 +1,258 @@
+# import OrderByStatusParts from './fragments/analytics.fragment.graphql'
+# import CategoryWiseProductParts from './fragments/analytics.fragment.graphql'
+# import CategoryWiseProductSaleParts from './fragments/analytics.fragment.graphql'
+# import TopRatedProductParts from './fragments/analytics.fragment.graphql'
+# import PaginatorParts from './paginator.fragment.graphql'
+query AdminDashboard(
+  $limit: Int! = 10
+  $language: String! = "en"
+  $searchJoin: String = "and"
+  $search: String = ""
+  $type_id: ID
+  $shop_id: ID
+) {
+  analytics {
+    totalRevenue
+    totalRefunds
+    totalShops
+    totalVendors
+    todaysRevenue
+    totalOrders
+    newCustomers
+    totalYearSaleByMonth {
+      total
+      month
+    }
+    yearlyTotalOrderByStatus {
+      ...OrderByStatusParts
+    }
+    monthlyTotalOrderByStatus {
+      ...OrderByStatusParts
+    }
+    weeklyTotalOrderByStatus {
+      ...OrderByStatusParts
+    }
+    todayTotalOrderByStatus {
+      ...OrderByStatusParts
+    }
+  }
+  popularProducts(limit: 10) {
+    id
+    sku
+    slug
+    name
+    description
+    product_type
+    shop {
+      name
+    }
+    image {
+      id
+      thumbnail
+      original
+    }
+    type {
+      id
+      name
+    }
+    price
+    max_price
+    min_price
+    quantity
+    unit
+    status
+  }
+  orders(first: 10, orderBy: "created_at", sortedBy: "DESC") {
+    data {
+      id
+      tracking_number
+      customer {
+        name
+        email
+      }
+      products {
+        id
+      }
+      total
+      created_at
+      order_status
+      payment_status
+    }
+    paginatorInfo {
+      ...PaginatorParts
+    }
+  }
+  withdraws(first: 10, orderBy: "created_at", sortedBy: "DESC") {
+    data {
+      id
+      amount
+      status
+      created_at
+      shop {
+        name
+      }
+    }
+  }
+  categoryWiseProduct(
+    limit: $limit
+    language: $language
+    searchJoin: $searchJoin
+    search: $search
+  ) {
+    ...CategoryWiseProductParts
+  }
+  categoryWiseProductSale(
+    limit: $limit
+    language: $language
+    searchJoin: $searchJoin
+    search: $search
+  ) {
+    ...CategoryWiseProductSaleParts
+  }
+  lowStockProducts(
+    limit: $limit
+    language: $language
+    searchJoin: $searchJoin
+    search: $search
+    type_id: $type_id
+    shop_id: $shop_id
+  ) {
+    id
+    name
+    image {
+      id
+      thumbnail
+      original
+    }
+    sku
+    type {
+      id
+      name
+      slug
+    }
+    price
+    sale_price
+    min_price
+    max_price
+    quantity
+    product_type
+    shop {
+      name
+      logo {
+        id
+        thumbnail
+        original
+      }
+    }
+  }
+  topRatedProducts(
+    limit: $limit
+    language: $language
+    searchJoin: $searchJoin
+    search: $search
+  ) {
+    ...TopRatedProductParts
+  }
+}
+
+
+mutation DashboardDateSelectionView($input:DashboardDateSelectionInput!) {
+    dashboardDateSelectionView( input:$input)
+     {
+        totalOrdersCount
+        totalVendorsCount
+        totalShopCount
+        totalRevenueCount
+        recentOrder {
+            id
+            tracking_number
+            customer_id
+            customer_contact
+            customer_name
+            language
+            parent_id
+            order_status
+            payment_status
+            amount
+            sales_tax
+            total
+            paid_total
+            payment_id
+            payment_gateway
+            altered_payment_gateway
+            discount
+            delivery_fee
+            delivery_time
+            created_at
+            updated_at
+            note
+        }
+        shopList {
+          id
+          name
+          slug
+          owner_id
+          owner {
+            name
+            email
+            profile {
+              contact
+              avatar {
+                id
+                thumbnail
+                original
+              }
+            }
+          }
+          staffs {
+            name
+            email
+          }
+          description
+          logo {
+            id
+            thumbnail
+            original
+          }
+          cover_image {
+            id
+            thumbnail
+            original
+          }
+          orders_count
+          products_count
+          is_active
+          balance {
+            admin_commission_rate
+            total_earnings
+            withdrawn_amount
+            current_balance
+            payment_info {
+              account
+              name
+              bank
+              email
+            }
+          }
+          address {
+            street_address
+            country
+            city
+            state
+            zip
+          }
+          created_at
+        }
+        withdrawList {
+            id
+            amount
+            status
+            shop_id
+            payment_method
+            details
+            note
+            created_at
+            updated_at
+        }
+    }
+}
