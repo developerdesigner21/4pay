@@ -88,6 +88,8 @@ input UpdateFlashSaleInput {
 }
 
 extend type Mutation {
+    allFlashSale(id:ID):[FlashSale] @field(resolver: "FlashSaleMutator@allFlashSale")
+    
     createFlashSale(input: CreateFlashSaleInput! @spread): FlashSale
         @field(resolver: "FlashSaleMutator@storeFlashSale")
         @can(ability: "store_owner")

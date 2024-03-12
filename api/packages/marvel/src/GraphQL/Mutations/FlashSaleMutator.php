@@ -21,4 +21,8 @@ class FlashSaleMutator
     {
         return Shop::call('Marvel\Http\Controllers\FlashSaleController@deleteFlashSale', $args);
     }
+    public function allFlashSale($rootValue, array $args, GraphQLContext $context)
+    {
+        return Shop::call('Marvel\Http\Controllers\FlashSaleController@allFlashSale', $args);
+    }
 }

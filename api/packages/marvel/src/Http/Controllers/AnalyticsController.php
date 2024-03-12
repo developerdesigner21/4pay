@@ -18,13 +18,23 @@ use Marvel\Enums\Permission;
 use Marvel\Exceptions\MarvelException;
 use Spatie\Permission\Models\Permission as ModelsPermission;
 
+use Marvel\Database\Repositories\ShopRepository;
+use Marvel\Database\Repositories\WithdrawRepository;
+use Marvel\Database\Models\Order;
+use Marvel\Database\Models\Withdraw;
+
+
 class AnalyticsController extends CoreController
 {
     public $repository;
+    public ShopRepository $shopRepository;
+    public WithdrawRepository $withdrawRepository;
 
-    public function __construct(AddressRepository $repository)
+    public function __construct(AddressRepository $repository, ShopRepository $shopRepository, WithdrawRepository $withdrawRepository)
     {
         $this->repository = $repository;
+        $this->shopRepository = $shopRepository;
+        $this->withdrawRepository = $withdrawRepository;
     }
 
 
@@ -653,5 +663,70 @@ class AnalyticsController extends CoreController
         }
 
         return $topRatedProducts;
+    }
+    public function DashboardDateSelectionView(Request $request)
+    {
+        $user = $request->user();
+
+        $startDate = $request->get('input')['startdate'];
+        $endDate =  $request->get('input')['enddate'];
+    
+        $startDates = strtotime($startDate);
+        $endDates = strtotime($endDate);
+
+        $totalOrdersQuery = DB::table('orders')->whereDate('created_at', '<', Carbon::now());
+        $totalVendorsquery = User::whereHas('permissions', function ($query) {
+            $query->where('name', Permission::STORE_OWNER);
+        })->get();
+        $totalShopsOuery = Shop::get();
+
+        $dbRevenueQuery = DB::table('orders as A')
+                ->whereDate('A.created_at', '<', Carbon::now())
+                ->where('A.order_status', OrderStatus::COMPLETED)
+                ->where('A.parent_id', '!=', null)
+                ->join('orders as B', 'A.parent_id', '=', 'B.id')
+                ->where('B.order_status', OrderStatus::COMPLETED)
+                ->select(
+                    'A.id',
+                    'A.parent_id',
+                    'A.paid_total',
+                    'B.delivery_fee',
+                    'B.sales_tax',
+                    'A.created_at',
+                    'A.shop_id'
+                );
+        $dbRevenueQuery = $dbRevenueQuery->get();
+        $totalRevenueQuery = $dbRevenueQuery->whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->sum('paid_total') +
+                        $dbRevenueQuery->unique('parent_id')->whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->sum('delivery_fee') + 
+                        $dbRevenueQuery->unique('parent_id')->whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->sum('sales_tax');
+                
+        $recentOrder = Order::whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->get();
+     
+        $shopList = Shop::whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->get();
+
+        $withdrawList = Withdraw::whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->get();
+
+        $totalOrders = $totalOrdersQuery->where('parent_id', null)->whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->count();
+        $totalVendors = $totalVendorsquery->whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->count();
+        $totalShop = $totalShopsOuery->whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->count();
+        
+        // $totalYearSaleByMonth = $this->getTotalYearSaleByMonth($user);
+        //  echo(json_encode($totalYearSaleByMonth));
+
+         $totalOrdersCount =  strval($totalOrders); 
+         $totalVendorsCount = strval($totalVendors);
+         $totalShopCount = strval($totalShop);
+         $totalRevenueCount = $totalRevenueQuery;
+         
+    
+        return [
+            'totalRevenueCount' => $totalRevenueCount,
+            'totalOrdersCount' => $totalOrdersCount,
+            'totalVendorsCount' => $totalVendorsCount,
+            'totalShopCount' => $totalShopCount,
+            'recentOrder' => $recentOrder,
+            'shopList' => $shopList,
+             'withdrawList' => $withdrawList
+        ];
     }
 }

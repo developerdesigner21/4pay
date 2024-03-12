@@ -35,4 +35,9 @@ class ProductQuery
         $args['parent_id'] = $rootValue->id;
         return Shop::call('Marvel\Http\Controllers\ProductController@fetchDigitalFilesForVariation', $args);
     }
+    public function attributeslist($rootValue, array $args, GraphQLContext $context)
+    {
+        $args['parent_id'] = $rootValue->id;
+        return Shop::call('Marvel\Http\Controllers\ProductController@attributeslist', $args);
+    }
 }

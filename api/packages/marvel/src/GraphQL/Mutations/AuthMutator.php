@@ -116,4 +116,16 @@ class AuthMutator
     {
         return Shop::call('Marvel\Http\Controllers\UserController@notificatontoken', $args);
     }
+    public function usertokenR($rootValue, array $args, GraphQLContext $context)
+    {
+        return Shop::call('Marvel\Http\Controllers\UserController@usertokenR', $args);
+    }
+    public function appemailchack($rootValue, array $args, GraphQLContext $context)
+    {
+        return Shop::call('Marvel\Http\Controllers\UserController@appemailchack', $args);
+    }
+    public function appemaillogin($rootValue, array $args, GraphQLContext $context)
+    {
+        return Shop::call('Marvel\Http\Controllers\UserController@appemaillogin', $args);
+    }
 }

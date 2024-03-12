@@ -41,4 +41,8 @@ class ShopMutator
     {
         return Shop::call('Marvel\Http\Controllers\ShopController@handleFollowShop', $args);
     }
+    public function updateStaff($rootValue, array $args, GraphQLContext $context)
+    {
+        return Shop::call('Marvel\Http\Controllers\ShopController@updateStaff', $args);
+    }
 }

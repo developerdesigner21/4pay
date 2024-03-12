@@ -30,6 +30,8 @@ use \OpenAI;
 use Marvel\Enums\Permission;
 use Marvel\Http\Resources\GetSingleProductResource;
 use Marvel\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\DB;
+use Log;
 
 class ProductController extends CoreController
 {
@@ -68,7 +70,6 @@ class ProductController extends CoreController
      */
     public function fetchProducts(Request $request)
     {
-        
         $unavailableProducts = [];
         $language = $request->language ? $request->language : DEFAULT_LANGUAGE;
 
@@ -86,7 +87,6 @@ class ProductController extends CoreController
         if ($request->flash_sale_builder) {
             $products_query = $this->repository->processFlashSaleProducts($request, $products_query);
         }
-
         return $products_query;
     }
 
@@ -801,5 +801,41 @@ class ProductController extends CoreController
         }
 
         return $products_query;
+    }
+    public function attributeslist(Request $request)
+    {
+        $results = DB::table('products')
+            ->leftJoin('attribute_product', 'attribute_product.product_id', '=', 'products.id')
+            ->leftJoin('attribute_values', 'attribute_values.id', '=', 'attribute_product.attribute_value_id')
+            ->leftJoin('attributes', 'attributes.id', '=', 'attribute_values.attribute_id')
+            ->where('products.id', '=', $request->parent_id)
+            ->select(
+                'attributes.slug as attribute_slug',
+                'attributes.name as attribute_name',
+                'attributes.id as attribute_id',
+                'attribute_values.attribute_id as av_attribute_id',
+                'attribute_values.slug as av_slug',
+                'attribute_values.value as av_value',
+                'products.id as product_id',
+                'attribute_product.product_id',
+                'attribute_values.id as av_id',
+                'attribute_product.attribute_value_id'
+            )
+            ->get();
+
+        $returndata = [];
+
+        if ($results[0]->attribute_slug) {
+            foreach ($results as $key => $value) {
+                if (isset($returndata[$value->attribute_slug])) {
+                    array_push($returndata[$value->attribute_slug]['data'], $value);
+                }else{
+                    $returndata[$value->attribute_slug]['key'] = $value->attribute_name;
+                    $returndata[$value->attribute_slug]['data'] = [$value];
+                }
+            }   
+        }
+
+        return $returndata;
     }
 }

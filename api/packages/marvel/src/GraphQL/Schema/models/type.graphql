@@ -106,6 +106,7 @@ type CompactProduct {
     external_product_url: String
     status: String
     type: CompactTypeSettings
+    qtn: Int
 }
 type CompactDemoBestSelling {
     enable: Boolean
@@ -159,6 +160,7 @@ type TypeSettings {
     customeproduct: [CustomeProduct]
     bottomslider:  [Attachment]
     # customPorduct: String
+    pageViews: String
 }
 
 input TypeSettingsInput {
@@ -175,6 +177,7 @@ input TypeSettingsInput {
     customeproduct: [CustomeProductType]
     bottomslider: [AttachmentInput]
     # customPorduct: String
+    pageViews: String
 }
 
 type Banner {

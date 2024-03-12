@@ -42,6 +42,7 @@ use Marvel\Otp\Gateways\OtpGateway;
 use Marvel\Traits\UsersTrait;
 use Marvel\Traits\WalletsTrait;
 use Spatie\Newsletter\Facades\Newsletter;
+use Log;
 
 class UserController extends CoreController
 {
@@ -248,10 +249,11 @@ class UserController extends CoreController
             'email'    => 'required|email',
             'password' => 'required',
         ]);
-
         $user = User::where('email', $request->email)->where('is_active', true)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password) || !$this->applicationIsValid) {
+        // if (!$user || !Hash::check($request->password, $user->password) || !$this->applicationIsValid) {
+        //     return ["token" => null, "permissions" => []];
+        // }
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return ["token" => null, "permissions" => []];
         }
         $email_verified = $user->hasVerifiedEmail();
@@ -465,6 +467,8 @@ class UserController extends CoreController
 
     public function socialLogin(Request $request)
     {
+        // Log::info($request->provider);
+        // Log::info($request->access_token);
         $provider = $request->provider;
         $token = $request->access_token;
         $this->validateProvider($provider);
@@ -854,5 +858,69 @@ class UserController extends CoreController
             }
         }
         return ['token'=>$request->input['token']];
+    }
+    public function usertokenR(Request $request)
+    {
+        $usertoken = User::where('id','=',$request->id)->first();
+        return ['notification_token'=>$usertoken->notification_token];
+    }
+    public function appemailchack(Request $request)
+    {
+        $profile = User::where('email', $request->get('email'))->first();
+        if ($profile) {
+            return [
+                'isContactExist'=>true,
+            ];
+        }else{
+            return [
+                'isContactExist'=>false
+            ];
+        }
+    }
+    public function appemaillogin(Request $request){
+        $profile = User::where('email', $request->get('input')['email'])->first();
+
+        if ($profile) {
+            $user = $profile;
+        }else{
+
+            $name = $request->get('input')['name'];
+            $email = $request->get('input')['email'];
+
+            if ($name && $email) {
+                
+                $userExist = User::where('email',  $email)->exists();
+                // $user = User::firstOrCreate(['email' => $email], ['name' => $name]);
+
+                $user = User::firstOrCreate(
+                    [
+                        'email' => $email
+                    ],
+                    [
+                        'email_verified_at' => now(),
+                        'name' => $name,
+                    ]
+                );
+                
+                $user->givePermissionTo(Permission::CUSTOMER);
+                $user->assignRole(Role::CUSTOMER);
+
+                $user->profile()->updateOrCreate(
+                    ['customer_id' => $user->id]
+                );
+                if (empty($userExist)) {
+                    $this->giveSignupPointsToCustomer($user->id);
+                }
+            } else {
+                return ['message' => REQUIRED_INFO_MISSING, 'success' => false];
+            }
+        }
+        event(new ProcessUserData());
+
+        return [
+            "token" => $user->createToken('auth_token')->plainTextToken,
+            "permissions" => $user->getPermissionNames(),
+            "role" => $user->getRoleNames()->first()
+        ];
     }
 }

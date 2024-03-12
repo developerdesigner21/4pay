@@ -18,4 +18,9 @@ class OrderQuery
     {
         return Shop::call('Marvel\Http\Controllers\OrderController@fetchSingleOrder', $args);
     }
+
+    public function fetchDashboadOrders($rootValue, array $args, GraphQLContext $context)
+    {
+        return Shop::call('Marvel\Http\Controllers\OrderController@fetchDashboadOrders', $args);
+    }
 }

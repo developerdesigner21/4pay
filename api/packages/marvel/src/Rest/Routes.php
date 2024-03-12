@@ -60,6 +60,9 @@ use Marvel\Http\Controllers\TermsAndConditionsController;
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verifyEmail'])->name('verification.verify');
+Route::get('/all/flashSale', [FlashSaleController::class, 'allFlashSale'])->name('all.flashSale');
+
+Route::get('user/token/{id}', [UserController::class, 'usertokenR']);
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/token', [UserController::class, 'token']);

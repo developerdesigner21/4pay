@@ -39,6 +39,7 @@ use Marvel\Traits\PaymentTrait;
 use Marvel\Traits\WalletsTrait;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Exceptions\RepositoryException;
+use Log;
 
 class OrderRepository extends BaseRepository
 {
@@ -189,7 +190,7 @@ class OrderRepository extends BaseRepository
                 $amount = round($request['paid_total'], 2) - $this->walletPointsToCurrency($wallet->available_points);
             }
 
-            if ($amount !== null && $amount == 0) {
+            if ($amount !== null && $amount === 0) {
                 $request['order_status'] = OrderStatus::COMPLETED;
                 $request['payment_gateway'] = PaymentGatewayType::FULL_WALLET_PAYMENT;
                 $request['payment_status'] = PaymentStatus::SUCCESS;
@@ -219,7 +220,6 @@ class OrderRepository extends BaseRepository
         ])) {
             $order['payment_intent'] = $this->processPaymentIntent($request, $settings);
         }
-
 
         if ($payment_gateway_type === PaymentGatewayType::CASH_ON_DELIVERY || $payment_gateway_type === PaymentGatewayType::CASH) {
             $this->orderStatusManagementOnCOD($order, OrderStatus::PENDING, OrderStatus::PROCESSING);
@@ -573,6 +573,7 @@ class OrderRepository extends BaseRepository
     {
         $settings = Settings::getData();
         $useMustVerifyLicense = isset($settings->options['app_settings']['trust']) ? $settings->options['app_settings']['trust'] : false;
-        return $useMustVerifyLicense;
+        // return $useMustVerifyLicense;
+        return true;
     }
 }

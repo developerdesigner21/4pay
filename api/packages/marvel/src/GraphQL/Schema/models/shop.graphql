@@ -174,13 +174,24 @@ input AddStaffInput {
     password: String!
     name: String!
     shop_id: ID! @rules(apply: ["exists:shops,id"])
+    details: String!
 }
 
 input FollowShopInput {
     shop_id: ID! @rules(apply: ["required", "numeric"])
 }
 
+input updateStaffInput{
+    id: ID!
+    shop_id: ID! @rules(apply: ["exists:shops,id"])
+    name: String!
+    details: String!
+}
+
 extend type Mutation {
+
+    updateStaff(input: updateStaffInput! @spread): Boolean @field(resolver: "ShopMutator@updateStaff")
+
     approveShop(input: ApproveShopInput! @spread): Shop
         @field(resolver: "ShopMutator@approveShop")
         @can(ability: "super_admin")

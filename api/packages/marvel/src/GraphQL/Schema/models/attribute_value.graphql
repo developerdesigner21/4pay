@@ -12,6 +12,7 @@ type AttributeValue {
     attribute: Attribute @belongsTo
     language: String!
     price: String!
+
 }
 
 input AttributeBelongTo {

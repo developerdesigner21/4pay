@@ -14,6 +14,19 @@ extend type Query {
         @field(
             resolver: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchSingleOrder"
         )
+    dashboardOrder(
+        start_date:String
+        end_date:String
+        tracking_number: String @where(operator: "LIKE")
+        orderBy: String
+        sortedBy: String
+        customer_id: ID @eq
+        shop_id: ID @eq
+    ): [Order!]!
+        @paginate(
+            builder: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchDashboadOrders"
+            defaultCount: 10
+        )
 }
 
 type PaymentIntentInfo {
@@ -254,6 +267,55 @@ input InputproductAddtocart {
     productid:ID
 }
 
+input DateSelectionInput {
+    startdate:String!
+    enddate:String!
+    status:String!
+}
+
+
+input DateSelectionInput {
+    startdate:String!
+    enddate:String!
+    status:String!
+}
+input DateSelectionShopInput {
+    shopid:String!
+    startdate:String!
+    enddate:String!
+}
+type ShopFilterResponse {
+    orderCount:String!
+    productCount:String!
+    reviewCount:String!
+    refundsCount:String!
+    grossSalesCount:String!
+    pendingOrdersCount:String!
+}
+
+type Review {
+    id: ID!
+    comment: String
+    rating: String
+    photos: [Attachment]
+    user: User @belongsTo
+    user_id: ID
+    order_id: ID
+    product: Product @belongsTo
+    product_id: ID
+    variation_option_id: ID
+    shop: Shop @belongsTo
+    shop_id: ID
+    feedbacks: [Feedback] @morphMany
+    positive_feedbacks_count: Int
+    negative_feedbacks_count: Int
+    abusive_reports_count: Int
+    abusive_reports: [AbusiveReport] @morphMany
+    my_feedback: Feedback
+    created_at: String
+    updated_at: String
+}
+
 extend type Mutation {
     isorderalert(id: ID): Sorderalert @field(resolver: "OrderMutator@isorderalert")
     deleteOrder(id: ID!): Order @delete @can(ability: "super_admin")
@@ -272,6 +334,11 @@ extend type Mutation {
     AddtocartProduct(input: InputproductAddtocart): String @field(resolver: "OrderMutator@AddtocartProduct")
     AddtocartProductRemove(input: InputproductAddtocart): String @field(resolver: "OrderMutator@AddtocartProductRemove")
     productAddtocart(id: ID!): RproductAddtocart @field(resolver: "OrderMutator@productAddtocart")
-    orderstatus(status: String!): [Order] @field(resolver: "OrderMutator@orderstatus")
-}
+    orderstatus(status: String): [Order] @field(resolver: "OrderMutator@orderstatus")
 
+    dateSelection(input: DateSelectionInput!): [Order] @field(resolver: "OrderMutator@dateSelection")
+    shopDateSelectionView(input: DateSelectionShopInput!): ShopFilterResponse @field(resolver: "OrderMutator@shopDateSelectionView")
+    reviewList(shopReviewId:ID!): [Review] @field(resolver:"OrderMutator@reviewList")
+    
+    cancelOrder(orderId:String!): Order @field(resolver:"OrderMutator@cancelOrder")
+}

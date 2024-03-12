@@ -222,8 +222,24 @@ type Product {
     unit: String!
     sold_quantity: Int
     in_flash_sale: Int
+    qtn: Int
     created_at: DateTime
     updated_at: DateTime
+    attributeslist: [newattributeslist]
+        @field(
+            resolver: "Marvel\\GraphQL\\Queries\\ProductQuery@attributeslist"
+        )
+}
+
+type newattributeslist {
+    key: String
+    data: [newattributeslistdata]
+}
+
+type newattributeslistdata {
+    av_id: String
+    av_value: String
+    attribute_id: String
 }
 
 input UpsertVariationsHasMany {

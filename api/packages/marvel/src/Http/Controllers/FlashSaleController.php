@@ -208,4 +208,8 @@ class FlashSaleController extends CoreController
 
         return $this->productRepository->whereIn('id', $product_ids);
     }
+
+    public function allFlashSale(){
+        return FlashSale::all();
+    }
 }

@@ -36,6 +36,10 @@ use Marvel\Traits\WalletsTrait;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Log;
+use Marvel\Database\Repositories\ProductRepository;
+
+use Marvel\Database\Models\Review;
+use Marvel\Database\Repositories\RefundRepository;
 
 class OrderController extends CoreController
 {
@@ -47,11 +51,15 @@ class OrderController extends CoreController
 
     public OrderRepository $repository;
     public Settings $settings;
+    public ProductRepository $productrepository;
+    public RefundRepository $refundRepository;
 
-    public function __construct(OrderRepository $repository)
+    public function __construct(OrderRepository $repository, ProductRepository $productrepository, RefundRepository $refundRepository )
     {
         $this->repository = $repository;
         $this->settings = Settings::first();
+        $this->productrepository = $productrepository;
+        $this->refundRepository = $refundRepository;
     }
 
     /**
@@ -88,7 +96,8 @@ class OrderController extends CoreController
 
         switch ($user) {
             case $user->hasPermissionTo(Permission::SUPER_ADMIN):
-                return $this->repository->with('children')->where('id', '!=', null)->where('parent_id', '=', null);
+                // return $this->repository->with('children')->where('id', '!=', null)->where('parent_id', '=', null);
+                return $this->repository->with('children')->where('id', '!=', null);
                 break;
 
             case $user->hasPermissionTo(Permission::STORE_OWNER):
@@ -147,7 +156,7 @@ class OrderController extends CoreController
      * @throws MarvelException
      */
     public function store(OrderCreateRequest $request)
-    {
+    {   
         try {
             // decision need
             // if(!($this->settings->options['useCashOnDelivery'] && $this->settings->options['useEnableGateway'])){
@@ -164,7 +173,10 @@ class OrderController extends CoreController
                 $Orderalertupdate->orderalert = 1;
                 $Orderalertupdate->save();
             }
+            //log::info(json_encode($request->all()));
+
             return DB::transaction(fn () => $this->repository->storeOrder($request, $this->settings));
+
         } catch (MarvelException $th) {
             throw new MarvelException(SOMETHING_WENT_WRONG, $th->getMessage());
         }
@@ -563,9 +575,160 @@ class OrderController extends CoreController
             throw new MarvelException(SOMETHING_WENT_WRONG, $e->getMessage());
         }
     }
-
-    public function orderstatus($rootValue, array $args, GraphQLContext $context)
+    public function orderstatus(Request $request){
+        $datalist = Order::where('order_status','=',$request->status)->orderBy('id', 'DESC')->get();
+        return $datalist;
+    }
+    public function dateSelection(Request $request){
+        $startDate= [$request->get('input')['startdate']];
+        $endDate =  [$request->get('input')['enddate']];
+        $testdetail = Order::whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate])
+                   ->where('order_status', $request->input['status'])
+                   ->orderBy('id', 'DESC')
+                   ->get();
+    
+        return $testdetail;
+    } 
+    
+    public function fetchProducts(Request $request)
     {
-        return Shop::call('Marvel\Http\Controllers\OrderController@orderstatus', $args);
+
+        $unavailableProducts = [];
+        $language = $request->language ? $request->language : DEFAULT_LANGUAGE;
+
+        $products_query = $this->productrepository->where('language', $language);
+
+        if (isset($request->date_range)) {
+            $dateRange = explode('//', $request->date_range);
+            $unavailableProducts = $this->repository->getUnavailableProducts($dateRange[0], $dateRange[1]);
+        }
+        if (in_array('variation_options.digital_files', explode(';', $request->with)) || in_array('digital_files', explode(';', $request->with))) {
+            throw new AuthorizationException(NOT_AUTHORIZED);
+        }
+        $products_query = $products_query->whereNotIn('id', $unavailableProducts);
+
+        if ($request->flash_sale_builder) {
+            $products_query = $this->repository->processFlashSaleProducts($request, $products_query);
+        }
+
+        return $products_query;
+    }
+    public function reviewList(Request $request) {
+
+        $orders = Review::where('shop_id', $request->shopReviewId)->get();
+        return $orders;
+    }
+
+    public function fetchRefunds(Request $request) {
+        {
+            try {
+                $language = $request->language ?? DEFAULT_LANGUAGE;
+                $user = $request->user();
+                if (!$user) {
+                    throw new AuthorizationException(NOT_AUTHORIZED);
+                }
+
+                $orderQuery = $this->refundRepository->whereHas('order', function ($q) use ($language) {
+                    $q->where('language', $language);
+                });
+
+                switch ($user) {
+                    case $user->hasPermissionTo(Permission::SUPER_ADMIN):
+                        if ((!isset($request->shop_id) || $request->shop_id === 'undefined')) {
+                            return $orderQuery->where('id', '!=', null)->where('shop_id', '=', null);
+                        }
+                        
+                        return $orderQuery->where('shop_id', '=', $request->shop_id);
+                        break;
+
+                    case $this->refundRepository->hasPermission($user, $request->shop_id):
+                        return $orderQuery->where('shop_id', '=', $request->shop_id);
+                        break;
+
+                    case $user->hasPermissionTo(Permission::CUSTOMER):
+                        return $orderQuery->where('customer_id', $user->id)->where('shop_id', null);
+                        break;
+
+                    default:
+                        return $orderQuery->where('customer_id', $user->id)->where('shop_id', null);
+                        break;
+                }
+            } catch (MarvelException $th) {
+                throw new MarvelException(SOMETHING_WENT_WRONG);
+            }
+        }
+
+    }
+    public function shopDateSelectionView(Request $request)
+    {
+        $startDate = $request->get('input')['startdate'];
+        $endDate =  $request->get('input')['enddate'];
+
+        $startDates = strtotime($startDate);
+        $endDates = strtotime($endDate);
+
+        $shopDetail = $this->fetchOrders($request)->with('children')->where('shop_id', $request->input['shopid'])->whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->count();
+    
+        $productsDetail = $this->fetchProducts($request)->where('shop_id', $request->input['shopid'])->whereBetween('created_at',  [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->count();
+
+        $reviewDetail =  $this->reviewList($request)->where('shop_id', $request->input['shopid'])->whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->count();
+        
+        $refundsDetail =  $this->fetchRefunds($request)->where('shop_id', $request->input['shopid'])->whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->count();
+
+        $grossSalesDetail = $this->fetchOrders($request)->with('children')->where('shop_id', $request->input['shopid'])->whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->pluck('amount')->sum();
+
+        $status = 'order-pending';
+        $pendingOrderList = Order::where('order_status','=',$status)->orderBy('id', 'DESC')->get();
+        $pendingOrdersDetail  = $pendingOrderList->where('shop_id', $request->input['shopid'])->whereBetween('created_at', [date('Y-m-d h:i:s', $startDates), date('Y-m-d h:i:s', $endDates)])->count();
+
+        $orderCount =  strval($shopDetail); 
+        $productCount = strval($productsDetail);
+        $reviewCount = strval($reviewDetail);
+        $refundsCount = strval($refundsDetail);
+        $grossSalesCount = strval($grossSalesDetail);
+        $pendingOrdersCount = strval($pendingOrdersDetail);
+    
+        $array = [
+            'orderCount' => $orderCount,
+            'productCount' => $productCount,
+            'reviewCount' => $reviewCount,
+            'refundsCount' => $refundsCount,
+            'grossSalesCount' => $grossSalesCount,
+            'pendingOrdersCount' => $pendingOrdersCount
+        ]; 
+
+        return $array;   
+    }
+
+    public function fetchDashboadOrders(Request $request)
+    {
+        $startDate = $request->start_date;
+        $endDate =  $request->end_date;
+
+        $startDates = strtotime($startDate);
+        $endDates = strtotime($endDate);
+        {
+            $user = $request->user();
+
+            if (!$user) {
+                throw new AuthorizationException(NOT_AUTHORIZED);
+            }
+
+            $Orderalertupdate = User::where('id','=',$user->id)->first();
+            if ($Orderalertupdate) {
+                $Orderalertupdate->orderalert = 0;
+                $Orderalertupdate->save();
+            }
+            return $this->repository->with('children')->where('id', '!=', null)->whereBetween('created_at', [$startDate, $endDate]);
+        }
+    }
+    public function cancelOrder(Request $request) {
+
+        $CancelOrderdData = Order::where('tracking_number',$request->orderId)->first();
+        if($CancelOrderdData){
+            $CancelOrderdData->order_status = 'order-cancelled';
+            $CancelOrderdData->save();
+        }
+       return $CancelOrderdData;
     }
 }

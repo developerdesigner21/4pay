@@ -214,6 +214,7 @@ class ShopController extends CoreController
                     'email' => $request->email,
                     'shop_id' => $request->shop_id,
                     'password' => Hash::make($request->password),
+                    'details' => $request->details,
                 ]);
 
                 $user->givePermissionTo($permissions);
@@ -420,6 +421,25 @@ class ShopController extends CoreController
             return $this->repository->withCount(['orders', 'products'])->with(['owner.profile'])->where('is_active', '=', $request->is_active)->paginate($limit)->withQueryString();
         } catch (MarvelException $e) {
             throw new MarvelException(SOMETHING_WENT_WRONG, $e->getMessage());
+        }
+    }
+
+    public function updateStaff(Request $request)
+    {
+        try {
+            if ($this->repository->hasPermission($request->user(), $request->shop_id)) {
+                $userdata = User::where('id',$request->id)->first();
+                if ($userdata) {
+                    $userdata->name = $request->name;
+                    $userdata->details = $request->details;
+                    $userdata->save();
+                    return true;
+                }
+                return false;
+            }
+            throw new AuthorizationException(NOT_AUTHORIZED);
+        } catch (MarvelException $th) {
+            throw new MarvelException(SOMETHING_WENT_WRONG);
         }
     }
 }

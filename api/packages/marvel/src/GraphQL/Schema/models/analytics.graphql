@@ -110,3 +110,94 @@ type CategoryWiseProductSale {
     shop_name: String
     total_sales: Int
 }
+
+
+input DashboardDateSelectionInput {
+    startdate:String!
+    enddate:String!
+}
+type DashboardFilterResponse {
+    totalRevenueCount:String!
+    totalOrdersCount:String!
+    totalVendorsCount:String!
+    totalShopCount:String!
+    recentOrder:[RecentOrder]
+    shopList:[ShopList]
+    withdrawList:[WithdrawList]
+}
+type RecentOrder{
+    id: ID!
+    tracking_number: String!
+    customer_id: ID
+    customer_contact: String!
+    customer_name: String
+    customer: User @belongsTo
+    language: String
+    refund: Refund @hasOne
+    wallet_point: WalletPoint @hasOne
+    parent_id: ID
+    parent_order: Order @belongsTo
+    children: [Order] @hasMany
+    order_status: String
+    payment_status: String
+    payment_intent: PaymentIntent
+    amount: Float!
+    sales_tax: Float!
+    total: Float!
+    paid_total: Float!
+    payment_id: String
+    payment_gateway: PaymentGatewayType!
+    altered_payment_gateway: String
+    coupon: Coupon @belongsTo
+    shop: Shop @belongsTo
+    discount: Float
+    delivery_fee: Float
+    delivery_time: String
+    products: [Product] @belongsToMany
+    created_at: DateTime
+    updated_at: DateTime
+    billing_address: UserAddress
+    shipping_address: UserAddress
+    note: String
+    count:String
+}
+
+type ShopList {
+     id: ID!
+    owner_id: ID!
+    owner: User @belongsTo
+    staffs: [User] @hasMany
+    refunds: [Refund] @hasMany
+    is_active: Boolean!
+    orders_count: Int @count(relation: "orders")
+    products_count: Int @count(relation: "products")
+    balance: Balance @hasOne
+    name: String!
+    slug: String!
+    description: String
+    cover_image: Attachment
+    logo: Attachment
+    address: UserAddress
+    settings: ShopSettings
+    distance: Float
+    lat: Float
+    lng: Float
+    created_at: DateTime
+    updated_at: DateTime
+}
+type WithdrawList {
+    id: ID!
+    amount: Float!
+    status: WithdrawStatus!
+    shop_id: ID!
+    shop: Shop @belongsTo
+    payment_method: String
+    details: String
+    note: String
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+extend type Mutation {
+    dashboardDateSelectionView(input:DashboardDateSelectionInput!):DashboardFilterResponse @field(resolver: "OrderMutator@DashboardDateSelectionView")
+}

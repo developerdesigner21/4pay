@@ -54,6 +54,7 @@ type User {
     is_active: Boolean
     address: [Address] @hasMany
     orders: [Order] @hasMany @lazyLoad(relations: ["products", "status"])
+    details: String
 }
 
 type UserPermission @model(class: "Spatie\\Permission\\Models\\Permission") {
@@ -265,6 +266,15 @@ type ORcustomeotpverification {
     role: String
 }
 
+type usertokenR {
+    notification_token: String
+}
+
+input inputappemaillogin {
+    email: String!
+    name: String
+}
+
 extend type Mutation {
     notifications_token(input: NotificationTokenInput!): NotificationTokenResponse
         @field(resolver: "AuthMutator@notificationstoken")
@@ -272,6 +282,10 @@ extend type Mutation {
         @field(resolver: "AuthMutator@customeotpverification")
     rcustomeotpverification(input: inputrcustomeotpverification): ORcustomeotpverification
         @field(resolver: "AuthMutator@rcustomeotpverification")
+    usertoken(id: ID!): usertokenR @field(resolver: "AuthMutator@usertokenR")
+
+    appemailchack(email: String): Ocustomeotpverification @field(resolver: "AuthMutator@appemailchack")
+    appemaillogin(input: inputappemaillogin): ORcustomeotpverification @field(resolver: "AuthMutator@appemaillogin")
 
     login(input: LoginInput! @spread): AuthResponse
         @field(resolver: "AuthMutator@token")
