@@ -8,8 +8,6 @@
 # testing
 /coverage
 
-/.cache
-
 # next.js
 /.next/
 /out/
@@ -41,10 +39,7 @@ vercel.*.json
 __generated__
 *.graphql.d.ts
 *.graphqls.d.ts
-.cache
+
 # PWA
 workbox-*.js
 sw.js
-
-.graphql-let.normal.yml
-.graphql-let.windows.yml
