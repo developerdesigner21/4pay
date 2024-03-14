@@ -8,7 +8,7 @@
     "dev:rest": "next dev -p 3003",
     "build:rest": "next build",
     "codegen": "graphql-let",
-    "dev:gql": "yarn codegen && next dev -p 3012",
+    "dev:gql": "yarn codegen && next dev -p 3014",
     "build:gql": "yarn codegen && next build",
     "start": "next start -p 3011",
     "lint": "next lint",
