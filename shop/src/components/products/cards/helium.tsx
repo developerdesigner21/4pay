@@ -209,7 +209,7 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
 
   const navigate = (path: string) => {
     router.push(path);
-    closeModal();
+    // closeModal();
   };
 
 

@@ -109,8 +109,8 @@ type Variation {
     product: Product @belongsTo
     language: String
     price: Float
-    image: Attachment
-    # image: [Attachment]
+    # image: Attachment
+    image: [Attachment]
     blocked_dates: [String]
     digital_file: DigitalFile
         @field(

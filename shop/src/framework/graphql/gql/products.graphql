@@ -160,6 +160,11 @@ query DownloadableProducts($first: Int = 15, $page: Int) {
           ... on Product {
             name
             slug
+            image {
+              id
+              thumbnail
+              original
+            }
             shop {
               name
               slug

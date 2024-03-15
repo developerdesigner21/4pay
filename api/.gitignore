@@ -4,6 +4,7 @@
 /public/license
 /storage/*.key
 /storage/framework/cache
+/storage/framework/sessions
 /storage/debugbar
 /vendor
 .env.backup
