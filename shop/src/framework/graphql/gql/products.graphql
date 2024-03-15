@@ -180,9 +180,6 @@ query DownloadableProducts($first: Int = 15, $page: Int) {
                 original
               }
             }
-            image {
-              id
-            }
           }
         }
       }

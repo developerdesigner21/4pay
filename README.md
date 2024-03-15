@@ -10,3 +10,15 @@ Backend
 2. composer install --ignore-platform-req=ext-intl
 3. php artisan serve
 
+
+
+php artisan storage:link
+
+sudo chown -R www-data:www-data storage
+sudo chown -R www-data:www-data bootstrap/cache
+
+yarn build:shop-gql
+yarn build:admin-gql
+
+pm2 --name shop-gql start yarn -- run start:shop-gql
+pm2 --name admin-gql start yarn -- run start:admin-gql
