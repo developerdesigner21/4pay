@@ -244,6 +244,7 @@ query Staffs(
       name
       email
       is_active
+      details
     }
     paginatorInfo {
       ...PaginatorParts
@@ -273,6 +274,10 @@ mutation DeleteShop($id: ID!) {
 
 mutation AddStaff($input: AddStaffInput!) {
   addStaff(input: $input)
+}
+
+mutation UpdateStaff($input: updateStaffInput!) {
+    updateStaff(input: $input)
 }
 
 mutation RemoveStaff($id: ID!) {

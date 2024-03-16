@@ -393,6 +393,7 @@ export default function Dashboard() {
     data?.analytics?.todayTotalOrderByStatus
   );
   const [dashboardDateSelectionView, { data: DashboardSelection, loading: DashboardSelectionLoader }] = useDashboardDateSelectionViewMutation({});
+  console.log("DashboardSelection", DashboardSelection);
 
   const { data: withdraws, loading: withdrawLoading } = useWithdrawsQuery({
     variables: {
@@ -406,6 +407,8 @@ export default function Dashboard() {
   const recentOrder = DashboardSelection?.dashboardDateSelectionView?.recentOrder;
   const shopList = DashboardSelection?.dashboardDateSelectionView?.shopList;
   const withdrawList = DashboardSelection?.dashboardDateSelectionView?.withdrawList;
+  console.log("shopList", shopList);
+
 
   const options = {
     options: {
@@ -438,17 +441,22 @@ export default function Dashboard() {
       }
     },
     series:
-      shopList?.map((item: any) => {
-        return (
-          item.balance.current_balance
-        )
-      }),
-    // series:
-    //   ChartListSeries?.map((item: any) => {
-    //     return (
-    //       item.balance.current_balance
-    //     )
-    //   })
+      // shopList?.map((item: any) => {
+      //   return (
+      //     item.balance.current_balance
+      //   )
+      // }),
+      isActualizar === true ?
+        shopList?.map((item: any) => {
+          return (
+            item?.balance?.current_balance
+          )
+        }) : ShopList?.map((item: any) => {
+          return (
+            item?.balance?.current_balance
+          )
+        })
+
   }
 
   const websiteOptions = {
@@ -483,11 +491,21 @@ export default function Dashboard() {
     },
 
     series:
-      ChartListSeries?.map((item: any) => {
-        return (
-          item?.balance?.current_balance
-        )
-      })
+      isActualizar === true ?
+        shopList?.map((item: any) => {
+          return (
+            item?.balance?.current_balance
+          )
+        }) : ShopList?.map((item: any) => {
+          return (
+            item?.balance?.current_balance
+          )
+        })
+    // ChartListSeries?.map((item: any) => {
+    //   return (
+    //     item?.balance?.current_balance
+    //   )
+    // })
   }
 
 
@@ -952,7 +970,6 @@ export default function Dashboard() {
                   series={options.series}
                   width="90%"
                   type="donut"
-
                 />
               </div>
               <div className='col-span-2 mb-6 overflow-hidden rounded pb-5'>
