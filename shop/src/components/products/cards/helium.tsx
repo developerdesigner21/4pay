@@ -164,7 +164,6 @@ import { twMerge } from 'tailwind-merge';
 import { EyeIcon } from '@/components/icons/category/eyes-icon';
 import { Routes } from '@/config/routes';
 import router, { useRouter } from 'next/router';
-import Link from '@/components/ui/link';
 
 import { useState } from 'react';
 
@@ -384,8 +383,8 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
       onMouseEnter={() => ManageViewButton()}
       onMouseLeave={() => RemoveViewButton()}
     >
-      <Link
-        href={Routes.product(product.slug)}
+      <div
+        onClick={() => navigate(Routes.product(product.slug))}
         // onClick={handleProductQuickView}
         className={cn(
           'relative flex h-48 w-auto items-center justify-center sm:h-64',
@@ -411,7 +410,7 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
           </div>
         )}
 
-      </Link>
+      </div>
       {/* End of product image */}
 
       <header className="relative ">
