@@ -6,9 +6,7 @@ fragment CategoryParts on Category {
   slug
   language
   translated_languages
-  details
   parent_id
-  products_count
   image {
     id
     original
@@ -41,12 +39,6 @@ query Categories(
   ) {
     data {
       ...CategoryParts
-      children {
-        ...CategoryParts
-        children {
-          ...CategoryParts
-        }
-      }
     }
     paginatorInfo {
       ...PaginatorParts

@@ -550,9 +550,9 @@ export default function CompactLayout({ variables }: HomePageProps) {
               <div className='col-span-2 space-y-3'>
                 <p className='text-2xl font-semibold'>Express Delivery</p>
                 <p className='text-gray-600	'>On time Delivery with in 3 days</p>
-                <button className='bg-white p-2 shadow-xl flex justify-center'>
+                {/* <button className='bg-white p-2 shadow-xl flex justify-center'>
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
-                </button >
+                </button > */}
               </div>
               <div>
                 <Image
@@ -570,9 +570,9 @@ export default function CompactLayout({ variables }: HomePageProps) {
               <div className='col-span-2 space-y-3'>
                 <p className='text-2xl font-semibold'>Get high Discounts</p>
                 <p className='text-gray-600	'>10%, 20% discounts for our products</p>
-                <button className='bg-white p-2 shadow-xl ' >
+                {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
-                </button >
+                </button > */}
               </div>
               <div>
                 <Image
@@ -590,9 +590,9 @@ export default function CompactLayout({ variables }: HomePageProps) {
               <div className='col-span-2 space-y-3'>
                 <p className='text-2xl font-semibold'>Loyalty Rewards</p>
                 <p className='text-gray-600	'>We provide best offer for buy again</p>
-                <button className='bg-white p-2 shadow-xl ' >
+                {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
-                </button>
+                </button> */}
               </div>
               <div >
                 <Image
@@ -610,9 +610,9 @@ export default function CompactLayout({ variables }: HomePageProps) {
               <div className=' col-span-2 space-y-3'>
                 <p className='text-2xl font-semibold'>100% Safe & Secure </p>
                 <p className='text-gray-600	'>Chat with our expert team any time</p>
-                <button className='bg-white p-2 shadow-xl ' >
+                {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
-                </button >
+                </button > */}
               </div>
               <div >
                 <Image

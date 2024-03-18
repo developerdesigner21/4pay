@@ -21,6 +21,9 @@ export const Routes = {
     // }
     return `/products/${encodeURIComponent(slug)}`;
   },
+  category: (type: string ,slug: string) => {
+    return `/${type}/search/?category=${slug}`;
+  },
   privacy: '/privacy',
   terms: '/terms',
   refund: '/refunds-and-return',

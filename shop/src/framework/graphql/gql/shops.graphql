@@ -72,7 +72,14 @@ query Shops(
     is_active: $is_active
   ) {
     data {
-      ...ShopParts
+      id
+      is_active
+      name
+      slug
+      description
+      distance
+      lat
+      lng
     }
     paginatorInfo {
       ...PaginatorParts

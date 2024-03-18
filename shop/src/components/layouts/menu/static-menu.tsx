@@ -2,6 +2,7 @@ import { ArrowDownIcon } from '@/components/icons/arrow-down';
 import Link from '@/components/ui/link';
 import { useTranslation } from 'next-i18next';
 import { siteSettings } from '@/config/site';
+import { Routes } from '@/config/routes';
 
 const StaticMenu = ({ categories }: { categories: any }) => {
   const { t } = useTranslation('common');
@@ -24,7 +25,7 @@ const StaticMenu = ({ categories }: { categories: any }) => {
           return (
             <div className='flex flex-row mt-5' key={index}>
               <li>
-                <Link href={`/${item?.type?.slug}/search/?category=${item.slug}`} className=" items-center font-normal text-heading no-underline  hover:text-accent focus:text-accent  ">
+                <Link href={Routes.category(item?.type?.slug, item.slug)} className=" items-center font-normal text-heading no-underline  hover:text-accent focus:text-accent  ">
                   <p className=' font-semibold'> {item.name}</p>
                 </Link>
               </li>

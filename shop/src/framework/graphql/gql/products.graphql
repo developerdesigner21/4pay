@@ -43,12 +43,40 @@ query Products(
     page: $page
   ) {
     data {
-      ...ProductParts
-      author {
-        name
-        slug
+      id
+      name
+      slug
+      variation_options {
+        id
+        title
+        language
+        price
+        sku
+        is_disable
+        is_digital
+        sale_price
+        quantity
+        sold_quantity
+        image {
+          thumbnail
+          original
+          id
+        }
+      }
+      image {
+        thumbnail
+        original
         id
       }
+      price
+      quantity
+      unit
+      sold_quantity
+      qtn
+      product_type
+      status
+      min_price
+      max_price
     }
     paginatorInfo {
       ...PaginatorParts
@@ -131,18 +159,78 @@ query Product($id: ID, $slug: String, $language: String) {
 }
 query PopularProducts($limit: Int, $type_slug: String, $range: Int) {
   popularProducts(limit: $limit, type_slug: $type_slug, range: $range) {
-    ...ProductParts
-    author {
-      name
-      slug
+    id
+    name
+    variation_options {
+      id
+      title
+      language
+      price
+      sku
+      is_disable
+      is_digital
+      sale_price
+      quantity
+      sold_quantity
+      image {
+        thumbnail
+        original
+        id
+      }
+    }
+    image {
+      thumbnail
+      original
       id
     }
+    price
+    quantity
+    unit
+    sold_quantity
+    qtn
+    product_type
+    status
+    min_price
+    max_price
   }
 }
 
 query BestSellingProducts($limit: Int, $type_slug: String, $range: Int) {
   bestSellingProducts(limit: $limit, type_slug: $type_slug, range: $range) {
-    ...ProductParts
+    id
+    name
+    slug
+    variation_options {
+      id
+      title
+      language
+      price
+      sku
+      is_disable
+      is_digital
+      sale_price
+      quantity
+      sold_quantity
+      image {
+        thumbnail
+        original
+        id
+      }
+    }
+    image {
+      thumbnail
+      original
+      id
+    }
+    price
+    quantity
+    unit
+    sold_quantity
+    qtn
+    product_type
+    status
+    min_price
+    max_price
     author {
       name
       slug

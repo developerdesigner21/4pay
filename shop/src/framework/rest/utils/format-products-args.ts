@@ -3,7 +3,7 @@ import { ProductQueryOptions } from '@/types';
 export const formatProductsArgs = (options?: Partial<ProductQueryOptions>) => {
   // Destructure
   const {
-    limit = 30,
+    limit = 16,
     price,
     categories,
     name,

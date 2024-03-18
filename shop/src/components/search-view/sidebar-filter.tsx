@@ -107,9 +107,9 @@ const SidebarFilter: React.FC<{
           <CategoryFilter type={type} />
         </FieldWrapper>
 
-        <FieldWrapper title="text-sort-by-price">
+        {/* <FieldWrapper title="text-sort-by-price">
           <PriceFilter />
-        </FieldWrapper>
+        </FieldWrapper> */}
 
         <FieldWrapper title="text-tags">
           <TagFilter type={type} />

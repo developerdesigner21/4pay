@@ -23,6 +23,10 @@ interface Variation {
   sale_price?: number;
   quantity: number;
   [key: string]: unknown;
+  image: {
+    thumbnail: string;
+    [key: string]: unknown;
+  }[]
 }
 export function generateCartItem(item: Item, variation: Variation) {
   const {
@@ -51,7 +55,7 @@ export function generateCartItem(item: Item, variation: Variation) {
       price: Number(
         variation.sale_price ? variation.sale_price : variation.price,
       ),
-      image: image?.thumbnail,
+      image: variation?.image?.length > 0 ? variation?.image[0]?.thumbnail :image?.thumbnail,
       variationId: variation.id,
       language,
       in_flash_sale,

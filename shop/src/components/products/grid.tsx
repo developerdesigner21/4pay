@@ -39,8 +39,6 @@ export function Grid({
   limit = PRODUCTS_PER_PAGE,
   column = 'auto',
 }: Props) {
-  const { t } = useTranslation('common');
-
   if (error) return <ErrorMessage message={error.message} />;
 
   if (!isLoading && !products?.length) {
@@ -51,11 +49,12 @@ export function Grid({
     );
   }
 
-  const [fullUrl, setFullUrl] = useState('');
-  // const [shopUrl,setUrl] 
+  const { t } = useTranslation('common');
 
-  let checkurl = fullUrl.includes("search");
-  let shopurl = fullUrl.includes("shops");
+  const [fullUrl, setFullUrl] = useState('');
+
+  let checkurl = fullUrl?.includes("search");
+  let shopurl = fullUrl?.includes("shops");
 
 
   useEffect(() => {

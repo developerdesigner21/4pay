@@ -6,7 +6,10 @@ import { ArrowNextIcon } from '@/components/icons/arrow-next';
 import { Swiper, SwiperSlide, Navigation } from '@/components/ui/slider';
 import { productPlaceholder } from '@/lib/placeholders';
 import { Image } from '@/components/ui/image';
-import Link from './link';
+// import Link from './link';
+import Link from '@/components/ui/link';
+import { Routes } from '@/config/routes';
+
 
 interface CategoryItemProps {
   item: any;
@@ -14,7 +17,7 @@ interface CategoryItemProps {
 const CategoryItem: React.FC<CategoryItemProps> = ({ item }) => {
   return (
     <div className="group relative cursor-pointer overflow-hidden text-center">
-      <Link href={`/${item?.type?.slug}/search/?category=${item.slug}`}>
+      <Link href={Routes.category(item?.type?.slug, item.slug)}>
         <Image
           src={item?.image?.original! ?? productPlaceholder}
           alt={item?.name!}
@@ -22,10 +25,10 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ item }) => {
           height={240}
           className="rounded-md"
         />
+        <span className="mt-2 block text-base font-semibold text-heading transition-colors group-hover:text-orange-500 ltr:text-center rtl:text-right">
+          {item.name}
+        </span>
       </Link>
-      <span className="mt-2 block text-base font-semibold text-heading transition-colors group-hover:text-orange-500 ltr:text-center rtl:text-right">
-        {item.name}
-      </span>
     </div>
   );
 };

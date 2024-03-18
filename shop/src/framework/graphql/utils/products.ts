@@ -23,7 +23,7 @@ export const getProducts = ({
   tags,
   text,
   searchQuery,
-  limit = 30,
+  limit = 16,
   ...params
 }: Partial<ProductQueryOptions>) => {
   return {
@@ -38,8 +38,8 @@ export const getProducts = ({
       type,
       categories,
       shop_id,
-      author,
-      manufacturer,
+      // author,
+      // manufacturer,
       min_price,
       max_price,
       tags,
