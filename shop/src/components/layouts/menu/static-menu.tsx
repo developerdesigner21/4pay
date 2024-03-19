@@ -20,7 +20,7 @@ const StaticMenu = ({ categories }: { categories: any }) => {
           </Link>
         </li>
       ))} */}
-      <div className='flex flex-row gap-x-9	 mt-0'>
+      <div className='flex flex-row gap-x-9	 mb-3'>
         {categories?.map((item: any, index: any) => {
           return (
             <div className='flex flex-row mt-5' key={index}>

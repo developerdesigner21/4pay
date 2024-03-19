@@ -1,4 +1,4 @@
-export const PRODUCTS_PER_PAGE = 16;
+export const PRODUCTS_PER_PAGE = 12;
 export const TYPES_PER_PAGE = 15;
 export const CATEGORIES_PER_PAGE = 1000;
 export const SHOPS_PER_PAGE = 30;

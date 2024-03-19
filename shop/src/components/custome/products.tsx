@@ -57,8 +57,8 @@ export default function CustomeProductGrid({
         },
     };
     return (
-        <div className="relative px-10">
-            <div className='my-7 flex items-center justify-between '>
+        <div className="relative px-3">
+            <div className='my-3 flex items-center justify-between '>
                 <h3 className="text-2xl font-semibold lg:text-[27px] 3xl:text-3xl">{title}</h3>
             </div>
             <Swiper

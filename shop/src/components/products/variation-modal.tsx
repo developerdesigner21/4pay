@@ -10,6 +10,7 @@ import {
 } from '@/components/products/details/attributes.context';
 import { AddToCart } from './add-to-cart/add-to-cart';
 import { useProduct } from '@/framework/product';
+import Spinner from '../ui/loaders/spinner/spinner';
 
 interface Props {
   product: any;
@@ -46,12 +47,14 @@ const Variation = ({ product }: Props) => {
       <div className="mb-8">
         <VariationGroups variations={variations} />
       </div>
+      <div>
       <AddToCart
         data={product}
         variant="big"
         variation={selectedVariation}
         disabled={selectedVariation?.is_disable || !isSelected}
       />
+      </div>
     </div>
   );
 };
@@ -60,7 +63,9 @@ const ProductVariation = ({ productSlug }: { productSlug: string }) => {
   const { product, isLoading } = useProduct({
     slug: productSlug,
   });
-  if (isLoading || !product) return <div>Loading</div>;
+  if (isLoading || !product) return       <div className="relative flex items-center justify-center h-96 w-96 bg-light">
+  <Spinner />
+</div>;
   return (
     <AttributesProvider>
       <Variation product={product} />

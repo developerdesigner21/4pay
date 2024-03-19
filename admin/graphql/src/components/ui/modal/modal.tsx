@@ -55,14 +55,14 @@ export default function Modal({ open, onClose, children }: any) {
           </span>
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-300"
+            enter="ease-out duration-100"
             enterFrom="opacity-0 scale-95"
             enterTo="opacity-100 scale-100"
-            leave="ease-in duration-200"
+            leave="ease-in duration-150"
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="min-w-content relative inline-block max-w-full align-middle transition-all ltr:text-left rtl:text-right">
+            <Dialog.Panel style={{marginTop:"24px"}} className="min-w-content relative inline-block max-w-full align-middle transition-all ltr:text-left rtl:text-right mt-24">
               <button
                 onClick={onClose}
                 aria-label="Close panel"

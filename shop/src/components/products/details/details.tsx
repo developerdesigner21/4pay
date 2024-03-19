@@ -140,8 +140,8 @@ const Details: React.FC<Props> = ({
   return (
     <article className="rounded-lg bg-light">
       <div className="flex flex-col border-b border-border-200 border-opacity-70 md:flex-row">
-        <div className="p-6 pt-10 md:w-1/2 lg:p-14 xl:p-16">
-          <div className="mb-8 flex items-center justify-between lg:mb-10">
+        <div className="p-6 pt-5 md:w-1/2 lg:p-14 xl:p-8">
+          <div className="mb-8 flex items-center justify-between lg:mb-3">
             {backBtn && <BackButton />}
             {discount && (
               <div className="rounded-full bg-yellow-500 px-3 text-xs font-semibold leading-6 text-light ltr:ml-auto rtl:mr-auto">
@@ -163,7 +163,7 @@ const Details: React.FC<Props> = ({
           </div>
         </div>
 
-        <div className="flex flex-col items-start p-5 pt-10 md:w-1/2 lg:p-14 xl:p-16">
+        <div className="flex flex-col items-start p-5 pt-5 md:w-1/2 lg:p-14 xl:p-8">
           <div className="w-full" ref={intersectionRef}>
             <div className="flex w-full items-start justify-between space-x-8 rtl:space-x-reverse">
               <h1
@@ -188,7 +188,7 @@ const Details: React.FC<Props> = ({
                 />
               </div>
             </div>
-            <div className="mt-2 flex items-center justify-between">
+            <div className="mt-0 flex items-center justify-between">
               {unit && !hasVariations && (
                 <span className="block text-sm font-normal text-body">
                   {unit}
@@ -204,7 +204,7 @@ const Details: React.FC<Props> = ({
             </div>
 
             {description && (
-              <div className="mt-3 text-sm leading-7 text-body md:mt-4">
+              <div className="mt-3 text-sm leading-7 text-body md:mt-3">
                 <Truncate
                   character={150}
                   {...(!isModal && {
@@ -219,7 +219,7 @@ const Details: React.FC<Props> = ({
 
             {hasVariations ? (
               <>
-                <div className="my-5 flex items-center md:my-10">
+                <div className="my-5 flex items-center md:my-1">
                   <VariationPrice
                     selectedVariation={selectedVariation}
                     minPrice={product.min_price}
@@ -231,7 +231,7 @@ const Details: React.FC<Props> = ({
                 </div>
               </>
             ) : (
-              <span className="my-5 flex items-center md:my-10">
+              <span className="my-5 flex items-center md:my-5">
                 <ins className="text-2xl font-semibold text-accent no-underline md:text-3xl">
                   {price}
                 </ins>

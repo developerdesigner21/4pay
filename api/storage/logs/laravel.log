@@ -1673,3 +1673,7 @@
 #38 /Applications/XAMPP/xamppfiles/htdocs/4pay_tryzen/4pay/api/server.php(21): require_once('/Applications/X...')
 #39 {main}
 "} 
+[2024-03-19 06:01:21] production.ERROR: Maximum execution time of 30 seconds exceeded {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Maximum execution time of 30 seconds exceeded at C:\\wamp64\\www\\4pay\\api\\vendor\\webonyx\\graphql-php\\src\\Language\\Parser.php:318)
+[stacktrace]
+#0 {main}
+"} 

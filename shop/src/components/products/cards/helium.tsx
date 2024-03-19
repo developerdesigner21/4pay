@@ -224,7 +224,7 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
 
   let productSlug = product.slug;
   function handleMoreInfoModal() {
-    return openModal('VARIATION_POPUP', { productSlug });
+    return openModal('SELECT_PRODUCT_VARIATION', product.slug);
   }
 
   // return (
@@ -531,7 +531,7 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
               </button>}
           </div>
           <div className='grid justify-items-end'>
-            {product?.product_type === "variable" ?
+            {product?.product_type === "VARIABLE" ?
               <button
                 onClick={handleMoreInfoModal}
                 className="flex items-center justify-center order-5 px-3 py-2 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start sm:px-4"

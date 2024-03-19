@@ -567,7 +567,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
             <div className='bg-[#BAE6D3]  grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md'>
               <div className='col-span-2 space-y-3'>
                 <p className='text-2xl font-semibold'>Mejores descuentos</p>
-                <p className='text-gray-600	'>Hasta 20% de descuento en nuestro sitio</p>
+                <p className='text-gray-600	'>Hasta 10 a 20% de descuento sobre la tarifa del mercado</p>
                 {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
                 </button > */}
@@ -586,7 +586,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
           <SwiperSlide>
             <div className='bg-[#CDF1FF]  grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md'>
               <div className='col-span-2 space-y-3'>
-                <p className='text-2xl font-semibold'>Recompensas de fidelidad</p>
+                <p className='text-2xl font-semibold'>Recompensas</p>
                 <p className='text-gray-600	'>¡Ofrecemos la mejor oferta para los clientes existentes!</p>
                 {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
@@ -606,7 +606,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
           <SwiperSlide >
             <div className='bg-[#B4C0FE]   grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md'>
               <div className=' col-span-2 space-y-3'>
-                <p className='text-2xl font-semibold'>100% best quality</p>
+                <p className='text-2xl font-semibold'>100% mejor calidad</p>
                 <p className='text-gray-600	'>Proporcionamos reembolso del 100% si el artículo está dañado.</p>
                 {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>

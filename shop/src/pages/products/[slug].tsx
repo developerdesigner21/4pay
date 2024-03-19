@@ -64,19 +64,19 @@ const ProductPage: NextPageWithLayout<InferGetStaticPropsType<typeof getStaticPr
             </>
           )}
 
-          <div className='grid grid-cols-1 lg:grid-cols-2  gap-4'>
+          <div className='grid grid-cols-1 gap-4'>
             <div>
               <ProductReviews
                 productId={product?.id}
                 productType={product?.type?.slug}
               />
             </div>
-            <div>
+            {/* <div>
               <FaqInformation
                 productId={product?.id}
                 shopId={product?.shop?.id}
                 productType={product?.type?.slug} />
-            </div>
+            </div> */}
           </div>
 
           {/* <ProductReviews
