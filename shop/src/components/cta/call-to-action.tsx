@@ -50,7 +50,7 @@ const CallToAction = (props:any) => {
           {SliderData?.map((item: any) => {
             return (
               <SwiperSlide>
-                <div className="relative flex w-full overflow-hidden rounded-xl  px-10">
+                <div className="relative flex w-full overflow-hidden rounded-xl  px-5">
                   <Image
                     className="h-96 w-full rounded-lg "
                     src={item.original}

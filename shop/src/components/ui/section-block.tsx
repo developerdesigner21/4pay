@@ -27,10 +27,10 @@ const SectionBlock: React.FC<SectionProps> = ({
     <div
       className={`${title === undefined ?
         "flex w-full flex-col" :
-        ' flex w-full flex-col px-5 pb-[40px] lg:px-7 xl:px-10 xl:pb-[54px] 3xl:pb-[60px]'}`}
+        ' flex w-full flex-col px-2 pb-[40px] lg:px-7 xl:px-10 xl:pb-[54px] 3xl:pb-[60px]'}`}
     >
       {title && (
-        <div className="mb-7 flex items-center justify-between ">
+        <div className="mb-3 flex items-center justify-between ">
           {title && (
             <h3 className="text-2xl font-semibold lg:text-[27px] 3xl:text-3xl">
               {t(title)}

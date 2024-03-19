@@ -81,7 +81,7 @@ export function Locationwiseshop(){
 
     return <>
         {Ischackloc?
-            <div className="flex w-full flex-col px-5 pb-[40px] lg:px-7 xl:px-10 xl:pb-[54px] 3xl:pb-[60px]">
+            <div className="flex w-full flex-col px-2 pb-[40px] lg:px-7 xl:px-10 xl:pb-[54px] 3xl:pb-[60px]">
                 <h3 className="mb-8 text-2xl font-bold text-heading">Near Shop</h3>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-4">
                 {ShopList.map((shop:any) => (

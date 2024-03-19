@@ -10,8 +10,6 @@ Backend
 2. composer install --ignore-platform-req=ext-intl
 3. php artisan serve
 
-
-
 php artisan storage:link
 
 sudo chown -R www-data:www-data storage

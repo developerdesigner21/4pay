@@ -67,8 +67,8 @@ export function Grid({
   return (
     <div className={cn('w-full', className)}>
       <div className={`${checkurl || shopurl === true ?
-        "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 gap-y-10'" :
-        ' grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6  gap-6 gap-y-10'}`}>
+        "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 gap-y-5'" :
+        ' grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6  gap-3 gap-y-5'}`}>
         {/* <div
         className={cn(
           {

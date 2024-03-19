@@ -534,7 +534,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
   }
   const PromotinalSlider = () => {
     return (
-      <div className='p-10 relative'>
+      <div className='p-6 relative'>
         <Swiper
           breakpoints={PromotinalSliderBreakpoints}
           modules={[Navigation]}
@@ -546,30 +546,28 @@ export default function CompactLayout({ variables }: HomePageProps) {
           }}
         >
           <SwiperSlide >
-            <div className='bg-[#E0EEF6] grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-5 rounded-md'>
+            <div className='bg-[#E0EEF6] grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md'>
               <div className='col-span-2 space-y-3'>
-                <p className='text-2xl font-semibold'>Express Delivery</p>
-                <p className='text-gray-600	'>On time Delivery with in 3 days</p>
-                {/* <button className='bg-white p-2 shadow-xl flex justify-center'>
-                  <p className='text-[#009F7F] font-semibold'>Order Now</p>
-                </button > */}
+                <p className='text-2xl font-semibold'>Entrega urgente</p>
+                <p className='text-gray-600	'>Consulte su tienda cercana para recibir su pedido en 45 minutos</p>
+              
               </div>
               <div>
                 <Image
                   className='h-auto max-w-lg lg:ms-auto m-auto'
                   src={DeliveryIcon}
                   alt={''}
-                  width={100}
+                  width={75}
                   height={20}
                 />
               </div>
             </div>
           </SwiperSlide>
           <SwiperSlide >
-            <div className='bg-[#BAE6D3]  grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-5 rounded-md'>
+            <div className='bg-[#BAE6D3]  grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md'>
               <div className='col-span-2 space-y-3'>
-                <p className='text-2xl font-semibold'>Get high Discounts</p>
-                <p className='text-gray-600	'>10%, 20% discounts for our products</p>
+                <p className='text-2xl font-semibold'>Mejores descuentos</p>
+                <p className='text-gray-600	'>Hasta 20% de descuento en nuestro sitio</p>
                 {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
                 </button > */}
@@ -579,17 +577,17 @@ export default function CompactLayout({ variables }: HomePageProps) {
                   className='h-auto max-w-lg lg:ms-auto m-auto'
                   src={DiscountIcon}
                   alt={''}
-                  width={100}
+                  width={75}
                   height={20}
                 />
               </div>
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className='bg-[#CDF1FF]  grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-5 rounded-md'>
+            <div className='bg-[#CDF1FF]  grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md'>
               <div className='col-span-2 space-y-3'>
-                <p className='text-2xl font-semibold'>Loyalty Rewards</p>
-                <p className='text-gray-600	'>We provide best offer for buy again</p>
+                <p className='text-2xl font-semibold'>Recompensas de fidelidad</p>
+                <p className='text-gray-600	'>¡Ofrecemos la mejor oferta para los clientes existentes!</p>
                 {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
                 </button> */}
@@ -599,17 +597,17 @@ export default function CompactLayout({ variables }: HomePageProps) {
                   className='h-auto max-w-lg lg:ms-auto m-auto'
                   src={RewardIcon}
                   alt={''}
-                  width={100}
+                  width={75}
                   height={20}
                 />
               </div>
             </div>
           </SwiperSlide>
           <SwiperSlide >
-            <div className='bg-[#B4C0FE]   grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-5 rounded-md'>
+            <div className='bg-[#B4C0FE]   grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md'>
               <div className=' col-span-2 space-y-3'>
-                <p className='text-2xl font-semibold'>100% Safe & Secure </p>
-                <p className='text-gray-600	'>Chat with our expert team any time</p>
+                <p className='text-2xl font-semibold'>100% best quality</p>
+                <p className='text-gray-600	'>Proporcionamos reembolso del 100% si el artículo está dañado.</p>
                 {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
                 </button > */}
@@ -619,7 +617,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
                   className='h-auto max-w-lg lg:ms-auto m-auto '
                   src={HoursIcon}
                   alt={''}
-                  width={100}
+                  width={75}
                   height={20}
                 />
               </div>
@@ -672,9 +670,9 @@ export default function CompactLayout({ variables }: HomePageProps) {
     return (
       flashLength === 0 ?
         <div></div> :
-        <div className='bg-[#009F7F] p-10 space-y-5 mb-5'>
+        <div className='bg-[#009F7F] p-3 space-y-5 mb-5'>
           <p className='text-center text-white text-3xl font-semibold font-sans'>Best Offer 2024</p>
-          <p className='text-center text-white text-4xl font-semibold font-sans'>Get Upto 10% OFF On All Products</p>
+          <p className='text-center text-white text-2xl font-semibold font-sans'>Get Upto 10% OFF On All Products</p>
           <div className='flex justify-center	'>
             <div className='bg-white p-5 rounded-lg  flex flex-row ' >
               <p className='pr-5 text-black font-semibold'>USE Coupon Code:</p>
@@ -827,7 +825,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
         variables={variables.categories}
       />
       <main className="block w-full">
-        <div className="justify-center bg-light w-full  lg:mt-20 mb-7 " >
+        <div className="justify-center bg-light w-full lg:mt-20 mb-0 " >
           <ul className="hidden block justify-center items-center rtl:space-x-reverse xl:flex 2xl:space-x-10 ">
             <StaticMenu categories={categories} />
           </ul>

@@ -159,7 +159,7 @@ const BookDetails: React.FC<Props> = ({ product, isModal = false }) => {
 
             {hasVariations ? (
               <>
-                <div className="mt-5 mb-7 flex items-center">
+                <div className="mt-5 mb-3 flex items-center">
                   <VariationPrice
                     selectedVariation={selectedVariation}
                     minPrice={product.min_price}
@@ -176,7 +176,7 @@ const BookDetails: React.FC<Props> = ({ product, isModal = false }) => {
                 </div>
               </>
             ) : (
-              <span className="mt-5 mb-7 flex items-center space-x-4 rtl:space-x-reverse">
+              <span className="mt-5 mb-3 flex items-center space-x-4 rtl:space-x-reverse">
                 <ins className="text-2xl font-bold text-heading no-underline md:text-3xl">
                   {price}
                 </ins>

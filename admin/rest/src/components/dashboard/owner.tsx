@@ -134,7 +134,7 @@ const OwnerShopLayout = () => {
   return (
     <>
       <div className="mb-8 rounded-lg bg-light p-5 md:p-8">
-        <div className="mb-7 flex items-center justify-between">
+        <div className="mb-3 flex items-center justify-between">
           <PageHeading title={t('text-summary')} />
         </div>
         <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
