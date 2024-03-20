@@ -4,6 +4,8 @@ import { isVariationSelected } from '@/lib/is-variation-selected';
 import VariationGroups from './details/variation-groups';
 import VariationPrice from './details/variation-price';
 import isEqual from 'lodash/isEqual';
+import pimage from '@/assets/category-img.png';
+import Image from 'next/image';
 import {
   AttributesProvider,
   useAttributes,
@@ -17,55 +19,47 @@ interface Props {
 }
 
 const Variation = ({ product }: Props) => {
-  const { attributes } = useAttributes();
-  const variations = useMemo(
-    () => getVariations(product?.variations),
-    [product?.variations]
-  );
-  const isSelected = isVariationSelected(variations, attributes);
-  let selectedVariation: any = {};
-  if (isSelected) {
-    selectedVariation = product?.variation_options?.find((o: any) =>
-      isEqual(
-        o.options.map((v: any) => v.value).sort(),
-        Object.values(attributes).sort()
-      )
-    );
-  }
   return (
-    <div className="w-[95vw] max-w-lg rounded-md bg-white p-8">
+    <div className="w-[95vw] max-w-xl rounded-md bg-white p-4 h-[75vh] overflow-auto">
       <h3 className="mb-2 text-center text-2xl font-semibold text-heading">
         {product?.name}
       </h3>
-      <div className="mb-8 flex items-center justify-center">
-        <VariationPrice
-          selectedVariation={selectedVariation}
-          minPrice={product.min_price}
-          maxPrice={product.max_price}
-        />
-      </div>
-      <div className="mb-8">
-        <VariationGroups variations={variations} />
-      </div>
-      <div>
-      <AddToCart
-        data={product}
-        variant="big"
-        variation={selectedVariation}
-        disabled={selectedVariation?.is_disable || !isSelected}
-      />
+      <div className="">
+        {product.variation_options.map((item: any, i: number) => {
+          return (
+            <>
+              <div className="flex items-center border-b border-solid border-border-200 border-opacity-75 px-4 py-4 text-sm sm:px-6 ">
+                <div className="relative mx-4 flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden bg-gray-100 sm:h-16 sm:w-16">
+                  <Image
+                    src={item?.image[0]?.original}
+                    alt={item.name}
+                    width={75}
+                    height={75}
+                  />
+                </div>
+                <div>
+                  <h3 className="font-bold text-heading">{item.title} </h3>
+                  <p className="my-2.5 font-semibold text-accent">${item.price}</p>
+                </div>
+                <div className="ltr:ml-auto rtl:mr-auto">
+                  <AddToCart data={product} variation={item} variant="single" />
+                </div>
+              </div>
+            </>
+          );
+        })}
       </div>
     </div>
   );
 };
 
-const ProductVariation = ({ productSlug }: { productSlug: string }) => {
-  const { product, isLoading } = useProduct({
-    slug: productSlug,
-  });
-  if (isLoading || !product) return       <div className="relative flex items-center justify-center h-96 w-96 bg-light">
-  <Spinner />
-</div>;
+const ProductVariation = ({ product }: { product: any }) => {
+  if (!product)
+    return (
+      <div className="relative flex items-center justify-center h-96 w-96 bg-light">
+        <Spinner />
+      </div>
+    );
   return (
     <AttributesProvider>
       <Variation product={product} />

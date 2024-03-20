@@ -80,7 +80,7 @@ const Counter: React.FC<CounterProps> = ({
             ? cn(
               'cursor-pointer p-2 transition-colors duration-200 hover:bg-accent-hover focus:outline-0',
               {
-                'px-3 py-3 sm:px-2': variant === 'single',
+                'px-2 py-3 sm:px-2': variant === 'single',
                 'px-5': variant === 'big',
                 'border border-gray-300 px-5 hover:border-accent hover:!bg-transparent ltr:rounded-l rtl:rounded-r':
                   variant === 'bordered',
@@ -99,7 +99,7 @@ const Counter: React.FC<CounterProps> = ({
       </button>
       <div
         className={cn(
-          'flex flex-1 items-center justify-center px-3 text-sm font-semibold',
+          'flex flex-1 items-center justify-center px-2 text-sm font-semibold',
           variant === 'pillVertical' && '!px-0 text-heading',
           variant === 'bordered' &&
           'border-t border-b border-gray-300 !px-8 text-heading'
@@ -115,7 +115,7 @@ const Counter: React.FC<CounterProps> = ({
             ? cn(
               'cursor-pointer p-2 transition-colors duration-200 hover:bg-accent-hover focus:outline-0',
               {
-                'px-3 py-3 sm:px-2': variant === 'single',
+                'px-2 py-3 sm:px-2': variant === 'single',
                 'px-5': variant === 'big',
                 'border border-gray-300 px-5 hover:border-accent hover:!bg-transparent hover:!text-accent ltr:rounded-r rtl:rounded-l':
                   variant === 'bordered',

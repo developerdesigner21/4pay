@@ -63,6 +63,11 @@ query Products(
           id
         }
       }
+      shop {
+        id
+        name
+        slug
+      }
       image {
         thumbnail
         original
@@ -193,6 +198,11 @@ query PopularProducts($limit: Int, $type_slug: String, $range: Int) {
     status
     min_price
     max_price
+    shop {
+      id
+      name
+      slug
+    }
   }
 }
 
@@ -232,6 +242,11 @@ query BestSellingProducts($limit: Int, $type_slug: String, $range: Int) {
     status
     min_price
     max_price
+    shop {
+      id
+      name
+      slug
+    }
     author {
       name
       slug

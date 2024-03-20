@@ -224,7 +224,7 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
 
   let productSlug = product.slug;
   function handleMoreInfoModal() {
-    return openModal('SELECT_PRODUCT_VARIATION', product.slug);
+    return openModal('SELECT_PRODUCT_VARIATION', product);
   }
 
   // return (

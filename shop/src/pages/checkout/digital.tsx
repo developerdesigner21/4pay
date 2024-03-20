@@ -4,6 +4,7 @@ import { getLayout as getSiteLayout } from '@/components/layouts/layout';
 import Seo from '@/components/seo/seo';
 import { useUser } from '@/framework/user';
 import ContactGrid from '@/components/checkout/contact/contact-grid';
+import CartSidebarView from '@/components/cart/cart-sidebar-view';
 export { getStaticProps } from '@/framework/general.ssr';
 
 const CheckoutCart = dynamic(
@@ -31,6 +32,7 @@ const CheckoutDigitalPage = () => {
             </span>
             <div className="w-full px-8 py-7">
               <CheckoutCart hideTitle={true} />
+              <CartSidebarView />
             </div>
           </div>
         </div>

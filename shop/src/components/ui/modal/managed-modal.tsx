@@ -124,7 +124,7 @@ const ManagedModal = () => {
       {view === 'ABUSE_REPORT' && <AbuseReport data={data} />}
       {view === 'QUESTION_FORM' && <QuestionForm />}
       {view === 'SELECT_PRODUCT_VARIATION' && (
-        <ProductVariation productSlug={data} />
+        <ProductVariation product={data} />
       )}
       {view === 'REVIEW_IMAGE_POPOVER' && <ReviewImageModal />}
       {/* Payment Modal */}
