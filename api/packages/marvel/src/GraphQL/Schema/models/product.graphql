@@ -217,6 +217,7 @@ type Product {
     height: String
     length: String
     width: String
+    weight: String
     price: Float
     quantity: Int
     unit: String!
@@ -335,6 +336,7 @@ input CreateProductInput {
     height: String
     length: String
     width: String
+    weight: String
 }
 
 input UpdateProductInput {
@@ -375,6 +377,7 @@ input UpdateProductInput {
     height: String
     length: String
     width: String
+    weight: String
 }
 
 input calculateRentalPriceInput {

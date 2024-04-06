@@ -84,6 +84,7 @@ class ProductRepository extends BaseRepository
         'height',
         'length',
         'width',
+        'weight',
         'in_stock',
         'is_taxable',
         'shop_id',
