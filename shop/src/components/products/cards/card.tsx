@@ -20,16 +20,15 @@ const MAP_PRODUCT_TO_CARD: Record<string, any> = {
 interface ProductCardProps {
   product: Product;
   className?: string;
-  cardType?: any;
+  cardView?: string;
 }
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
   className,
+  cardView,
   ...props
 }) => {
-  const Component = product?.type?.settings?.productCard
-    ? MAP_PRODUCT_TO_CARD[product?.type?.settings?.productCard]
-    : Helium;
+  const Component = cardView ? MAP_PRODUCT_TO_CARD[cardView] : Helium;
   return <Component product={product} {...props} className={className} />;
 };
 export default ProductCard;

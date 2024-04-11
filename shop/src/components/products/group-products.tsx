@@ -4,21 +4,23 @@ import dynamic from 'next/dynamic';
 import { useTranslation } from 'next-i18next';
 
 const ProductsGrid = dynamic(
-  () => import('@/components/products/group-products/grid')
+  () => import('@/components/products/group-products/grid'),
 );
 
 const ProductsSlider = dynamic(
-  () => import('@/components/products/group-products/slider')
+  () => import('@/components/products/group-products/slider'),
 );
 
 export default function GroupProducts({
   products,
   title,
   isSlider,
+  cardView,
 }: {
   products: Product[];
   title?: string;
   isSlider?: boolean;
+  cardView?: string;
 }) {
   const { t } = useTranslation();
   return (
@@ -26,7 +28,7 @@ export default function GroupProducts({
       {!isSlider ? (
         <ProductsGrid products={products} />
       ) : (
-        <ProductsSlider products={products} />
+        <ProductsSlider cardView={cardView} products={products} />
       )}
     </SectionBlock>
   );

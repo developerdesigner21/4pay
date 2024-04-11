@@ -149,7 +149,6 @@
 
 // export default Helium;
 
-
 import { Image } from '@/components/ui/image';
 import cn from 'classnames';
 import usePrice from '@/lib/use-price';
@@ -163,11 +162,8 @@ import { twMerge } from 'tailwind-merge';
 
 import { EyeIcon } from '@/components/icons/category/eyes-icon';
 import { Routes } from '@/config/routes';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Link from '@/components/ui/link';
-
-import { useState } from 'react';
-
 
 type HeliumProps = {
   product: any;
@@ -176,8 +172,6 @@ type HeliumProps = {
 
 const Helium: React.FC<HeliumProps> = ({ product, className }) => {
   const { t } = useTranslation('common');
-  const [isDisplayViewButton, setIsDisplayViewButton] = useState(false);
-
   const { query } = useRouter();
   const {
     name,
@@ -189,8 +183,6 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
     product_type,
     in_flash_sale,
   } = product ?? {};
-
-
   const { price, basePrice, discount } = usePrice({
     amount: product.sale_price ? product.sale_price : product.price!,
     baseAmount: product.price,
@@ -201,28 +193,12 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
   const { price: maxPrice } = usePrice({
     amount: max_price,
   });
-
   const { openModal } = useModalAction();
 
   function handleProductQuickView() {
     return openModal('PRODUCT_DETAILS', product.slug);
   }
 
-  const navigate = (path: string) => {
-    router.push(path);
-    // closeModal();
-  };
-
-
-  const ManageViewButton = () => {
-    console.log("dfbvdfh")
-    setIsDisplayViewButton(true)
-  }
-  const RemoveViewButton = () => {
-    setIsDisplayViewButton(false)
-  }
-
-  let productSlug = product.slug;
   function handleMoreInfoModal() {
     return openModal('SELECT_PRODUCT_VARIATION', product);
   }
@@ -378,24 +354,20 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
       className={twMerge(
         cn(
           'product-card cart-type-helium h-full overflow-hidden rounded border border-border-200 bg-light transition-shadow duration-200 hover:shadow-sm',
-          className
-        )
+          className,
+        ),
       )}
-      onMouseEnter={() => ManageViewButton()}
-      onMouseLeave={() => RemoveViewButton()}
     >
       <Link
         href={Routes.product(product.slug)}
-        // onClick={handleProductQuickView}
         className={cn(
           'relative flex h-48 w-auto items-center justify-center sm:h-64',
           query?.pages
             ? query?.pages?.includes('medicine')
               ? 'm-4 mb-0'
               : ''
-            : ''
+            : '',
         )}
-      // role="button" 
       >
         <span className="sr-only">{t('text-product-image')}</span>
         <Image
@@ -410,23 +382,17 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
             {discount}
           </div>
         )}
-
       </Link>
       {/* End of product image */}
 
       <header className="relative ">
-        {/* <div className='flex flex-row justify-between gap-5'> */}
         <Link href={Routes.product(product.slug)}>
-
           <h3
-            // onClick={() => navigate(Routes.product(product.slug))}
             role="button"
             className=" text-sm font-semibold truncate text-heading px-3 md:px-3 pt-3"
-          >{name}</h3>
-          {/* 
-          <div>
-            <p className="text-xs text-muted px-3 md:px-3 ">{unit}</p>
-          </div> */}
+          >
+            {name}
+          </h3>
 
           <div className="min-h-6 px-3 md:px-3 mt-2">
             {product_type.toLowerCase() === 'variable' ? (
@@ -440,16 +406,6 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
                     {maxPrice}
                   </span>
                 </div>
-
-                {/* {Number(quantity) > 0 && (
-                <button
-                  // onClick={handleProductQuickView}
-                  className="flex items-center justify-center order-5 px-3 py-2 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start sm:px-4"
-                >
-                  <CartIcon className="w-4 h-4 ltr:mr-2 rtl:ml-2" />
-                  <span>{t('text-cart')}</span>
-                </button>
-              )} */}
               </>
             ) : (
               <>
@@ -459,18 +415,12 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
                       {price}
                     </span>
                   </div>
-                  <div className='ml-2 text-sm mt-0.5'>
+                  <div className="ml-2 text-sm mt-0.5">
                     {basePrice && (
-                      <del className=" text-muted ">
-                        {basePrice}
-                      </del>
+                      <del className=" text-muted ">{basePrice}</del>
                     )}
                   </div>
                 </div>
-
-                {/* {Number(quantity) > 0 && (
-                <AddToCart data={product} variant="single" />
-              )} */}
               </>
             )}
 
@@ -482,72 +432,33 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
           </div>
         </Link>
 
-        {/* <div className='flex  mb-4 justify-between px-1 md:px-1 xl:px-3 '>
-        <div>
-          {isDisplayViewButton === true ?
+        <div className="grid grid-cols-2 px-3 mb-5">
+          <div className="grid justify-items-start">
             <button
-              className="flex items-center justify-center order-5 gap-x-2 py-2 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start px-3 " onClick={handleProductQuickView} >
-              <EyeIcon height={20} width={20} className='cursor-pointer' />
-              <span>View</span>
-            </button> :
-            <button
-              className="invisible  flex items-center justify-center order-5 gap-x-2 py-2 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start px-3 " onClick={handleProductQuickView} >
-              <EyeIcon height={20} width={20} className='cursor-pointer' />
-              <span>View</span>
-            </button>
-          }
-        </div>
-       
-         <div>
-          {product?.product_type === "VARIABLE" ?
-            <button
-              onClick={handleMoreInfoModal}
-              className="flex items-center justify-center order-5 px-3 py-2 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start sm:px-4"
+              className="flex items-center justify-center gap-x-2 py-2 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start px-3 "
+              onClick={handleProductQuickView}
             >
-              <CartIcon className="w-4 h-4 ltr:mr-2 rtl:ml-2" />
-              <span>cart</span>
-            </button> :
-            <AddToCart data={product} variant="single" />
-          }
-        </div>
-      </div> */}
-
-        <div className='grid grid-cols-2 px-3 mb-5'>
-          <div className='grid justify-items-start'>
-            {isDisplayViewButton === true ?
-              window.innerWidth < 400 ?
-                <button
-                  className="flex items-center justify-center  gap-x-2 py-2 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start px-3 " onClick={handleProductQuickView} >
-                  <EyeIcon height={20} width={20} className='cursor-pointer' />
-                </button> :
-                <button
-                  className="flex items-center justify-center  gap-x-2 py-2 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start px-3 " onClick={handleProductQuickView} >
-                  <EyeIcon height={20} width={20} className='cursor-pointer' />
-                  <span>View</span>
-                </button>
-              : <button
-                className=" invisible flex items-center justify-center  gap-x-2 py-2 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start px-3 " onClick={handleProductQuickView} >
-                <EyeIcon height={20} width={20} className='cursor-pointer' />
-              </button>}
+              <EyeIcon height={20} width={20} className="cursor-pointer" />
+              <span className="hidden md:block">View</span>
+            </button>
           </div>
-          <div className='grid justify-items-end'>
-            {product?.product_type === "VARIABLE" ?
+          <div className="grid justify-items-end">
+            {product?.product_type === 'VARIABLE' ? (
               <button
                 onClick={handleMoreInfoModal}
                 className="flex items-center justify-center order-5 px-3 py-2 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start sm:px-4"
               >
                 <CartIcon className="w-4 h-4 ltr:mr-2 rtl:ml-2" />
                 <span>cart</span>
-              </button> :
+              </button>
+            ) : (
               <AddToCart data={product} variant="single" />
-            }
+            )}
           </div>
         </div>
-
       </header>
     </article>
-  )
-
+  );
 };
 
 export default Helium;

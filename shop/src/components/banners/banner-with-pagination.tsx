@@ -1,9 +1,4 @@
-import {
-  Swiper,
-  SwiperSlide,
-  Pagination,
-  Navigation,
-} from '@/components/ui/slider';
+import { Swiper, SwiperSlide, Navigation } from '@/components/ui/slider';
 import { Image } from '@/components/ui/image';
 import { productPlaceholder } from '@/lib/placeholders';
 import Link from '@/components/ui/link';
@@ -28,7 +23,7 @@ const BannerWithPagination: React.FC<BannerProps> = ({ banners, slug }) => {
   const nextRef = useRef<HTMLDivElement>(null);
   const { isRTL } = useIsRTL();
   return (
-    <div className="compact relative">
+    <div className="compact relative -mt-10">
       <div className="-z-1 overflow-hidden">
         {/* <div className="relative">
           <Swiper

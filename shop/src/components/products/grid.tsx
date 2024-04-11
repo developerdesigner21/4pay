@@ -25,9 +25,11 @@ interface Props {
   isLoadingMore?: boolean;
   hasMore?: boolean;
   className?: string;
+  cardView?: string;
 }
 
 export function Grid({
+  cardView,
   className,
   gridClassName,
   products,
@@ -53,9 +55,8 @@ export function Grid({
 
   const [fullUrl, setFullUrl] = useState('');
 
-  let checkurl = fullUrl?.includes("search");
-  let shopurl = fullUrl?.includes("shops");
-
+  let checkurl = fullUrl?.includes('search');
+  let shopurl = fullUrl?.includes('shops');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -66,9 +67,13 @@ export function Grid({
 
   return (
     <div className={cn('w-full', className)}>
-      <div className={`${checkurl || shopurl === true ?
-        "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 gap-y-5'" :
-        ' grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6  gap-3 gap-y-5'}`}>
+      <div
+        className={`${
+          checkurl || shopurl === true
+            ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 gap-y-5'"
+            : ' grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 gap-y-5'
+        }`}
+      >
         {/* <div
         className={cn(
           {
@@ -84,11 +89,15 @@ export function Grid({
       > */}
         {isLoading && !products?.length
           ? rangeMap(limit, (i) => (
-            <ProductLoader key={i} uniqueKey={`product-${i}`} />
-          ))
+              <ProductLoader key={i} uniqueKey={`product-${i}`} />
+            ))
           : products?.map((product) => (
-            <ProductCard product={product} key={product.id} />
-          ))}
+              <ProductCard
+                cardView={cardView}
+                product={product}
+                key={product.id}
+              />
+            ))}
       </div>
       {hasMore && (
         <div className="flex justify-center mt-8 mb-4 sm:mb-6 lg:mb-2 lg:mt-12">

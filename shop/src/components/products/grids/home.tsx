@@ -7,12 +7,14 @@ interface Props {
   variables: any;
   column?: any;
   gridClassName?: string;
+  cardView?: string;
 }
 export default function ProductGridHome({
   className,
   variables,
   column,
   gridClassName,
+  cardView,
 }: Props) {
   const { query } = useRouter();
   const { products, loadMore, isLoadingMore, isLoading, hasMore, error } =
@@ -24,6 +26,7 @@ export default function ProductGridHome({
   const productsItem: any = products;
   return (
     <Grid
+      cardView={cardView}
       products={productsItem}
       loadMore={loadMore}
       isLoading={isLoading}

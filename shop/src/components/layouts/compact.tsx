@@ -637,6 +637,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
         key={item}
         variables={variables?.bestSellingProducts}
         title={variables?.layoutSettings?.bestSelling?.title}
+        cardView={variables?.layoutSettings?.productCard}
       />
     ) : (
       ''
@@ -649,6 +650,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
         key={item}
         variables={variables.popularProducts}
         title={variables?.layoutSettings?.popularProducts?.title}
+        cardView={variables?.layoutSettings?.productCard}
       />
     ) : (
       ''
@@ -694,6 +696,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
         products={variables?.layoutSettings?.handpickedProducts?.products}
         title={variables?.layoutSettings?.handpickedProducts?.title}
         isSlider={variables?.layoutSettings?.handpickedProducts?.enableSlider}
+        cardView={variables?.layoutSettings?.productCard}
       />
     ) : (
       ''
@@ -713,6 +716,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
             sortedBy: 'DESC',
             orderBy: 'created_at',
           }}
+          cardView={variables?.layoutSettings?.productCard}
         />
       </SectionBlock>
     ) : (
@@ -797,6 +801,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
           key={index}
           variables={productItem?.products}
           title={productItem?.title}
+          cardView={variables?.layoutSettings?.productCard}
         />
       );
     });
@@ -815,17 +820,15 @@ export default function CompactLayout({ variables }: HomePageProps) {
     return <Locationwiseshop key={item} />;
   };
 
-  // console.log('variables.categories',variables.categories);
-
   return (
     <div className="flex flex-col flex-1 bg-white">
       <FilterBar
         className="top-16 lg:hidden"
         variables={variables.categories}
       />
-      <main className="block w-full">
+      <main className="flex flex-col gap-10 w-full">
         <div className="justify-center bg-light w-full lg:mt-20 mb-0 ">
-          <ul className="hidden block justify-center items-center rtl:space-x-reverse xl:flex 2xl:space-x-10 ">
+          <ul className="hidden xl:flex justify-center items-center rtl:space-x-reverse 2xl:space-x-10 ">
             <StaticMenu categories={categories} />
           </ul>
         </div>

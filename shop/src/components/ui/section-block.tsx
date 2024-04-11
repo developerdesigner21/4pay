@@ -1,4 +1,3 @@
-import cn from 'classnames';
 import { useTranslation } from 'next-i18next';
 import Link from '@/components/ui/link';
 
@@ -25,9 +24,11 @@ const SectionBlock: React.FC<SectionProps> = ({
   const { t } = useTranslation('common');
   return (
     <div
-      className={`${title === undefined ?
-        "flex w-full flex-col" :
-        ' flex w-full flex-col px-2 pb-[40px] lg:px-7 xl:px-10 xl:pb-[54px] 3xl:pb-[60px]'}`}
+      className={`${
+        title === undefined
+          ? 'flex w-full flex-col'
+          : 'flex w-full flex-col px-2 lg:px-7 xl:px-10'
+      }`}
     >
       {title && (
         <div className="mb-3 flex items-center justify-between ">

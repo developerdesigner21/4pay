@@ -2,10 +2,6 @@ import { Swiper, SwiperSlide, Navigation } from '@/components/ui/slider';
 import { ArrowNext, ArrowPrev } from '@/components/icons';
 import { useTranslation } from 'next-i18next';
 import { Product } from '@/types';
-import { Image } from '@/components/ui/image';
-import Link from '@/components/ui/link';
-import { Routes } from '@/config/routes';
-import { productPlaceholder } from '@/lib/placeholders';
 import ProductCard from '@/components/products/cards/card';
 
 const offerSliderBreakpoints = {
@@ -14,24 +10,30 @@ const offerSliderBreakpoints = {
     spaceBetween: 16,
   },
   580: {
-    slidesPerView: 2,
-    spaceBetween: 16,
-  },
-  1024: {
     slidesPerView: 3,
     spaceBetween: 16,
   },
-  1280:{
-    slidesPerView: 6,
+  1024: {
+    slidesPerView: 4,
+    spaceBetween: 16,
+  },
+  1280: {
+    slidesPerView: 5,
     spaceBetween: 24,
   },
-  1920: {
-    slidesPerView: 5,
+  1536: {
+    slidesPerView: 6,
     spaceBetween: 24,
   },
 };
 
-const ProductsSlider = ({ products }: { products: Product[] }) => {
+const ProductsSlider = ({
+  products,
+  cardView,
+}: {
+  products: Product[];
+  cardView?: string;
+}) => {
   const { t } = useTranslation();
   return (
     <div className="relative">
@@ -46,7 +48,7 @@ const ProductsSlider = ({ products }: { products: Product[] }) => {
       >
         {products?.map((product: Product) => (
           <SwiperSlide key={product?.id}>
-            <ProductCard product={product} />
+            <ProductCard cardView={cardView} product={product} />
           </SwiperSlide>
         ))}
       </Swiper>

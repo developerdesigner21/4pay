@@ -13,6 +13,7 @@ interface Props {
   limit?: number;
   variables: any;
   title?: string;
+  cardView?: string;
 }
 
 export default function BestSellingProductsGrid({
@@ -20,6 +21,7 @@ export default function BestSellingProductsGrid({
   limit = 10,
   variables,
   title,
+  cardView,
 }: Props) {
   const { t } = useTranslation('common');
   const { products, isLoading, error } = useBestSellingProducts(variables);
@@ -37,13 +39,17 @@ export default function BestSellingProductsGrid({
     <SectionBlock title={title}>
       <div className={classNames(className, 'w-full')}>
         {/* <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6 gap-y-10 lg:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] xl:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] xl:gap-8 xl:gap-y-12 2xl:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] 3xl:grid-cols-[repeat(auto-fill,minmax(360px,1fr))]"> */}
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3  gap-y-5'>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3  gap-y-5">
           {isLoading && !products.length
             ? rangeMap(limit, (i) => (
                 <ProductLoader key={i} uniqueKey={`product-${i}`} />
               ))
             : products.map((product: any) => (
-                <ProductCard product={product} key={product?.id} />
+                <ProductCard
+                  cardView={cardView}
+                  product={product}
+                  key={product?.id}
+                />
               ))}
         </div>
       </div>
