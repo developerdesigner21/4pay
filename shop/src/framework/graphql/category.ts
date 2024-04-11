@@ -2,15 +2,15 @@ import type { CategoryQueryOptions } from '@/types';
 import { NetworkStatus } from '@apollo/client';
 import { useCategoriesQuery } from './gql/categories.graphql';
 import { getCategories } from './utils/categories';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 export function useCategories(options: CategoryQueryOptions) {
   const { locale } = useRouter();
 
   const localeOptions = {
     ...getCategories(options),
-    language: locale
-  }
+    language: locale,
+  };
 
   const {
     data,
@@ -21,6 +21,7 @@ export function useCategories(options: CategoryQueryOptions) {
   } = useCategoriesQuery({
     variables: localeOptions,
     notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'no-cache',
   });
   function handleLoadMore() {
     if (data?.categories?.paginatorInfo.hasMorePages) {

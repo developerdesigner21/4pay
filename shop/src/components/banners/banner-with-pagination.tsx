@@ -1,4 +1,9 @@
-import { Swiper, SwiperSlide, Pagination ,Navigation} from '@/components/ui/slider';
+import {
+  Swiper,
+  SwiperSlide,
+  Pagination,
+  Navigation,
+} from '@/components/ui/slider';
 import { Image } from '@/components/ui/image';
 import { productPlaceholder } from '@/lib/placeholders';
 import Link from '@/components/ui/link';
@@ -10,12 +15,6 @@ import { useIsRTL } from '@/lib/locals';
 import { ArrowNextIcon } from '@/components/icons/arrow-next';
 import { ArrowPrevIcon } from '@/components/icons/arrow-prev';
 import { Autoplay } from 'swiper/modules';
-
-
-
-
-
-
 
 interface BannerProps {
   banners: Banner[] | undefined;

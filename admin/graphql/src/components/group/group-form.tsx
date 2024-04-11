@@ -41,13 +41,13 @@ import {
   Product,
   Type,
   TypeSettingsInput,
-  InputMaybe
+  InputMaybe,
 } from '__generated__/__types__';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { values } from 'lodash';
 
-import { ReactSortable } from "react-sortablejs";
+import { ReactSortable } from 'react-sortablejs';
 
 const typeIcon = [
   {
@@ -211,7 +211,7 @@ type IProps = {
 };
 
 interface customProType {
-  [index: number | string]: string
+  [index: number | string]: string;
 }
 
 export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
@@ -227,55 +227,74 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
   const generateRedirectUrl = router.query.shop
     ? `/${router.query.shop}${Routes.type.list}`
     : Routes.type.list;
+  let cpCount = 0;
 
   let pageViewListView = initialValues?.settings?.pageViews;
 
-  const [CustomProduct, setCustomProduct] = useState([
-    {
-      title: '',
-      category: [],
-      products: []
-    }
-  ]);
-
-
   const datalist: any = {
     // "top-banner": { id: 1, name: "Top Banner", slug: 'top-banner' },
-    "promotinal-slider": { id: 2, name: "Marketing Message", slug: 'promotinal-slider' },
-    "our-categories": { id: 3, name: "Our Categories", slug: 'our-categories' },
-    "best-selling": { id: 4, name: "Best Selling Products", slug: 'best-selling' },
-    "popular-product": { id: 5, name: "Popular Products", slug: 'popular-product' },
-    "offer-countdown": { id: 6, name: "Offer CountDown", slug: 'offer-countdown' },
-    "people-also-buy": { id: 7, name: "People also buy This", slug: 'people-also-buy' },
-    "new-product": { id: 8, name: "New Products", slug: 'new-product' },
-    "offers": { id: 9, name: "Offers", slug: 'offers' },
-    "custome-product": { id: 10, name: "Custome Product", slug: 'custome-product' },
-    "bottom-banner": { id: 11, name: "bottom Banner", slug: 'bottom-banner' },
-    "near-shop": { id: 12, name: "Near Shop", slug: 'near-shop' },
-  }
+    'promotinal-slider': {
+      id: 2,
+      name: 'Marketing Message',
+      slug: 'promotinal-slider',
+    },
+    'our-categories': { id: 3, name: 'Our Categories', slug: 'our-categories' },
+    'best-selling': {
+      id: 4,
+      name: 'Best Selling Products',
+      slug: 'best-selling',
+    },
+    'popular-product': {
+      id: 5,
+      name: 'Popular Products',
+      slug: 'popular-product',
+    },
+    'offer-countdown': {
+      id: 6,
+      name: 'Offer CountDown',
+      slug: 'offer-countdown',
+    },
+    'people-also-buy': {
+      id: 7,
+      name: 'People also buy This',
+      slug: 'people-also-buy',
+    },
+    'new-product': { id: 8, name: 'New Products', slug: 'new-product' },
+    offers: { id: 9, name: 'Offers', slug: 'offers' },
+    'custome-product': {
+      id: 10,
+      name: 'Custome Product',
+      slug: 'custome-product',
+    },
+    'bottom-banner': { id: 11, name: 'bottom Banner', slug: 'bottom-banner' },
+    'near-shop': { id: 12, name: 'Near Shop', slug: 'near-shop' },
+  };
 
   const [dragData, setDrageData] = useState<any>([
     // { id: 1, name: "Top Banner", slug: 'top-banner' },
-    { id: 2, name: "Marketing Message", slug: 'promotinal-slider' },
-    { id: 3, name: "Our Categories", slug: 'our-categories' },
-    { id: 4, name: "Best Selling Products", slug: 'best-selling' },
-    { id: 5, name: "Popular Products", slug: 'popular-product' },
-    { id: 6, name: "Offer CountDown", slug: 'offer-countdown' },
-    { id: 7, name: "People also buy This", slug: 'people-also-buy' },
-    { id: 8, name: "New Products", slug: 'new-product' },
-    { id: 9, name: "Offers", slug: 'offers' },
-    { id: 10, name: "Custome Product", slug: 'custome-product' },
-    { id: 11, name: "bottom Banner", slug: 'bottom-banner' },
-    { id: 12, name: "Near Shop", slug: 'near-shop' },
+    { id: 2, name: 'Marketing Message', slug: 'promotinal-slider' },
+    { id: 3, name: 'Our Categories', slug: 'our-categories' },
+    { id: 4, name: 'Best Selling Products', slug: 'best-selling' },
+    { id: 5, name: 'Popular Products', slug: 'popular-product' },
+    { id: 6, name: 'Offer CountDown', slug: 'offer-countdown' },
+    { id: 7, name: 'People also buy This', slug: 'people-also-buy' },
+    { id: 8, name: 'New Products', slug: 'new-product' },
+    { id: 9, name: 'Offers', slug: 'offers' },
+    { id: 10, name: 'Custome Product', slug: 'custome-product' },
+    { id: 11, name: 'bottom Banner', slug: 'bottom-banner' },
+    { id: 12, name: 'Near Shop', slug: 'near-shop' },
   ]);
 
   useEffect(() => {
     if (pageViewListView) {
-      setDrageData([...pageViewListView?.split(',').map((item: any) => { return datalist[item] })]);
+      setDrageData([
+        ...pageViewListView?.split(',').map((item: any) => {
+          return datalist[item];
+        }),
+      ]);
     }
-  }, [])
+  }, []);
   const concatenatedString = dragData.map((item: any) => item.slug).join(',');
-
 
   const {
     register,
@@ -315,34 +334,35 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
           : concatenatedString,
         handpickedProducts: {
           enable: initialValues?.settings?.handpickedProducts?.enable,
-          enableSlider: initialValues?.settings?.handpickedProducts?.enableSlider,
+          enableSlider:
+            initialValues?.settings?.handpickedProducts?.enableSlider,
           title: initialValues?.settings?.handpickedProducts?.title,
           products: initialValues?.settings?.handpickedProducts?.products
             ? initialValues?.settings?.handpickedProducts?.products?.map(
-              (product: any) => {
-                return {
-                  id: product?.id!,
-                  name: product?.name,
-                  slug: product?.slug,
-                  regular_price: product?.regular_price,
-                  sale_price: product?.sale_price,
-                  min_price: product?.min_price,
-                  max_price: product?.max_price,
-                  product_type: product?.product_type,
-                  quantity: product?.quantity,
-                  is_external: product?.is_external,
-                  unit: product?.unit,
-                  price: product?.price,
-                  external_product_url: product?.external_product_url,
-                  status: product?.status,
-                  image: {
-                    id: product?.image?.id,
-                    thumbnail: product?.image?.thumbnail,
-                    original: product?.image?.original,
-                  },
-                };
-              },
-            )
+                (product: any) => {
+                  return {
+                    id: product?.id!,
+                    name: product?.name,
+                    slug: product?.slug,
+                    regular_price: product?.regular_price,
+                    sale_price: product?.sale_price,
+                    min_price: product?.min_price,
+                    max_price: product?.max_price,
+                    product_type: product?.product_type,
+                    quantity: product?.quantity,
+                    is_external: product?.is_external,
+                    unit: product?.unit,
+                    price: product?.price,
+                    external_product_url: product?.external_product_url,
+                    status: product?.status,
+                    image: {
+                      id: product?.image?.id,
+                      thumbnail: product?.image?.thumbnail,
+                      original: product?.image?.original,
+                    },
+                  };
+                }
+              )
             : [],
         },
         newArrival: {
@@ -357,39 +377,79 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
           enable: initialValues?.settings?.manufactures?.enable,
           title: initialValues?.settings?.manufactures?.title,
         },
-        customPorduct: initialValues?.settings?.customPorduct,
+        customeproduct: initialValues?.settings?.customeproduct?.map(
+          (item, index: number) => {
+            return {
+              cpId: index + 1,
+              title: item?.title,
+              category: item?.category,
+              products: item?.products?.map((product: any) => ({
+                id: product?.id!,
+                name: product?.name,
+                slug: product?.slug,
+                regular_price: product?.regular_price,
+                sale_price: product?.sale_price,
+                min_price: product?.min_price,
+                max_price: product?.max_price,
+                product_type: product?.product_type,
+                quantity: product?.quantity,
+                is_external: product?.is_external,
+                unit: product?.unit,
+                price: product?.price,
+                external_product_url: product?.external_product_url,
+                status: product?.status,
+                image: {
+                  id: product?.image?.id,
+                  thumbnail: product?.image?.thumbnail,
+                  original: product?.image?.original,
+                },
+                type: {
+                  settings: {
+                    productCard: values?.settings?.productCard,
+                  },
+                },
+              })),
+            };
+          }
+        ),
         bottomslider: initialValues?.settings?.bottomslider?.map(
           ({ thumbnail, original, id }: any) => ({
             thumbnail,
             original,
             id,
-          })),
+          })
+        ),
       },
       icon: initialValues?.icon
         ? typeIcon.find(
-          (singleIcon) => singleIcon.value === initialValues?.icon!,
-        )
+            (singleIcon) => singleIcon.value === initialValues?.icon!
+          )
         : '',
     },
   });
   const slugAutoSuggest = formatSlug(watch('name'));
-
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'banners',
   });
 
-  const { fields: cpfields, append: cpappend, remove: cpremove } = useFieldArray({
+  const {
+    fields: cpfields,
+    append: cpappend,
+    remove: cpremove,
+    replace: cpreplace,
+    update: cpupdate,
+  } = useFieldArray({
     control,
     name: 'customeproduct',
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     if (initialValues?.settings?.customeproduct?.length > 0) {
-      cpappend(initialValues?.settings?.customeproduct); 
+      cpreplace([]);
+      cpappend(initialValues?.settings?.customeproduct);
     }
-  },[initialValues?.settings?.customeproduct])
-
+  }, [initialValues?.settings?.customeproduct]);
 
   const layoutType = useWatch({
     control,
@@ -433,7 +493,7 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
             undefined,
             {
               locale: Config.defaultLanguage,
-            },
+            }
           );
         }
       }
@@ -443,13 +503,9 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
   });
   const onSubmit = async (values: FormValues) => {
     try {
-
       if (values.settings.customeproduct?.length != cpfields.length) {
         values.settings.customeproduct = cpfields;
       }
-
-      
-
       const inputData = {
         language: router.locale!,
         name: values.name!,
@@ -504,7 +560,7 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
                     },
                   },
                 };
-              },
+              }
             ),
           },
           newArrival: {
@@ -519,13 +575,13 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
             enable: values?.settings?.manufactures?.enable,
             title: values?.settings?.manufactures?.title,
           },
-          customeproduct: values?.settings?.customeproduct?.map(({ title, category, products }) => ({
-            // id:index,
-            title,
-            category,
-            products:products.map(
-              (product: any) => {
-                return {
+          customeproduct: values?.settings?.customeproduct?.map(
+            (item, index: number) => {
+              return {
+                cpId: index + 1,
+                title: item?.title,
+                category: item?.category,
+                products: item?.products?.map((product: any) => ({
                   id: product?.id!,
                   name: product?.name,
                   slug: product?.slug,
@@ -550,10 +606,11 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
                       productCard: values?.settings?.productCard,
                     },
                   },
-                };
-              },
-            ),
-          })),
+                })),
+              };
+            }
+          ),
+
           bottomslider: values.settings.bottomslider?.map(
             ({ thumbnail, original, id }: any) => ({
               thumbnail,
@@ -567,7 +624,7 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
             thumbnail,
             original,
             id,
-          }),
+          })
         ),
         banners: values?.banners?.map(({ title, description, image }) => ({
           title,
@@ -577,7 +634,7 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
             thumbnail: image?.thumbnail,
             original: image?.original,
           },
-        }))
+        })),
       };
 
       if (
@@ -592,10 +649,6 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
             },
           },
         });
-
-        // await router.push(Routes.type.list, undefined, {
-        //   locale: Config.defaultLanguage,
-        // });
 
         await router.push(generateRedirectUrl, undefined, {
           locale: Config.defaultLanguage,
@@ -650,10 +703,11 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title={t('form:item-description')}
-          details={`${initialValues
-            ? t('form:item-description-update')
-            : t('form:item-description-add')
-            } ${t('form:group-description-help-text')}`}
+          details={`${
+            initialValues
+              ? t('form:item-description-update')
+              : t('form:item-description-add')
+          } ${t('form:group-description-help-text')}`}
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
 
@@ -771,7 +825,7 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
         className={classNames(
           layoutType === 'compact'
             ? 'my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8'
-            : 'my-5 flex flex-wrap sm:my-8',
+            : 'my-5 flex flex-wrap sm:my-8'
         )}
       >
         <Description
@@ -789,7 +843,7 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
             ''
           )}
           {(layoutType === 'compact' || layoutType === 'minimal') &&
-            fields?.length > 0 ? (
+          fields?.length > 0 ? (
             <Alert
               className="mb-5"
               message="Disabled item will not show in shop end."
@@ -817,7 +871,7 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
                       'text-sm text-red-500 transition-colors duration-200 hover:text-red-700 focus:outline-none sm:col-span-1 sm:mt-4',
                       layoutType === 'minimal' && index !== 0 && index > 0
                         ? 'pointer-events-none cursor-not-allowed text-opacity-80'
-                        : '',
+                        : ''
                     )}
                     disabled={
                       layoutType === 'minimal' && index !== 0 && index > 0
@@ -994,7 +1048,7 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
                     variant="outline"
                     {...register('settings.handpickedProducts.title')}
                     error={t(
-                      errors?.settings?.handpickedProducts?.title?.message,
+                      errors?.settings?.handpickedProducts?.title?.message
                     )}
                   />
                   <div className="flex items-center gap-x-4">
@@ -1039,7 +1093,7 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
                       <ValidationError
                         message={t(
                           errors?.settings?.handpickedProducts?.products
-                            ?.message,
+                            ?.message
                         )}
                       />
                     </div>
@@ -1125,89 +1179,138 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
         className={classNames(
           layoutType === 'compact'
             ? 'my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8'
-            : 'my-5 flex flex-wrap sm:my-8',
+            : 'my-5 flex flex-wrap sm:my-8'
         )}
       >
-        <Description title={'Custome Product'} className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5" />
+        <Description
+          title={'Custome Product'}
+          className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
+        />
         <Card className="w-full sm:w-8/12 md:w-2/3">
-
           {layoutType === 'minimal' && cpfields?.length > 0 ? (
-            <Alert className="mb-5" message="Minimal demo will show only first item of banner." />
-          ) : ('')}
+            <Alert
+              className="mb-5"
+              message="Minimal demo will show only first item of banner."
+            />
+          ) : (
+            ''
+          )}
 
           <div>
-            {cpfields.map((item: any & { id: string }, index: number) => (
-              <div className="border-b border-dashed border-border-200 py-5 first:pt-0 last:border-0 md:py-8" key={item.id} >
-                <div className="mb-5 flex items-center justify-between">
-                  <Title className="mb-0"> {'Custome Product'} {index + 1} </Title>
-                  <button onClick={() => { 
-                    delete customPro[index];
-                    let newselectremove = Object.fromEntries(Object.values(customPro).map((value, index) => [index, value]));
-                    setCustomPro({...customPro,...newselectremove})
-                    cpremove(index); 
-                  }}
-                    type="button"
-                    className={'text-sm text-red-500 transition-colors duration-200 hover:text-red-700 focus:outline-none sm:col-span-1 sm:mt-4'}
-                  >
-                    {'Remove'}
-                  </button>
-                </div>
-                <div className="grid grid-cols-1 gap-5">
-                  <Input
-                    label={t('form:input-title')}
-                    variant="outline"
-                    {...register(`settings.customeproduct.${index}.title` as const)}
-                    defaultValue={item?.title!}
-                    error={t(errors.banners?.[index]?.title?.message!)}
-                  />
+            {cpfields.map((item: any & { id: string }, index: number) => {
+              if (
+                item?.title === null ||
+                item?.products === null ||
+                Object.keys(item).length === 2
+              ) {
+                return;
+              } else {
+                cpCount++;
+              }
 
-                  <div className="grid gap-5">
-                    <CategoryTypeFilter
-                      className="w-full"
-                      type={customPro[index]}
-                      enableCategory
-                      enableType
-                      onCategoryFilter={(category: Category) => {
-                        setValue(`settings.customeproduct.${index}.category`,category?.slug)
+              return (
+                <div
+                  className="border-b border-dashed border-border-200 py-5 first:pt-0 last:border-0 md:py-8"
+                  key={item.id}
+                >
+                  <div className="mb-5 flex items-center justify-between">
+                    <Title className="mb-0">Custome Product {cpCount}</Title>
+                    <button
+                      onClick={() => {
+                        delete customPro[index];
+                        let newselectremove = Object.fromEntries(
+                          Object.values(customPro).map((value, index) => [
+                            index,
+                            value,
+                          ])
+                        );
+                        console.log({ index });
+                        setCustomPro({ ...customPro, ...newselectremove });
+                        setValue(
+                          `settings.customeproduct.${index}.title`,
+                          null
+                        );
+                        setValue(
+                          `settings.customeproduct.${index}.products`,
+                          null
+                        );
+                        cpupdate(index, { cpId: cpCount });
                       }}
-                      onTypeFilter={(type: Type) => {
-                        customPro[index] = type?.slug?type?.slug:'';
-                        setCustomPro({...customPro})
-                        
-                        setType(type?.slug!);
-                      }}
+                      type="button"
+                      className={
+                        'text-sm text-red-500 transition-colors duration-200 hover:text-red-700 focus:outline-none sm:col-span-1 sm:mt-4'
+                      }
+                    >
+                      Remove
+                    </button>
+                  </div>
+                  <div className="hidden">
+                    <Input name={`settings.customeproduct.${index}.cpId`} />
+                  </div>
+                  <div className="grid grid-cols-1 gap-5">
+                    <Input
+                      label={t('form:input-title')}
+                      variant="outline"
+                      {...register(`settings.customeproduct.${index}.title`)}
+                      defaultValue={item?.title!}
+                      error={t(errors.banners?.[index]?.title?.message!)}
                     />
-                    <div>
-                      <Label>
-                        Products <span className="ml-0.5 text-red-500">*</span>
-                      </Label>
-                      <SelectInput
-                        name={`settings.customeproduct.${index}.products`}
-                        control={control}
-                        getOptionLabel={(option: any) => option.name}
-                        getOptionValue={(option: any) => option.id}
-                        options={products?.products?.data as Product[]}
-                        isClearable={true}
-                        isLoading={loadingProduct}
-                        isMulti
+
+                    <div className="grid gap-5">
+                      <CategoryTypeFilter
+                        className="w-full"
+                        type={customPro[index]}
+                        enableCategory
+                        enableType
+                        onCategoryFilter={(category: Category) => {
+                          setValue(item?.category, category?.slug);
+                        }}
+                        onTypeFilter={(type: Type) => {
+                          customPro[index] = type?.slug ? type?.slug : '';
+                          setCustomPro({ ...customPro });
+                          setType(type?.slug!);
+                        }}
                       />
-                      <ValidationError message={t(errors?.settings?.handpickedProducts?.products?.message,)} />
+                      <div>
+                        <Label>
+                          Products
+                          <span className="ml-0.5 text-red-500">*</span>
+                        </Label>
+                        <SelectInput
+                          name={`settings.customeproduct.${index}.products`}
+                          control={control}
+                          getOptionLabel={(option: any) => option.name}
+                          getOptionValue={(option: any) => option.id}
+                          options={products?.products?.data as Product[]}
+                          isClearable={true}
+                          isLoading={loadingProduct}
+                          isMulti
+                        />
+                        <ValidationError
+                          message={t(
+                            errors?.settings?.handpickedProducts?.products
+                              ?.message
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <Button
             type="button"
             onClick={() => {
               cpappend({ title: '', category: '', products: [] });
-              customPro[cpfields?.length] = '';
-              setCustomPro({...customPro});
+              customPro[cpfields && cpfields?.length] = '';
+              setCustomPro({ ...customPro });
             }}
             className="w-full sm:w-auto"
-            disabled={layoutType === 'minimal' && cpfields?.length > 0}
+            disabled={
+              layoutType === 'minimal' && cpfields && cpfields?.length > 0
+            }
           >
             {'Add Custome Product'}
           </Button>
@@ -1222,7 +1325,11 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
             className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
           />
           <Card className="w-full sm:w-8/12 md:w-2/3">
-            <FileInput name="settings.bottomslider" control={control} multiple />
+            <FileInput
+              name="settings.bottomslider"
+              control={control}
+              multiple
+            />
           </Card>
         </div>
       </div>
@@ -1234,21 +1341,22 @@ export default function CreateOrUpdateGroupForm({ initialValues }: IProps) {
             // details={'Upload Sliders'}
             className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
           />
-          <Card className='w-full sm:w-8/12 md:w-2/3 '>
+          <Card className="w-full sm:w-8/12 md:w-2/3 ">
             <ReactSortable
               list={dragData}
               setList={setDrageData}
               // onSelect={true}
               {...register('settings.pageViews')}
               animation={200}
-              className='w-full space-y-3'>
+              className="w-full space-y-3"
+            >
               {dragData.map((item: any) => {
                 return (
-                  <div className='w-full  p-3 border border-gray rounded flex flex-row justify-between '>
+                  <div className="w-full  p-3 border border-gray rounded flex flex-row justify-between ">
                     <p key={item.id}>{item.name}</p>
-                    <p className='cursor-pointer handle'>::</p>
+                    <p className="cursor-pointer handle">::</p>
                   </div>
-                )
+                );
               })}
             </ReactSortable>
           </Card>

@@ -37,7 +37,9 @@ export function useType(slug: string) {
       slug,
       language: locale,
     },
+    fetchPolicy: 'no-cache',
   });
+
   return {
     type: data?.type,
     isLoading,

@@ -33,13 +33,17 @@ export const getStaticPaths: GetStaticPaths<ParsedQueryParams> = async ({
     query: GroupsDocument,
   });
   // Get the paths we want to pre-render based on types
-  const paths = types?.flatMap((type) =>
-    locales?.map((locale: any) => ({ params: { pages: [type.slug] }, locale }))
+  const paths = types?.flatMap(
+    (type) =>
+      locales?.map((locale: any) => ({
+        params: { pages: [type.slug] },
+        locale,
+      })),
   );
   // We'll pre-render only these paths at build time also with the slash route.
   return {
     paths: paths.concat(
-      locales?.map((locale: any) => ({ params: { pages: [] }, locale }))
+      locales?.map((locale: any) => ({ params: { pages: [] }, locale })),
     ),
     fallback: 'blocking',
   };
@@ -62,7 +66,9 @@ export const getStaticProps: GetStaticProps<
     variables: {
       language: locale,
     },
+    fetchPolicy: 'no-cache',
   });
+
   const { pages } = params!;
   let pageType: string | undefined | null;
   if (!pages) {
@@ -86,6 +92,7 @@ export const getStaticProps: GetStaticProps<
       slug: pageType,
       language: locale,
     },
+    fetchPolicy: 'no-cache',
   });
   const popularProductVariables = {
     type_slug: pageType,
@@ -103,12 +110,13 @@ export const getStaticProps: GetStaticProps<
   await apolloClient.query({
     query: ProductsDocument,
     variables: getProducts(productVariables),
+    fetchPolicy: 'no-cache',
   });
   const categoryVariables = {
     type: pageType,
     limit: CATEGORIES_PER_PAGE,
     ...(types?.find((t) => t.slug === pageType)?.settings?.layoutType ===
-      'minimal'
+    'minimal'
       ? {}
       : { parent: null }),
     language: locale,
@@ -116,6 +124,7 @@ export const getStaticProps: GetStaticProps<
   await apolloClient.query({
     query: CategoriesDocument,
     variables: getCategories(categoryVariables),
+    fetchPolicy: 'no-cache',
   });
 
   return addApolloState(apolloClient, {
