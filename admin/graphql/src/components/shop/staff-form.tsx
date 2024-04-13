@@ -137,7 +137,11 @@
 import Button from '@/components/ui/button';
 import Input from '@/components/ui/input';
 import PasswordInput from '@/components/ui/password-input';
-import { useAddStaffMutation, useShopQuery, useUpdateStaffMutation } from '@/graphql/shops.graphql';
+import {
+  useAddStaffMutation,
+  useShopQuery,
+  useUpdateStaffMutation,
+} from '@/graphql/shops.graphql';
 import { Controller, useForm } from 'react-hook-form';
 import { getErrorMessage } from '@/utils/form-error';
 import Card from '@/components/common/card';
@@ -145,21 +149,15 @@ import Description from '@/components/ui/description';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { passwordRules } from '@/utils/constants';
 import StickyFooterPanel from '@/components/ui/sticky-footer-panel';
 import Label from '../ui/label';
 import FileInput from '../ui/file-input';
 import Radio from '../ui/radio/radio';
 import { DatePicker } from '../ui/date-picker';
-import { Permission } from '__generated__/__types__';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
-
-type IProps = {
-  initialValues?: Permission | null;
-};
+import { customerValidationSchema } from '../user/user-validation-schema';
 
 type FormValues = {
   name: string;
@@ -175,7 +173,6 @@ type FormValues = {
   jobtype: string;
 };
 
-
 const jobTypeValue = [
   {
     label: 'Part Time',
@@ -187,34 +184,9 @@ const jobTypeValue = [
   },
 ];
 
-const staffFormSchema = yup.object().shape({
-  name: yup.string().required('form:error-name-required'),
-  email: yup
-    .string()
-    .email('form:error-email-format')
-    .required('form:error-email-required'),
-  password: yup
-    .string()
-    .required('form:error-password-required')
-    .matches(passwordRules, {
-      message:
-        'Please create a stronger password. hint: Min 8 characters, 1 Upper case letter, 1 Lower case letter, 1 Numeric digit.',
-    }),
-});
 const AddStaffForm = (props: any) => {
-
-  // const staffValue: any = initialValues.initialValues;
-  // let staff: any = {};
-
-  // staffValue?.forEach((user: any) => {
-  //   staff = user;
-  // });
-  console.log("initialValues", props.initialValues);
-
-  // const userData = staff;
-
-
   const router = useRouter();
+  const { t } = useTranslation();
   const {
     query: { shop },
   } = router;
@@ -223,21 +195,52 @@ const AddStaffForm = (props: any) => {
       slug: shop as string,
     },
   });
+  const [userDetails, setDetails] = useState<Record<string, any>>({});
+  const [userShopId, setShopId] = useState<string>();
+  const [dob, setDob] = useState<Date | null>();
+  const [joinDate, setJoinDate] = useState<Date | null>();
   const shopId = shopData?.shop?.id!;
+
   const {
     register,
     handleSubmit,
     setError,
     control,
-    watch,
     formState: { errors },
   } = useForm<FormValues>({
     //@ts-ignore
-    resolver: yupResolver(staffFormSchema),
-    // defaultValues: {
-    //   ...props.initialValues,
-    //   name: props.initialValues.name
-    // }
+    resolver: yupResolver(customerValidationSchema),
+    defaultValues: {
+      name: props?.initialValues?.name,
+      lastname:
+        props?.initialValues?.details &&
+        JSON.parse(props?.initialValues?.details)?.lastname,
+      email: props?.initialValues?.email,
+      password:
+        props?.initialValues?.details &&
+        JSON.parse(props?.initialValues?.details)?.password,
+      salary:
+        props?.initialValues?.details &&
+        JSON.parse(props?.initialValues?.details)?.salary,
+      emergencynumber:
+        props?.initialValues?.details &&
+        JSON.parse(props?.initialValues?.details)?.emergencynumber,
+      phone:
+        props?.initialValues?.details &&
+        JSON.parse(props?.initialValues?.details)?.phone,
+      jobtype:
+        props?.initialValues?.details &&
+        JSON.parse(props?.initialValues?.details)?.jobtype,
+      joindate:
+        props?.initialValues?.details &&
+        JSON.parse(props?.initialValues?.details)?.joindate,
+      dob:
+        props?.initialValues?.details &&
+        JSON.parse(props?.initialValues?.details)?.dob,
+      photo:
+        props?.initialValues?.details &&
+        JSON.parse(props?.initialValues?.details)?.photo,
+    },
   });
 
   const [addStaff, { loading }] = useAddStaffMutation({
@@ -255,9 +258,14 @@ const AddStaffForm = (props: any) => {
     },
   });
 
-  const [updateStaff, { loading: update }] = useUpdateStaffMutation({
+  const [updateStaff, { loading: updateLoading }] = useUpdateStaffMutation({
     onCompleted: () => {
-      router.push(`/${router.query.shop}/staffs`);
+      if (shopId) {
+        router.replace(`/${router.query.shop}/staffs`);
+      } else {
+        router.replace('/users/vendor-staffs');
+      }
+      // router.back();
     },
     onError: (error) => {
       const serverErrors = getErrorMessage(error);
@@ -268,12 +276,12 @@ const AddStaffForm = (props: any) => {
         });
       });
     },
-  })
-
-  const { t } = useTranslation();
+  });
 
   async function onSubmit(values: FormValues) {
-    let StaffData = JSON.stringify(values);
+    console.log({ dob });
+    let staffData = JSON.stringify({ ...values, dob: dob, joinDate: joinDate });
+    console.log({ staffData });
 
     try {
       const inputData = {
@@ -281,24 +289,25 @@ const AddStaffForm = (props: any) => {
         email: values.email,
         password: values.password,
         shop_id: shopId,
-        details: StaffData
-      }
+        details: staffData,
+      };
       const seconInput = {
-        shop_id: shopId,
         name: values.name,
-        details: StaffData
-      }
-
-      if (
-        !props.initialValues) {
-        await addStaff({
+        password: values.password,
+        shop_id: userShopId!,
+        details: staffData,
+      };
+      if (!props.initialValues) {
+        const { data } = await addStaff({
           variables: {
             input: {
               ...inputData,
             },
           },
         });
-        toast.success(t('common:create-success'));
+        if (data?.addStaff) {
+          toast.success(t('common:create-success'));
+        }
       } else {
         const { data } = await updateStaff({
           variables: {
@@ -309,30 +318,29 @@ const AddStaffForm = (props: any) => {
           },
         });
 
-        if (data) {
+        if (data?.updateStaff) {
           toast.success(t('common:successfully-updated'));
         }
-
       }
     } catch (error) {
       getErrorMessage(error);
     }
-
-
-    // addStaff({
-    //   variables: {
-    //     input: {
-    //       name: values.name,
-    //       email: values.email,
-    //       password: values.password,
-    //       shop_id: shopId,
-    //       details: StaffData
-    //     },
-    //   },
-    // });
   }
-  const [birth_date] = watch(['dob']);
-  const [join_date] = watch(['joindate']);
+
+  useEffect(() => {
+    if (props?.initialValues?.details) {
+      console.log('inside 1');
+      const details = JSON.parse(props?.initialValues?.details);
+      setDetails(details);
+      setDob(dayjs(details?.dob).toDate());
+      setJoinDate(dayjs(details?.joinDate).toDate());
+      console.log(dayjs(details?.dob).toDate());
+    }
+    if (props?.initialValues) {
+      console.log('inside 2');
+      setShopId(props?.initialValues?.shop_id);
+    }
+  }, [props?.initialValues]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -343,13 +351,12 @@ const AddStaffForm = (props: any) => {
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
 
-        <Card className="w-full sm:w-8/12 md:w-2/3">
+        <Card className="flex flex-col gap-4 w-full sm:w-8/12 md:w-2/3">
           <Input
             label={'FirstName'}
             {...register('name')}
             type="text"
             variant="outline"
-            className="mb-4"
             error={t(errors.name?.message!)}
             defaultValue={props.initialValues?.name}
             required
@@ -359,8 +366,7 @@ const AddStaffForm = (props: any) => {
             {...register('lastname')}
             type="text"
             variant="outline"
-            className="mb-4"
-            defaultValue={props?.initialValues?.details?.lastname}
+            defaultValue={userDetails?.lastname}
             required
           />
           <Input
@@ -368,45 +374,37 @@ const AddStaffForm = (props: any) => {
             {...register('email')}
             type="email"
             variant="outline"
-            className="mb-4"
             error={t(errors.email?.message!)}
             defaultValue={props?.initialValues?.email}
             required
+            disabled={props?.initialValues?.email}
           />
           <PasswordInput
             label={t('form:input-label-password')}
             {...register('password')}
             error={t(errors.password?.message!)}
             variant="outline"
-            className="mb-4"
             required
-            defaultValue={props?.initialValues?.password}
-
+            defaultValue={userDetails?.lastname}
           />
 
-          <div className='mb-3'>
+          <div className="mb-3">
             <Label>Date of Birth:</Label>
             <Controller
               control={control}
               name="dob"
               render={({ field: { onChange, onBlur, value } }) => {
-
-                const defultDate = dayjs(props?.initialValues?.details?.dob).toDate();
                 return (
                   //@ts-ignore
                   <DatePicker
                     dateFormat="dd/MM/yyyy"
-                    onChange={onChange}
+                    onChange={(date) => setDob(date)}
                     onBlur={onBlur}
-                    selected={defultDate}
+                    selected={dob}
                     selectsEnd
-                    startDate={birth_date}
-                    className="border border-border-base"
-
-                  // selected={props?.initialValues?.details?.dob
-                  // }
-
-                  />)
+                    className="border border-border-base cursor-pointer bg-gray-300"
+                  />
+                );
               }}
             />
           </div>
@@ -420,28 +418,19 @@ const AddStaffForm = (props: any) => {
             {...register('phone')}
             type="text"
             variant="outline"
-            className="mb-4"
-            defaultValue={props?.initialValues?.details?.phone}
-
-
+            defaultValue={userDetails?.phone}
           />
           <Input
             label="Emergency Number:"
             {...register('emergencynumber')}
             type="text"
             variant="outline"
-            className="mb-4"
-            defaultValue={props?.initialValues?.details?.emergencynumber}
-
-
-
+            defaultValue={userDetails?.emergencynumber}
           />
           <div>
             <Label>Job Type:</Label>
             <div className="grid grid-cols-3 gap-5 mt-5">
               {jobTypeValue?.map((item, index) => {
-                console.log("item", item);
-
                 return (
                   <Radio
                     key={`product-card-${index}`}
@@ -449,8 +438,7 @@ const AddStaffForm = (props: any) => {
                     label={t(item.label)}
                     value={item.value}
                     id={`product-card-${index}`}
-                    defaultValue={props?.initialValues?.details?.jobtype}
-
+                    defaultValue={userDetails?.jobtype}
                   />
                 );
               })}
@@ -461,35 +449,26 @@ const AddStaffForm = (props: any) => {
             {...register('salary')}
             type="text"
             variant="outline"
-            className="mb-4"
-            defaultValue={props?.initialValues?.details?.salary}
-
-
+            defaultValue={userDetails?.salary}
             required
           />
-          <div className='mb-3'>
+          <div>
             <Label>Join Date:</Label>
             <Controller
               control={control}
               name="joindate"
               render={({ field: { onChange, onBlur, value } }) => {
-                const defultDate = dayjs(props?.initialValues?.details?.joindate).toDate();
-
                 return (
                   //@ts-ignore
                   <DatePicker
-                    {...register('joindate')}
                     dateFormat="dd/MM/yyyy"
-                    onChange={onChange}
+                    onChange={(date) => setJoinDate(date)}
                     onBlur={onBlur}
-                    selected={defultDate}
+                    selected={joinDate}
                     selectsEnd
-                    startDate={join_date}
                     className="border border-border-base"
-                    defaultValue={props?.initialValues?.details?.joindate}
-
                   />
-                )
+                );
               }}
             />
           </div>
@@ -498,10 +477,11 @@ const AddStaffForm = (props: any) => {
 
       <StickyFooterPanel>
         <div className="text-end">
-          <Button loading={loading} disabled={loading}>
-            {props.initialValues
-              ? 'Update Staff'
-              : 'Add Staff'}
+          <Button
+            loading={loading || updateLoading}
+            disabled={loading || updateLoading}
+          >
+            {props.initialValues ? 'Update Staff' : 'Add Staff'}
           </Button>
         </div>
       </StickyFooterPanel>
@@ -510,5 +490,3 @@ const AddStaffForm = (props: any) => {
 };
 
 export default AddStaffForm;
-
-

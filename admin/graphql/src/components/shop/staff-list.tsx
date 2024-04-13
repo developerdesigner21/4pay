@@ -130,13 +130,17 @@
 
 // export default StaffList;
 
-
 import { Table } from '@/components/ui/table';
 import ActionButtons from '@/components/common/action-buttons';
 import { useTranslation } from 'next-i18next';
 import { useIsRTL } from '@/utils/locals';
 import Pagination from '@/components/ui/pagination';
-import { UserPaginator, SortOrder, Type, Permission } from '__generated__/__types__';
+import {
+  UserPaginator,
+  SortOrder,
+  Type,
+  Permission,
+} from '__generated__/__types__';
 import { useMemo, useState } from 'react';
 import debounce from 'lodash/debounce';
 import TitleWithSort from '@/components/ui/title-with-sort';
@@ -157,17 +161,15 @@ type IProps = {
 };
 
 const StaffList = ({ staffs, onPagination, refetch }: IProps) => {
-
   const { t } = useTranslation();
   const { alignLeft, alignRight } = useIsRTL();
   const { data, paginatorInfo } = staffs!;
-  console.log("data", data);
+  console.log({ staffs });
+
   const { query } = useRouter();
   const {
     query: { shop },
   } = useRouter();
-  console.log("shop", shop);
-
 
   const [order, setOrder] = useState<SortOrder>(SortOrder.Desc);
   const [column, setColumn] = useState<string>();
@@ -241,7 +243,6 @@ const StaffList = ({ staffs, onPagination, refetch }: IProps) => {
   //   },
   // ];
 
-
   const columns = [
     {
       title: 'First Name',
@@ -261,16 +262,15 @@ const StaffList = ({ staffs, onPagination, refetch }: IProps) => {
       render: (details: any) => {
         let data: any = {};
         try {
-          data = JSON.parse(details);
+          if (details) {
+            data = JSON.parse(details);
+          }
           // console.log("data", data);
-
         } catch (error) {
           console.error('Error parsing JSON:', error);
         }
-        return (
-          <p>{data?.lastname}</p>
-        );
-      }
+        return <p>{data?.lastname}</p>;
+      },
     },
     {
       title: 'Email',
@@ -290,15 +290,15 @@ const StaffList = ({ staffs, onPagination, refetch }: IProps) => {
       render: (details: any) => {
         let data: any = {};
         try {
-          data = JSON.parse(details);
+          if (details) {
+            data = JSON.parse(details);
+          }
         } catch (error) {
           console.error('Error parsing JSON:', error);
         }
-        const date = dayjs(data.dob).format('YYYY-MM-DD')
-        return (
-          <p>{date}</p>
-        );
-      }
+        const date = data ? dayjs(data.dob).format('YYYY-MM-DD') : '';
+        return <p>{date}</p>;
+      },
     },
     {
       title: 'Phone',
@@ -310,15 +310,14 @@ const StaffList = ({ staffs, onPagination, refetch }: IProps) => {
       render: (details: any) => {
         let data: any = {};
         try {
-          data = JSON.parse(details);
+          if (details) {
+            data = JSON.parse(details);
+          }
         } catch (error) {
           console.error('Error parsing JSON:', error);
         }
-        console.log("Parsed Data:", data);
-        return (
-          <p>{data?.phone}</p>
-        );
-      }
+        return <p>{data?.phone}</p>;
+      },
     },
     {
       title: 'Job Type',
@@ -330,15 +329,15 @@ const StaffList = ({ staffs, onPagination, refetch }: IProps) => {
       render: (details: any) => {
         let data: any = {};
         try {
-          data = JSON.parse(details);
+          if (details) {
+            data = JSON.parse(details);
+          }
         } catch (error) {
           console.error('Error parsing JSON:', error);
         }
-        console.log("Parsed Data:", data);
-        return (
-          <p>{data?.jobtype}</p>
-        );
-      }
+
+        return <p>{data?.jobtype}</p>;
+      },
     },
     {
       title: 'Salary',
@@ -350,15 +349,15 @@ const StaffList = ({ staffs, onPagination, refetch }: IProps) => {
       render: (details: any) => {
         let data: any = {};
         try {
-          data = JSON.parse(details);
+          if (details) {
+            data = JSON.parse(details);
+          }
         } catch (error) {
           console.error('Error parsing JSON:', error);
         }
-        console.log("Parsed Data:", data);
-        return (
-          <p>{data?.salary}</p>
-        );
-      }
+
+        return <p>{data?.salary}</p>;
+      },
     },
     {
       title: 'Join Date',
@@ -370,20 +369,20 @@ const StaffList = ({ staffs, onPagination, refetch }: IProps) => {
       render: (details: any) => {
         let data: any = {};
         try {
-          data = JSON.parse(details);
+          if (details) {
+            data = JSON.parse(details);
+          }
         } catch (error) {
           console.error('Error parsing JSON:', error);
         }
-        const date = dayjs(data.dob).format('YYYY-MM-DD')
-        return (
-          <p>{date}</p>
-        );
-      }
+        const date = data ? dayjs(data.joinDate).format('YYYY-MM-DD') : '';
+        return <p>{date}</p>;
+      },
     },
     {
       title: t('table:table-item-actions'),
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'id',
+      key: 'id',
       align: alignRight,
       // render: (id: string, slug: any, record: any, data: any) => {
       //   return (
@@ -401,19 +400,18 @@ const StaffList = ({ staffs, onPagination, refetch }: IProps) => {
       //   )
 
       // },
-      render: (name: string, record: Permission.Staff) => {
+      render: (id: string, record: Permission.Staff) => {
         return (
           <LanguageSwitcher
-            slug={name}
+            slug={id}
             record={record}
             deleteModalView="DELETE_TYPE"
-            routes={Routes.staff}
+            routes={Routes.user}
           />
-        )
+        );
       },
     },
-
-  ]
+  ];
 
   return (
     <>
@@ -451,6 +449,3 @@ const StaffList = ({ staffs, onPagination, refetch }: IProps) => {
 };
 
 export default StaffList;
-
-
-

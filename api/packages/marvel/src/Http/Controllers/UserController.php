@@ -923,4 +923,15 @@ class UserController extends CoreController
             "role" => $user->getRoleNames()->first()
         ];
     }
+
+    public function deleteStaff(Request $request)
+    {
+        try {
+            $user = User::findOrFail($request->input('variables.id'));
+            $user->delete();
+            return $user;
+        } catch (\Exception $e) {
+            throw new ModelNotFoundException(NOT_FOUND);
+        }
+    }
 }

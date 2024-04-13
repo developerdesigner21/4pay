@@ -128,4 +128,8 @@ class AuthMutator
     {
         return Shop::call('Marvel\Http\Controllers\UserController@appemaillogin', $args);
     }
+    public function deleteStaff($rootValue, array $args, GraphQLContext $context)
+    {
+        return Shop::call('Marvel\Http\Controllers\UserController@deleteStaff', $args);
+    }
 }

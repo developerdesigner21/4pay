@@ -22,12 +22,26 @@ query UsersByPermission(
   ) {
     data {
       ...UserParts
+      details
     }
     paginatorInfo {
       ...PaginatorParts
     }
   }
 }
+
+query FindStaffById($id: ID) {
+  findStaffById(id: $id) {
+    id
+    name
+    email
+    password
+    is_active
+    shop_id
+    details
+  }
+}
+
 query MyStaffs(
   $search: String
   $orderBy: String
@@ -111,9 +125,14 @@ mutation UpdateUserEmail($input: UpdateEmailUserInput!) {
   }
 }
 
-
 mutation Notifications_token($input: NotificationTokenInput!) {
   notifications_token(input: $input) {
     token
+  }
+}
+
+mutation DeleteStaff($id: ID!) {
+  deleteStaff(id: $id) {
+    ...UserParts
   }
 }

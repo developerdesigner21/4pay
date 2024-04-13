@@ -54,7 +54,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
               {/* @ts-ignore */}
               <CartProvider>
                 <>
-                  {['/login','/register'].includes(router.pathname)?'':<Notificationcom />}
+                  {['/login', '/register'].includes(router.pathname) ? '' : ''}
                   <DefaultSeo />
                   {authProps ? (
                     //@ts-ignore

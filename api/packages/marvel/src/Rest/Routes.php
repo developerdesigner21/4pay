@@ -487,6 +487,7 @@ Route::group(['middleware' => ['permission:' . Permission::SUPER_ADMIN, 'auth:sa
     Route::get('/customers/list', [UserController::class, 'customers']);
     Route::get('my-staffs', [UserController::class, 'myStaffs']);
     Route::get('all-staffs', [UserController::class, 'allStaffs']);
+    Route::delete('staff/{id}', [UserController::class, 'deleteStaff']);
     Route::resource('refund-policies', RefundPolicyController::class, [
         'only' => ['store', 'update', 'destroy'],
     ]);
