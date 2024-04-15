@@ -16,7 +16,7 @@ const SearchFilterView = dynamic(
   () => import('@/components/search-view/sidebar-filter'),
 );
 const MaintenanceMoreInfo = dynamic(
-  () => import('@/components/maintenance/more-info')
+  () => import('@/components/maintenance/more-info'),
 );
 
 export default function ManagedDrawer() {
@@ -35,9 +35,9 @@ export default function ManagedDrawer() {
           ? 'left'
           : 'right'
       }
-      className={
-        ['MAINTENANCE_MORE_INFO']?.includes(view) ? 'max-w-sm md:max-w-xl' : ''
-      }
+      className={`${
+        view === 'MAINTENANCE_MORE_INFO' && 'max-w-sm md:max-w-xl '
+      }${view === 'SEARCH_FILTER' && ' w-80'}`}
     >
       {view === 'cart' && <CartSidebarView />}
       {view === 'FILTER_VIEW' && <MobileCategoryMenu variables={data} />}

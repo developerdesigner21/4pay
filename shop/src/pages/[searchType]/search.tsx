@@ -30,6 +30,8 @@ const MobileNavigation = dynamic(
 export { getServerSideProps } from '@/framework/search.ssr';
 
 export default function SearchPage() {
+  const { t } = useTranslation('common');
+  const [_, setDrawerView] = useAtom(drawerAtom);
   const { query } = useRouter();
   const { searchType, ...restQuery }: any = query;
   const {
@@ -54,8 +56,29 @@ export default function SearchPage() {
   if (error) return <ErrorMessage message={error.message} />;
   return (
     <div className="w-full">
-      <div className="flex flex-col items-center justify-between mb-7 md:flex-row">
+      <div className="flex flex-col items-center justify-between gap-5 mb-7 lg:flex-row-reverse">
         {/* //FIXME: */}
+        <div className="flex items-center justify-between w-full lg:w-fit">
+          <motion.button
+            className="flex lg:hidden items-center rounded border border-border-200 bg-gray-100 bg-opacity-90 py-1 px-3 text-sm font-semibold text-heading transition-colors duration-200 hover:border-accent-hover hover:bg-accent hover:text-light focus:border-accent-hover focus:bg-accent focus:text-light focus:outline-0 md:h-10 md:py-1.5 md:px-4 md:text-base"
+            whileTap={{ scale: 0.88 }}
+            onClick={() =>
+              setDrawerView({
+                display: true,
+                view: 'SEARCH_FILTER',
+              })
+            }
+            style={{ height: '45px' }}
+          >
+            <FilterIcon
+              width="17.05"
+              height="18"
+              className="ltr:mr-2 rtl:ml-2"
+            />
+            {t('text-filter')}
+          </motion.button>
+          <Sorting variant="dropdown" />
+        </div>
         <SearchCount
           from={paginatorInfo?.firstItem ?? 0}
           to={paginatorInfo?.lastItem ?? 0}
@@ -64,9 +87,6 @@ export default function SearchPage() {
             paginatorInfo?.total ?? 0
           }
         />
-        <div className="max-w-xs mt-4 md:mt-0">
-          <Sorting variant="dropdown" />
-        </div>
       </div>
       <Grid
         products={products as Product[] | undefined}
@@ -82,14 +102,12 @@ export default function SearchPage() {
 }
 
 const GetLayout = (page: React.ReactElement) => {
-  const { t } = useTranslation('common');
-  const [_, setDrawerView] = useAtom(drawerAtom);
   return (
-    <HomeGeneralLayout layout='compact'>
+    <HomeGeneralLayout layout="compact">
       <>
         <div className="w-full bg-light">
-          <div className="flex w-full min-h-screen px-5 py-10 mx-auto max-w-1920 rtl:space-x-reverse lg:space-x-10 xl:py-14 xl:px-16">
-            <div className="hidden w-80 shrink-0 lg:block">
+          <div className="flex flex-col lg:flex-row w-full min-h-screen p-5 lg:px-5 lg:py-10 mx-auto max-w-1920 rtl:space-x-reverse lg:space-x-10 xl:py-14 xl:px-16">
+            <div className="w-full hidden lg:block lg:w-80">
               <StickyBox offsetTop={140} offsetBottom={30}>
                 <SidebarFilter />
               </StickyBox>
@@ -97,21 +115,6 @@ const GetLayout = (page: React.ReactElement) => {
             {page}
           </div>
         </div>
-        <MobileNavigation>
-          <motion.button
-            whileTap={{ scale: 0.88 }}
-            onClick={() =>
-              setDrawerView({
-                display: true,
-                view: 'SEARCH_FILTER',
-              })
-            }
-            className="flex items-center justify-center h-full p-2 focus:text-accent focus:outline-0"
-          >
-            <span className="sr-only">{t('text-filter')}</span>
-            <FilterIcon width="17.05" height="18" />
-          </motion.button>
-        </MobileNavigation>
       </>
     </HomeGeneralLayout>
   );

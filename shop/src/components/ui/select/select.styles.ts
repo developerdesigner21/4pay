@@ -19,7 +19,7 @@ export const selectStyles = {
     width: state.selectProps.width,
     display: 'flex',
     alignItems: 'center',
-    minHeight: !state.selectProps.isMinimal ? 50 : 0,
+    minHeight: !state.selectProps.isMinimal ? 45 : 0,
     backgroundColor: '#ffffff',
     borderRadius: 5,
     border: !state.selectProps.isMinimal ? '1px solid #F1F1F1' : 'none',

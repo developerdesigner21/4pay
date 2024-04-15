@@ -15,7 +15,7 @@ import { useIsRTL } from '@/lib/locals';
 import Button from '@/components/ui/button';
 
 const FieldWrapper = ({ children, title }: any) => (
-  <div className="border-b border-gray-200 py-7 last:border-0">
+  <div className="border-b border-gray-200 py-2 lg:py-7 last:border-0">
     <CustomDisclosure title={title}>{children}</CustomDisclosure>
   </div>
 );
@@ -66,17 +66,17 @@ const SidebarFilter: React.FC<{
     <div
       className={classNames(
         'flex h-full w-full flex-col rounded-xl border-gray-200 bg-white lg:h-auto lg:border',
-        className
+        className,
       )}
     >
-      <div className="sticky top-0 z-10 flex items-center justify-between rounded-tl-xl rounded-tr-xl border-b border-gray-200 bg-white px-5 py-6 lg:static">
+      <div className="sticky top-0 z-10 flex items-center justify-between rounded-tl-xl rounded-tr-xl border-b border-gray-200 bg-white p-3 lg:px-5 lg:py-6 lg:static">
         <div className="flex items-center space-x-3 rtl:space-x-reverse lg:space-x-0">
           <button
             className="text-body focus:outline-0 lg:hidden"
             onClick={() => closeSidebar({ display: false, view: '' })}
           >
             <ArrowNarrowLeft
-              className={classNames('h-7', {
+              className={classNames('h-5 lg:h-7', {
                 'rotate-180': isRTL,
               })}
               strokeWidth={1.7}
@@ -84,7 +84,7 @@ const SidebarFilter: React.FC<{
             <span className="sr-only">{t('text-close')}</span>
           </button>
 
-          <h3 className="text-xl font-semibold text-heading lg:text-2xl">
+          <h3 className="text-base font-semibold text-heading lg:text-2xl">
             {t('text-filter')}
           </h3>
         </div>
@@ -92,7 +92,7 @@ const SidebarFilter: React.FC<{
         <ClearFiltersButton />
       </div>
 
-      <div className="flex-1 px-5">
+      <div className="flex-1 px-3 py-2 lg:px-5">
         <FieldWrapper title="text-search">
           <Search variant="minimal" label="search" />
         </FieldWrapper>
@@ -121,7 +121,7 @@ const SidebarFilter: React.FC<{
           </FieldWrapper>
         )}
       </div>
-      <div className="sticky bottom-0 z-10 mt-auto border-t border-gray-200 bg-white p-5 lg:hidden">
+      <div className="sticky bottom-0 z-10 mt-auto border-t border-gray-200 bg-white px-3 py-2 lg:p-5 lg:hidden">
         <Button
           className="w-full"
           onClick={() => closeSidebar({ display: false, view: '' })}
