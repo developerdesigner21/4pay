@@ -53,10 +53,10 @@ const Navbar = () => {
   // const [searchModal, setSearchModal] = useAtom(searchModalInitialValues);
   const [miniSidebar, setMiniSidebar] = useAtom(miniSidebarInitialValue);
   const [isMaintenanceMode, maintenanceMode] = useAtom(
-    checkIsMaintenanceModeComing,
+    checkIsMaintenanceModeComing
   );
   const [isMaintenanceModeStart, maintenanceModeStart] = useAtom(
-    checkIsMaintenanceModeStart,
+    checkIsMaintenanceModeStart
   );
   const { width } = useWindowSize();
   function handleClick() {
@@ -105,7 +105,7 @@ const Navbar = () => {
               <span
                 className={cn(
                   'h-0.5 rounded-full bg-gray-600 transition-[width] group-hover:bg-accent',
-                  miniSidebar ? 'w-full' : 'w-2/4',
+                  miniSidebar ? 'w-full' : 'w-2/4'
                 )}
               />
               <span className="h-0.5 w-full rounded-full bg-gray-600 group-hover:bg-accent" />
@@ -114,7 +114,7 @@ const Navbar = () => {
             <div
               className={cn(
                 'flex h-16 shrink-0 transition-[width] duration-300 me-4 lg:h-[76px] lg:border-solid lg:border-gray-200/80 lg:me-8 lg:border-e',
-                miniSidebar ? 'lg:w-[65px]' : 'lg:w-[257px]',
+                miniSidebar ? 'lg:w-[65px]' : 'lg:w-[257px]'
               )}
             >
               <Logo />
@@ -126,14 +126,14 @@ const Navbar = () => {
               <span
                 className={cn(
                   'h-0.5 rounded-full bg-gray-600 transition-[width] group-hover:bg-accent',
-                  miniSidebar ? 'w-full' : 'w-2/4',
+                  miniSidebar ? 'w-full' : 'w-2/4'
                 )}
               />
               <span className="h-0.5 w-full rounded-full bg-gray-600 group-hover:bg-accent" />
               <span
                 className={cn(
                   'h-0.5 rounded-full bg-gray-600 transition-[width] group-hover:bg-accent',
-                  miniSidebar ? 'w-full' : 'w-3/4',
+                  miniSidebar ? 'w-full' : 'w-3/4'
                 )}
               />
             </button>
@@ -151,6 +151,15 @@ const Navbar = () => {
           <div className="flex shrink-0 grow-0 basis-auto items-center">
             {hasAccess(adminAndOwnerOnly, permissions) && (
               <>
+                <div className="hidden border-gray-200/80 px-6 py-5 border-e 2xl:block">
+                  <LinkButton
+                    href={Routes.order.create}
+                    size="small"
+                    className="px-3.5"
+                  >
+                    {t('common:sidebar-nav-item-create-order')}
+                  </LinkButton>
+                </div>
                 <div className="hidden border-gray-200/80 px-6 py-5 border-e 2xl:block">
                   <LinkButton
                     href={Routes.shop.create}

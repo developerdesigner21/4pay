@@ -19,7 +19,7 @@ const NotFound: React.FC<Props> = ({
   const { t } = useTranslation('common');
   return (
     <div className={twMerge(cn('flex flex-col items-center', className))}>
-      <div
+      {/* <div
         className={twMerge(
           cn(
             'relative flex h-full min-h-[380px] w-full items-center justify-center md:min-h-[450px]',
@@ -34,7 +34,7 @@ const NotFound: React.FC<Props> = ({
           fill
           sizes="(max-width: 768px) 100vw"
         />
-      </div>
+      </div> */}
       {text && (
         <h3 className="my-7 w-full text-center text-xl font-semibold text-body">
           {t(text)}

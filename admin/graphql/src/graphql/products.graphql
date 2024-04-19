@@ -99,6 +99,14 @@ query Products(
   ) {
     data {
       ...ProductParts
+      categories {
+        id
+        icon
+        name
+        slug
+        details
+        language
+      }
     }
     paginatorInfo {
       ...PaginatorParts
@@ -225,6 +233,14 @@ query Product($id: ID, $slug: String, $language: String) {
 mutation CreateProduct($input: CreateProductInput!) {
   createProduct(input: $input) {
     ...ProductParts
+    categories {
+      id
+      icon
+      name
+      slug
+      details
+      language
+    }
   }
 }
 mutation UpdateProduct($input: UpdateProductInput!) {

@@ -31,6 +31,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import CategoryFilter from '@/components/filters/category-filter';
 
 export default function ProductsPage() {
   const { t } = useTranslation();
@@ -127,19 +128,22 @@ export default function ProductsPage() {
           <div className="mt-5 flex w-full flex-col border-t border-gray-200 pt-5 md:mt-8 md:flex-row md:items-center md:pt-8">
             <CategoryTypeFilter
               type={type}
-              onCategoryFilter={(product: Category) => {
-                setCategory(product?.slug!);
-                setPage(1);
-              }}
               onTypeFilter={(product: Type) => {
                 setType(product?.slug!);
                 setPage(1);
               }}
               className="w-full"
-              enableCategory
               enableType
             />
           </div>
+        </div>
+        <div className="flex w-full transition mt-5 z-20">
+          <CategoryFilter
+            onCategoryFilter={(product: Category) => {
+              setCategory(product?.slug!);
+              setPage(1);
+            }}
+          />
         </div>
       </Card>
 
