@@ -198,11 +198,11 @@ export const siteSettings = {
             label: 'sidebar-nav-item-manufacturers',
             icon: 'ManufacturersIcon',
           },
-          {
-            href: Routes.author.list,
-            label: 'sidebar-nav-item-authors',
-            icon: 'AuthorIcon',
-          },
+          // {
+          //   href: Routes.author.list,
+          //   label: 'sidebar-nav-item-authors',
+          //   icon: 'AuthorIcon',
+          // },
         ],
       },
 
@@ -375,7 +375,7 @@ export const siteSettings = {
               {
                 href: '',
                 label: 'Cancelled Orders',
-              }
+              },
             ],
           },
           {
@@ -398,7 +398,7 @@ export const siteSettings = {
               {
                 href: Routes.websiteCancelledOrder,
                 label: 'Cancelled Orders',
-              }
+              },
             ],
           },
           {
@@ -411,8 +411,7 @@ export const siteSettings = {
             label: 'text-transactions',
             icon: 'TransactionsIcon',
           },
-
-        ]
+        ],
       },
 
       user: {
@@ -509,7 +508,7 @@ export const siteSettings = {
                 href: Routes.coupon.create,
                 label: 'text-new-coupon',
                 icon: 'CouponsIcon',
-              }
+              },
             ],
           },
           {
@@ -886,7 +885,7 @@ export const siteSettings = {
             label: 'Pending Orders',
             icon: 'OrdersIcon',
             permissions: adminOwnerAndStaffOnly,
-          }
+          },
         ],
       },
 
@@ -1161,7 +1160,7 @@ export const siteSettings = {
             label: 'Pending Orders',
             icon: 'OrdersIcon',
             permissions: adminOwnerAndStaffOnly,
-          }
+          },
         ],
       },
 
