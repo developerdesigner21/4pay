@@ -840,37 +840,26 @@ export default function CompactLayout({ variables }: HomePageProps) {
           switch (item) {
             case 'near-shop':
               return NearShopPage(item);
-              break;
             case 'best-selling':
               return BestSellingPage(item);
-              break;
             case 'popular-product':
               return PopularPage(item);
-              break;
             case 'our-categories':
               return CategoriesPage(item);
-              break;
             case 'people-also-buy':
               return handpickProduct(item);
-              break;
             case 'new-product':
               return NewProductPage(item);
-              break;
-            case 'offers':
-              return OfferPage(item);
-              break;
+            // case 'offers':
+            //   return OfferPage(item);
             case 'custome-product':
               return CustomeProductPage(item);
-              break;
             case 'bottom-banner':
               return BottomPage(item);
-              break;
             case 'offer-countdown':
               return OfferCountDown(item);
-              break;
             case 'promotinal-slider':
               return PromotinalSlider(item);
-              break;
             default:
               break;
           }
