@@ -379,27 +379,27 @@ export const siteSettings = {
             ],
           },
           {
-            href: '',
+            href: Routes.shoporderinfo,
             label: 'Website Orders',
             icon: 'WebsiteIcon',
-            childMenu: [
-              {
-                href: Routes.shoporderinfo,
-                label: 'All Orders',
-              },
-              {
-                href: Routes.websitePendingOrder,
-                label: 'Pending Orders',
-              },
-              {
-                href: Routes.websiteCompleteOrder,
-                label: 'Complete Orders',
-              },
-              {
-                href: Routes.websiteCancelledOrder,
-                label: 'Cancelled Orders',
-              },
-            ],
+            // childMenu: [
+            //   {
+            //     href: Routes.shoporderinfo,
+            //     label: 'All Orders',
+            //   },
+            //   {
+            //     href: Routes.websitePendingOrder,
+            //     label: 'Pending Orders',
+            //   },
+            //   {
+            //     href: Routes.websiteCompleteOrder,
+            //     label: 'Complete Orders',
+            //   },
+            //   {
+            //     href: Routes.websiteCancelledOrder,
+            //     label: 'Cancelled Orders',
+            //   },
+            // ],
           },
           {
             href: Routes.order.create,
