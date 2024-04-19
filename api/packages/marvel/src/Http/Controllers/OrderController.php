@@ -589,6 +589,15 @@ class OrderController extends CoreController
     
         return $testdetail;
     } 
+    public function dateSelectionAllOrders(Request $request){
+        $startDate= [$request->get('input')['startdate']];
+        $endDate =  [$request->get('input')['enddate']];
+        $testdetail = Order::whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate])
+                   ->orderBy('id', 'DESC')
+                   ->get();
+    
+        return $testdetail;
+    } 
     
     public function fetchProducts(Request $request)
     {

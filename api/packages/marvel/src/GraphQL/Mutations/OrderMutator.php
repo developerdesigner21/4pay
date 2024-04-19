@@ -50,6 +50,10 @@ class OrderMutator
     {
         return Shop::call('Marvel\Http\Controllers\OrderController@dateSelection', $args);
     }
+    public function dateSelectionAllOrders($rootValue, array $args, GraphQLContext $context)
+    {
+        return Shop::call('Marvel\Http\Controllers\OrderController@dateSelectionAllOrders', $args);
+    }
 
     public function shopDateSelectionView($rootValue,array $args,GraphQLContext $context)
     {

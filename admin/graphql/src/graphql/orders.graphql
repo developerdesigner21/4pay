@@ -14,7 +14,7 @@ fragment OrderParts on Order {
   payment_status
   payment_intent {
     id
-    order_id 
+    order_id
     payment_gateway
     payment_intent_info {
       client_secret
@@ -95,6 +95,7 @@ fragment OrderParts on Order {
   updated_at
   language
 }
+
 query orders(
   $tracking_number: String
   $orderBy: String
@@ -116,6 +117,7 @@ query orders(
     data {
       id
       customer_id
+      customer_name
       customer {
         name
         email
@@ -330,7 +332,7 @@ mutation UpdateOrder($input: UpdateOrderInput!) {
       image {
         id
         original
-        thumbnail 
+        thumbnail
       }
       slug
       pivot {
@@ -373,6 +375,7 @@ mutation UpdateOrder($input: UpdateOrderInput!) {
     created_at
   }
 }
+
 mutation DeleteOrder($id: ID!) {
   deleteOrder(id: $id) {
     id
@@ -442,92 +445,92 @@ mutation DeleteOrder($id: ID!) {
   }
 }
 
-mutation ProductAddtocart($id:ID!) {
-    productAddtocart(id:$id) {
-        order {
-            id
-            tracking_number
-            customer_id
-            customer_contact
-            customer_name
-            language
-            parent_id
-            order_status
-            payment_status
-            amount
-            sales_tax
-            total
-            paid_total
-            payment_id
-            payment_gateway
-            altered_payment_gateway
-            discount
-            delivery_fee
-            delivery_time
-            created_at
-            updated_at
-            note
-            products {
-                id
-                name
-                slug
-                language
-                translated_languages
-                product_type
-                shop_id
-                author_id
-                manufacturer_id
-                blocked_dates
-                description
-                in_stock
-                is_taxable
-                is_digital
-                is_external
-                external_product_url
-                external_product_button_text
-                sale_price
-                max_price
-                min_price
-                ratings
-                total_reviews
-                in_wishlist
-                sku
-                status
-                height
-                length
-                width
-                price
-                quantity
-                unit
-                sold_quantity
-                in_flash_sale
-                created_at
-                updated_at
-                image {
-                    thumbnail
-                    original
-                    id
-                }
-            }
+mutation ProductAddtocart($id: ID!) {
+  productAddtocart(id: $id) {
+    order {
+      id
+      tracking_number
+      customer_id
+      customer_contact
+      customer_name
+      language
+      parent_id
+      order_status
+      payment_status
+      amount
+      sales_tax
+      total
+      paid_total
+      payment_id
+      payment_gateway
+      altered_payment_gateway
+      discount
+      delivery_fee
+      delivery_time
+      created_at
+      updated_at
+      note
+      products {
+        id
+        name
+        slug
+        language
+        translated_languages
+        product_type
+        shop_id
+        author_id
+        manufacturer_id
+        blocked_dates
+        description
+        in_stock
+        is_taxable
+        is_digital
+        is_external
+        external_product_url
+        external_product_button_text
+        sale_price
+        max_price
+        min_price
+        ratings
+        total_reviews
+        in_wishlist
+        sku
+        status
+        height
+        length
+        width
+        price
+        quantity
+        unit
+        sold_quantity
+        in_flash_sale
+        created_at
+        updated_at
+        image {
+          thumbnail
+          original
+          id
         }
-        wishlist {
-            id
-            name
-            price
-            image
-            created_at
-            updated_at
-        }
-        addtocart {
-            id
-            name
-            price
-            image
-            slug
-            created_at
-            updated_at
-        }
+      }
     }
+    wishlist {
+      id
+      name
+      price
+      image
+      created_at
+      updated_at
+    }
+    addtocart {
+      id
+      name
+      price
+      image
+      slug
+      created_at
+      updated_at
+    }
+  }
 }
 
 mutation CreateOrder($input: CreateOrderInput!) {
@@ -545,7 +548,180 @@ mutation GenerateInvoiceDownloadUrl($input: GenerateInvoiceDownloadUrlInput!) {
 }
 
 mutation Orderstatus($status: String!) {
- orderstatus(status:$status) {
+  orderstatus(status: $status) {
+    id
+    tracking_number
+    customer_id
+    customer_contact
+    customer_name
+    language
+    parent_id
+    order_status
+    payment_status
+    amount
+    sales_tax
+    total
+    paid_total
+    payment_id
+    payment_gateway
+    altered_payment_gateway
+    discount
+    delivery_fee
+    delivery_time
+    created_at
+    updated_at
+    note
+    customer {
+      id
+      name
+      email
+      shop_id
+      notification_token
+      created_at
+      updated_at
+      is_active
+    }
+    refund {
+      id
+      title
+      description
+      amount
+      status
+      refund_reason_id
+      created_at
+      updated_at
+    }
+    wallet_point {
+      id
+      amount
+    }
+    parent_order {
+      id
+      tracking_number
+      customer_id
+      customer_contact
+      customer_name
+      language
+      parent_id
+      order_status
+      payment_status
+      amount
+      sales_tax
+      total
+      paid_total
+      payment_id
+      payment_gateway
+      altered_payment_gateway
+      discount
+      delivery_fee
+      delivery_time
+      created_at
+      updated_at
+      note
+    }
+    children {
+      id
+      tracking_number
+      customer_id
+      customer_contact
+      customer_name
+      language
+      parent_id
+      order_status
+      payment_status
+      amount
+      sales_tax
+      total
+      paid_total
+      payment_id
+      payment_gateway
+      altered_payment_gateway
+      discount
+      delivery_fee
+      delivery_time
+      created_at
+      updated_at
+      note
+    }
+    payment_intent {
+      id
+      order_id
+      payment_gateway
+      tracking_number
+    }
+    coupon {
+      id
+      code
+      description
+      type
+      language
+      translated_languages
+      is_valid
+      message
+      amount
+      minimum_cart_amount
+      sub_total
+      active_from
+      expire_at
+      created_at
+      updated_at
+      target
+      is_approve
+      shop_id
+      user_id
+    }
+    shop {
+      id
+      owner_id
+      is_active
+      orders_count
+      products_count
+      name
+      slug
+      description
+      distance
+      lat
+      lng
+      created_at
+      updated_at
+    }
+    products {
+      id
+      name
+      slug
+      language
+      translated_languages
+      product_type
+      shop_id
+      author_id
+      manufacturer_id
+      blocked_dates
+      description
+      in_stock
+      is_taxable
+      is_digital
+      is_external
+      external_product_url
+      external_product_button_text
+      sale_price
+      max_price
+      min_price
+      ratings
+      total_reviews
+      in_wishlist
+      sku
+      status
+      height
+      length
+      width
+      price
+      quantity
+      unit
+      sold_quantity
+      in_flash_sale
+      created_at
+      updated_at
+      orders {
         id
         tracking_number
         customer_id
@@ -569,219 +745,219 @@ mutation Orderstatus($status: String!) {
         updated_at
         note
         customer {
-            id
-            name
-            email
-            shop_id
-            notification_token
-            created_at
-            updated_at
-            is_active
-        }
-        refund {
-            id
-            title
-            description
-            amount
-            status
-            refund_reason_id
-            created_at
-            updated_at
-        }
-        wallet_point {
-            id
-            amount
+          id
+          name
+          email
+          shop_id
+          notification_token
+          created_at
+          updated_at
+          is_active
         }
         parent_order {
-            id
-            tracking_number
-            customer_id
-            customer_contact
-            customer_name
-            language
-            parent_id
-            order_status
-            payment_status
-            amount
-            sales_tax
-            total
-            paid_total
-            payment_id
-            payment_gateway
-            altered_payment_gateway
-            discount
-            delivery_fee
-            delivery_time
-            created_at
-            updated_at
-            note
+          id
+          tracking_number
+          customer_id
+          customer_contact
+          customer_name
+          language
+          parent_id
+          order_status
+          payment_status
+          amount
+          sales_tax
+          total
+          paid_total
+          payment_id
+          payment_gateway
+          altered_payment_gateway
+          discount
+          delivery_fee
+          delivery_time
+          created_at
+          updated_at
+          note
         }
-        children {
-            id
-            tracking_number
-            customer_id
-            customer_contact
-            customer_name
-            language
-            parent_id
-            order_status
-            payment_status
-            amount
-            sales_tax
-            total
-            paid_total
-            payment_id
-            payment_gateway
-            altered_payment_gateway
-            discount
-            delivery_fee
-            delivery_time
-            created_at
-            updated_at
-            note
-        }
-        payment_intent {
-            id
-            order_id
-            payment_gateway
-            tracking_number
-        }
-        coupon {
-            id
-            code
-            description
-            type
-            language
-            translated_languages
-            is_valid
-            message
-            amount
-            minimum_cart_amount
-            sub_total
-            active_from
-            expire_at
-            created_at
-            updated_at
-            target
-            is_approve
-            shop_id
-            user_id
-        }
-        shop {
-            id
-            owner_id
-            is_active
-            orders_count
-            products_count
-            name
-            slug
-            description
-            distance
-            lat
-            lng
-            created_at
-            updated_at
-        }
-        products {
-            id
-            name
-            slug
-            language
-            translated_languages
-            product_type
-            shop_id
-            author_id
-            manufacturer_id
-            blocked_dates
-            description
-            in_stock
-            is_taxable
-            is_digital
-            is_external
-            external_product_url
-            external_product_button_text
-            sale_price
-            max_price
-            min_price
-            ratings
-            total_reviews
-            in_wishlist
-            sku
-            status
-            height
-            length
-            width
-            price
-            quantity
-            unit
-            sold_quantity
-            in_flash_sale
-            created_at
-            updated_at
-            orders {
-                id
-                tracking_number
-                customer_id
-                customer_contact
-                customer_name
-                language
-                parent_id
-                order_status
-                payment_status
-                amount
-                sales_tax
-                total
-                paid_total
-                payment_id
-                payment_gateway
-                altered_payment_gateway
-                discount
-                delivery_fee
-                delivery_time
-                created_at
-                updated_at
-                note
-                customer {
-                    id
-                    name
-                    email
-                    shop_id
-                    notification_token
-                    created_at
-                    updated_at
-                    is_active
-                }
-                parent_order {
-                    id
-                    tracking_number
-                    customer_id
-                    customer_contact
-                    customer_name
-                    language
-                    parent_id
-                    order_status
-                    payment_status
-                    amount
-                    sales_tax
-                    total
-                    paid_total
-                    payment_id
-                    payment_gateway
-                    altered_payment_gateway
-                    discount
-                    delivery_fee
-                    delivery_time
-                    created_at
-                    updated_at
-                    note
-                }
-            }
-        }
+      }
     }
+  }
 }
 
 mutation DateSelection($input: DateSelectionInput!) {
-    dateSelection(input:$input) {
+  dateSelection(input: $input) {
+    id
+    tracking_number
+    customer_id
+    customer_contact
+    customer_name
+    language
+    parent_id
+    order_status
+    payment_status
+    amount
+    sales_tax
+    total
+    paid_total
+    payment_id
+    payment_gateway
+    altered_payment_gateway
+    discount
+    delivery_fee
+    delivery_time
+    created_at
+    updated_at
+    note
+    customer {
+      id
+      name
+      email
+      shop_id
+      notification_token
+      created_at
+      updated_at
+      is_active
+    }
+    refund {
+      id
+      title
+      description
+      amount
+      status
+      refund_reason_id
+      created_at
+      updated_at
+    }
+    wallet_point {
+      id
+      amount
+    }
+    parent_order {
+      id
+      tracking_number
+      customer_id
+      customer_contact
+      customer_name
+      language
+      parent_id
+      order_status
+      payment_status
+      amount
+      sales_tax
+      total
+      paid_total
+      payment_id
+      payment_gateway
+      altered_payment_gateway
+      discount
+      delivery_fee
+      delivery_time
+      created_at
+      updated_at
+      note
+    }
+    children {
+      id
+      tracking_number
+      customer_id
+      customer_contact
+      customer_name
+      language
+      parent_id
+      order_status
+      payment_status
+      amount
+      sales_tax
+      total
+      paid_total
+      payment_id
+      payment_gateway
+      altered_payment_gateway
+      discount
+      delivery_fee
+      delivery_time
+      created_at
+      updated_at
+      note
+    }
+    payment_intent {
+      id
+      order_id
+      payment_gateway
+      tracking_number
+    }
+    coupon {
+      id
+      code
+      description
+      type
+      language
+      translated_languages
+      is_valid
+      message
+      amount
+      minimum_cart_amount
+      sub_total
+      active_from
+      expire_at
+      created_at
+      updated_at
+      target
+      is_approve
+      shop_id
+      user_id
+    }
+    shop {
+      id
+      owner_id
+      is_active
+      orders_count
+      products_count
+      name
+      slug
+      description
+      distance
+      lat
+      lng
+      created_at
+      updated_at
+    }
+    products {
+      id
+      name
+      slug
+      language
+      translated_languages
+      product_type
+      shop_id
+      author_id
+      manufacturer_id
+      blocked_dates
+      description
+      in_stock
+      is_taxable
+      is_digital
+      is_external
+      external_product_url
+      external_product_button_text
+      sale_price
+      max_price
+      min_price
+      ratings
+      total_reviews
+      in_wishlist
+      sku
+      status
+      height
+      length
+      width
+      price
+      quantity
+      unit
+      sold_quantity
+      in_flash_sale
+      created_at
+      updated_at
+      orders {
         id
         tracking_number
         customer_id
@@ -805,263 +981,326 @@ mutation DateSelection($input: DateSelectionInput!) {
         updated_at
         note
         customer {
-            id
-            name
-            email
-            shop_id
-            notification_token
-            created_at
-            updated_at
-            is_active
-        }
-        refund {
-            id
-            title
-            description
-            amount
-            status
-            refund_reason_id
-            created_at
-            updated_at
-        }
-        wallet_point {
-            id
-            amount
+          id
+          name
+          email
+          shop_id
+          notification_token
+          created_at
+          updated_at
+          is_active
         }
         parent_order {
-            id
-            tracking_number
-            customer_id
-            customer_contact
-            customer_name
-            language
-            parent_id
-            order_status
-            payment_status
-            amount
-            sales_tax
-            total
-            paid_total
-            payment_id
-            payment_gateway
-            altered_payment_gateway
-            discount
-            delivery_fee
-            delivery_time
-            created_at
-            updated_at
-            note
+          id
+          tracking_number
+          customer_id
+          customer_contact
+          customer_name
+          language
+          parent_id
+          order_status
+          payment_status
+          amount
+          sales_tax
+          total
+          paid_total
+          payment_id
+          payment_gateway
+          altered_payment_gateway
+          discount
+          delivery_fee
+          delivery_time
+          created_at
+          updated_at
+          note
         }
-        children {
-            id
-            tracking_number
-            customer_id
-            customer_contact
-            customer_name
-            language
-            parent_id
-            order_status
-            payment_status
-            amount
-            sales_tax
-            total
-            paid_total
-            payment_id
-            payment_gateway
-            altered_payment_gateway
-            discount
-            delivery_fee
-            delivery_time
-            created_at
-            updated_at
-            note
-        }
-        payment_intent {
-            id
-            order_id
-            payment_gateway
-            tracking_number
-        }
-        coupon {
-            id
-            code
-            description
-            type
-            language
-            translated_languages
-            is_valid
-            message
-            amount
-            minimum_cart_amount
-            sub_total
-            active_from
-            expire_at
-            created_at
-            updated_at
-            target
-            is_approve
-            shop_id
-            user_id
-        }
-        shop {
-            id
-            owner_id
-            is_active
-            orders_count
-            products_count
-            name
-            slug
-            description
-            distance
-            lat
-            lng
-            created_at
-            updated_at
-        }
-        products {
-            id
-            name
-            slug
-            language
-            translated_languages
-            product_type
-            shop_id
-            author_id
-            manufacturer_id
-            blocked_dates
-            description
-            in_stock
-            is_taxable
-            is_digital
-            is_external
-            external_product_url
-            external_product_button_text
-            sale_price
-            max_price
-            min_price
-            ratings
-            total_reviews
-            in_wishlist
-            sku
-            status
-            height
-            length
-            width
-            price
-            quantity
-            unit
-            sold_quantity
-            in_flash_sale
-            created_at
-            updated_at
-            orders {
-                id
-                tracking_number
-                customer_id
-                customer_contact
-                customer_name
-                language
-                parent_id
-                order_status
-                payment_status
-                amount
-                sales_tax
-                total
-                paid_total
-                payment_id
-                payment_gateway
-                altered_payment_gateway
-                discount
-                delivery_fee
-                delivery_time
-                created_at
-                updated_at
-                note
-                customer {
-                    id
-                    name
-                    email
-                    shop_id
-                    notification_token
-                    created_at
-                    updated_at
-                    is_active
-                }
-                parent_order {
-                    id
-                    tracking_number
-                    customer_id
-                    customer_contact
-                    customer_name
-                    language
-                    parent_id
-                    order_status
-                    payment_status
-                    amount
-                    sales_tax
-                    total
-                    paid_total
-                    payment_id
-                    payment_gateway
-                    altered_payment_gateway
-                    discount
-                    delivery_fee
-                    delivery_time
-                    created_at
-                    updated_at
-                    note
-                }
-            }
-        }
+      }
     }
+  }
 }
 
-mutation OrderListView($input:DateSelectionShopInput!) {
-    shopDateSelectionView( input:$input ) {
-        orderCount
-        productCount
-        reviewCount
-        refundsCount
-        grossSalesCount
-        pendingOrdersCount
+mutation DateSelectionAllOrders($input: DateSelectionAllOrdersInput!) {
+  dateSelectionAllOrders(input: $input) {
+    id
+    tracking_number
+    customer_id
+    customer_contact
+    customer_name
+    language
+    parent_id
+    order_status
+    payment_status
+    amount
+    sales_tax
+    total
+    paid_total
+    payment_id
+    payment_gateway
+    altered_payment_gateway
+    discount
+    delivery_fee
+    delivery_time
+    created_at
+    updated_at
+    note
+    customer {
+      id
+      name
+      email
+      shop_id
+      notification_token
+      created_at
+      updated_at
+      is_active
     }
+    refund {
+      id
+      title
+      description
+      amount
+      status
+      refund_reason_id
+      created_at
+      updated_at
+    }
+    wallet_point {
+      id
+      amount
+    }
+    parent_order {
+      id
+      tracking_number
+      customer_id
+      customer_contact
+      customer_name
+      language
+      parent_id
+      order_status
+      payment_status
+      amount
+      sales_tax
+      total
+      paid_total
+      payment_id
+      payment_gateway
+      altered_payment_gateway
+      discount
+      delivery_fee
+      delivery_time
+      created_at
+      updated_at
+      note
+    }
+    children {
+      id
+      tracking_number
+      customer_id
+      customer_contact
+      customer_name
+      language
+      parent_id
+      order_status
+      payment_status
+      amount
+      sales_tax
+      total
+      paid_total
+      payment_id
+      payment_gateway
+      altered_payment_gateway
+      discount
+      delivery_fee
+      delivery_time
+      created_at
+      updated_at
+      note
+    }
+    payment_intent {
+      id
+      order_id
+      payment_gateway
+      tracking_number
+    }
+    coupon {
+      id
+      code
+      description
+      type
+      language
+      translated_languages
+      is_valid
+      message
+      amount
+      minimum_cart_amount
+      sub_total
+      active_from
+      expire_at
+      created_at
+      updated_at
+      target
+      is_approve
+      shop_id
+      user_id
+    }
+    shop {
+      id
+      owner_id
+      is_active
+      orders_count
+      products_count
+      name
+      slug
+      description
+      distance
+      lat
+      lng
+      created_at
+      updated_at
+    }
+    products {
+      id
+      name
+      slug
+      language
+      translated_languages
+      product_type
+      shop_id
+      author_id
+      manufacturer_id
+      blocked_dates
+      description
+      in_stock
+      is_taxable
+      is_digital
+      is_external
+      external_product_url
+      external_product_button_text
+      sale_price
+      max_price
+      min_price
+      ratings
+      total_reviews
+      in_wishlist
+      sku
+      status
+      height
+      length
+      width
+      price
+      quantity
+      unit
+      sold_quantity
+      in_flash_sale
+      created_at
+      updated_at
+      orders {
+        id
+        tracking_number
+        customer_id
+        customer_contact
+        customer_name
+        language
+        parent_id
+        order_status
+        payment_status
+        amount
+        sales_tax
+        total
+        paid_total
+        payment_id
+        payment_gateway
+        altered_payment_gateway
+        discount
+        delivery_fee
+        delivery_time
+        created_at
+        updated_at
+        note
+        customer {
+          id
+          name
+          email
+          shop_id
+          notification_token
+          created_at
+          updated_at
+          is_active
+        }
+        parent_order {
+          id
+          tracking_number
+          customer_id
+          customer_contact
+          customer_name
+          language
+          parent_id
+          order_status
+          payment_status
+          amount
+          sales_tax
+          total
+          paid_total
+          payment_id
+          payment_gateway
+          altered_payment_gateway
+          discount
+          delivery_fee
+          delivery_time
+          created_at
+          updated_at
+          note
+        }
+      }
+    }
+  }
 }
 
-query DashboardOrder ($start_date:String,$end_date:String) {
-    dashboardOrder(start_date:$start_date,end_date:$end_date){
-         data {
-            id
-            tracking_number
-            customer_id
-            customer_contact
-            customer_name
-            language
-            parent_id
-            order_status
-            payment_status
-            amount
-            sales_tax
-            total
-            paid_total
-            payment_id
-            payment_gateway
-            altered_payment_gateway
-            discount
-            delivery_fee
-            delivery_time
-            created_at
-            updated_at
-            note
-        }
-        paginatorInfo {
-            count
-            currentPage
-            firstItem
-            hasMorePages
-            lastItem
-            lastPage
-            perPage
-            total
-        }
+mutation OrderListView($input: DateSelectionShopInput!) {
+  shopDateSelectionView(input: $input) {
+    orderCount
+    productCount
+    reviewCount
+    refundsCount
+    grossSalesCount
+    pendingOrdersCount
+  }
+}
+
+query DashboardOrder($start_date: String, $end_date: String) {
+  dashboardOrder(start_date: $start_date, end_date: $end_date) {
+    data {
+      id
+      tracking_number
+      customer_id
+      customer_contact
+      customer_name
+      language
+      parent_id
+      order_status
+      payment_status
+      amount
+      sales_tax
+      total
+      paid_total
+      payment_id
+      payment_gateway
+      altered_payment_gateway
+      discount
+      delivery_fee
+      delivery_time
+      created_at
+      updated_at
+      note
     }
+    paginatorInfo {
+      count
+      currentPage
+      firstItem
+      hasMorePages
+      lastItem
+      lastPage
+      perPage
+      total
+    }
+  }
 }

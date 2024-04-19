@@ -1,344 +1,350 @@
 extend type Query {
-    orders(
-        tracking_number: String @where(operator: "LIKE")
-        orderBy: String
-        sortedBy: String
-        customer_id: ID @eq
-        shop_id: ID @eq
-    ): [Order!]!
-        @paginate(
-            builder: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchOrders"
-            defaultCount: 10
-        )
-    order(id: ID, tracking_number: String): Order
-        @field(
-            resolver: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchSingleOrder"
-        )
-    dashboardOrder(
-        start_date:String
-        end_date:String
-        tracking_number: String @where(operator: "LIKE")
-        orderBy: String
-        sortedBy: String
-        customer_id: ID @eq
-        shop_id: ID @eq
-    ): [Order!]!
-        @paginate(
-            builder: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchDashboadOrders"
-            defaultCount: 10
-        )
+  orders(
+    tracking_number: String @where(operator: "LIKE")
+    orderBy: String
+    sortedBy: String
+    customer_id: ID @eq
+    shop_id: ID @eq
+  ): [Order]
+    @paginate(
+      builder: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchOrders"
+      defaultCount: 10
+    )
+
+  order(id: ID, tracking_number: String): Order
+    @field(resolver: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchSingleOrder")
+  dashboardOrder(
+    start_date: String
+    end_date: String
+    tracking_number: String @where(operator: "LIKE")
+    orderBy: String
+    sortedBy: String
+    customer_id: ID @eq
+    shop_id: ID @eq
+  ): [Order!]!
+    @paginate(
+      builder: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchDashboadOrders"
+      defaultCount: 10
+    )
 }
 
 type PaymentIntentInfo {
-    client_secret: String
-    is_redirect: Boolean
-    payment_id: String
-    redirect_url: String
-    amount: String
-    currency: String
+  client_secret: String
+  is_redirect: Boolean
+  payment_id: String
+  redirect_url: String
+  amount: String
+  currency: String
 }
 
 type Order {
-    id: ID!
-    tracking_number: String!
-    customer_id: ID
-    customer_contact: String!
-    customer_name: String
-    customer: User @belongsTo
-    language: String
-    refund: Refund @hasOne
-    wallet_point: WalletPoint @hasOne
-    parent_id: ID
-    parent_order: Order @belongsTo
-    children: [Order] @hasMany
-    order_status: String
-    payment_status: String
-    payment_intent: PaymentIntent
-    amount: Float!
-    sales_tax: Float!
-    total: Float!
-    paid_total: Float!
-    payment_id: String
-    payment_gateway: PaymentGatewayType!
-    altered_payment_gateway: String
-    coupon: Coupon @belongsTo
-    shop: Shop @belongsTo
-    discount: Float
-    delivery_fee: Float
-    delivery_time: String
-    products: [Product] @belongsToMany
-    created_at: DateTime
-    updated_at: DateTime
-    billing_address: UserAddress
-    shipping_address: UserAddress
-    note: String
+  id: ID!
+  tracking_number: String!
+  customer_id: ID
+  customer_contact: String!
+  customer_name: String
+  customer: User @belongsTo
+  language: String
+  refund: Refund @hasOne
+  wallet_point: WalletPoint @hasOne
+  parent_id: ID
+  parent_order: Order @belongsTo
+  children: [Order] @hasMany
+  order_status: String
+  payment_status: String
+  payment_intent: PaymentIntent
+  amount: Float!
+  sales_tax: Float!
+  total: Float!
+  paid_total: Float!
+  payment_id: String
+  payment_gateway: PaymentGatewayType!
+  altered_payment_gateway: String
+  coupon: Coupon @belongsTo
+  shop: Shop @belongsTo
+  discount: Float
+  delivery_fee: Float
+  delivery_time: String
+  products: [Product] @belongsToMany
+  created_at: DateTime
+  updated_at: DateTime
+  billing_address: UserAddress
+  shipping_address: UserAddress
+  note: String
 }
 
 type WalletPoint {
-    id: ID!
-    amount: Float
+  id: ID!
+  amount: Float
 }
 
 input SyncProductOrderBelongsToMany {
-    sync: [ConnectProductOrderPivot!]
+  sync: [ConnectProductOrderPivot!]
 }
 
 input ConnectCustomerBelongsTo {
-    connect: ID! @rules(apply: ["exists:users,id"])
+  connect: ID! @rules(apply: ["exists:users,id"])
 }
 input ConnectCouponBelongsTo {
-    connect: ID! @rules(apply: ["exists:coupons,id"])
+  connect: ID! @rules(apply: ["exists:coupons,id"])
 }
 
 input UpdateOrderInput {
-    id: ID!
-    order_status: String!
-    products: SyncProductOrderBelongsToMany
-    language: String
-    coupon: ConnectCouponBelongsTo
-    shop_id: ID @rules(apply: ["exists:shops,id"])
-    delivery_time: String
-    billing_address: UserAddressInput
-    shipping_address: UserAddressInput
-    altered_payment_gateway: String
+  id: ID!
+  order_status: String!
+  products: SyncProductOrderBelongsToMany
+  language: String
+  coupon: ConnectCouponBelongsTo
+  shop_id: ID @rules(apply: ["exists:shops,id"])
+  delivery_time: String
+  billing_address: UserAddressInput
+  shipping_address: UserAddressInput
+  altered_payment_gateway: String
 }
 
 input CardInput {
-    number: String!
-    expiryMonth: String!
-    expiryYear: String!
-    cvv: String!
-    email: String
+  number: String!
+  expiryMonth: String!
+  expiryYear: String!
+  cvv: String!
+  email: String
 }
 
 input CreateOrderInput {
-    customer_contact: String! @rules(apply: ["required"])
-    products: [ConnectProductOrderPivot!]! @rules(apply: ["required"])
-    amount: Float! @rules(apply: ["required"])
-    sales_tax: Float!
-    total: Float! @rules(apply: ["required"])
-    paid_total: Float! @rules(apply: ["required"])
-    payment_id: String
-    payment_gateway: PaymentGatewayType! @rules(apply: ["required"])
-    altered_payment_gateway: String
-    payment_sub_gateway: String
-    coupon_id: ID
-    shop_id: ID
-    customer_id: ID
-    discount: Float
-    use_wallet_points: Boolean
-    delivery_fee: Float
-    delivery_time: String
-    customer_name: String
-    card: CardInput
-    token: String
-    billing_address: UserAddressInput!
-    shipping_address: UserAddressInput!
-    language: String
-    note: String
-    isFullWalletPayment: Boolean
+  customer_contact: String! @rules(apply: ["required"])
+  products: [ConnectProductOrderPivot!]! @rules(apply: ["required"])
+  amount: Float! @rules(apply: ["required"])
+  sales_tax: Float!
+  total: Float! @rules(apply: ["required"])
+  paid_total: Float! @rules(apply: ["required"])
+  payment_id: String
+  payment_gateway: PaymentGatewayType! @rules(apply: ["required"])
+  altered_payment_gateway: String
+  payment_sub_gateway: String
+  coupon_id: ID
+  shop_id: ID
+  customer_id: ID
+  discount: Float
+  use_wallet_points: Boolean
+  delivery_fee: Float
+  delivery_time: String
+  customer_name: String
+  card: CardInput
+  token: String
+  billing_address: UserAddressInput!
+  shipping_address: UserAddressInput!
+  language: String
+  note: String
+  isFullWalletPayment: Boolean
 }
 
 input generateOrderExportUrlInput {
-    shop_id: ID
-        @rules(
-            apply: []
-            messages: { exists: "Sorry! The file doesn't exists." }
-        )
+  shop_id: ID
+    @rules(apply: [], messages: { exists: "Sorry! The file doesn't exists." })
 }
 
 input TranslatedLanguage {
-    subtotal: String
-    discount: String
-    tax: String
-    delivery_fee: String
-    total: String
-    products: String
-    quantity: String
-    invoice_no: String
-    date: String
-    paid_from_wallet: String
-    amount_due: String
+  subtotal: String
+  discount: String
+  tax: String
+  delivery_fee: String
+  total: String
+  products: String
+  quantity: String
+  invoice_no: String
+  date: String
+  paid_from_wallet: String
+  amount_due: String
 }
 
 input GenerateInvoiceDownloadUrlInput {
-    order_id: String!
-    translated_languages: TranslatedLanguage
-    is_rtl: Boolean!
-    language: String!
+  order_id: String!
+  translated_languages: TranslatedLanguage
+  is_rtl: Boolean!
+  language: String!
 }
 
 input PaymentInput {
-    products: [ConnectProductOrderPivot!]! @rules(apply: ["required"])
-    sales_tax: Float!
-    payment_gateway: PaymentGatewayType! @rules(apply: ["required"])
-    coupon_id: ID
-    shop_id: ID
-    customer_id: ID
-    language: String
-    discount: Float
-    use_wallet_points: Boolean
-    delivery_fee: Float
-    delivery_time: String
-    billing_address: UserAddressInput!
-    shipping_address: UserAddressInput!
+  products: [ConnectProductOrderPivot!]! @rules(apply: ["required"])
+  sales_tax: Float!
+  payment_gateway: PaymentGatewayType! @rules(apply: ["required"])
+  coupon_id: ID
+  shop_id: ID
+  customer_id: ID
+  language: String
+  discount: Float
+  use_wallet_points: Boolean
+  delivery_fee: Float
+  delivery_time: String
+  billing_address: UserAddressInput!
+  shipping_address: UserAddressInput!
 }
 type PaymentData {
-    id: String
-    currency: String
-    amount: Float
+  id: String
+  currency: String
+  amount: Float
 }
 type PaymentResponse {
-    order: PaymentData
-    redirect_url: String
-    is_redirect: Boolean!
-    payment_id: String
-    client_secret: String
+  order: PaymentData
+  redirect_url: String
+  is_redirect: Boolean!
+  payment_id: String
+  client_secret: String
 }
 
 input CreateOrderPaymentInput {
-    tracking_number: String
-    payment_gateway: String
+  tracking_number: String
+  payment_gateway: String
 }
 
 type Sorderalert {
-    orderalert: String
+  orderalert: String
 }
 
-type RproductAddtocart{
-    order: [AddtocartOrder]
-    wishlist: [AddtocartProduct]
-    addtocart: [AddtocartProduct]
+type RproductAddtocart {
+  order: [AddtocartOrder]
+  wishlist: [AddtocartProduct]
+  addtocart: [AddtocartProduct]
 }
 
-type AddtocartOrder{
-    id: ID!
-    tracking_number: String!
-    customer_id: ID
-    customer_contact: String!
-    customer_name: String
-    customer: User @belongsTo
-    language: String
-    refund: Refund @hasOne
-    wallet_point: WalletPoint @hasOne
-    parent_id: ID
-    parent_order: Order @belongsTo
-    children: [Order] @hasMany
-    order_status: String
-    payment_status: String
-    payment_intent: PaymentIntent
-    amount: Float!
-    sales_tax: Float!
-    total: Float!
-    paid_total: Float!
-    payment_id: String
-    payment_gateway: PaymentGatewayType!
-    altered_payment_gateway: String
-    coupon: Coupon @belongsTo
-    shop: Shop @belongsTo
-    discount: Float
-    delivery_fee: Float
-    delivery_time: String
-    products: [Product] @belongsToMany
-    created_at: DateTime
-    updated_at: DateTime
-    billing_address: UserAddress
-    shipping_address: UserAddress
-    note: String
+type AddtocartOrder {
+  id: ID!
+  tracking_number: String!
+  customer_id: ID
+  customer_contact: String!
+  customer_name: String
+  customer: User @belongsTo
+  language: String
+  refund: Refund @hasOne
+  wallet_point: WalletPoint @hasOne
+  parent_id: ID
+  parent_order: Order @belongsTo
+  children: [Order] @hasMany
+  order_status: String
+  payment_status: String
+  payment_intent: PaymentIntent
+  amount: Float!
+  sales_tax: Float!
+  total: Float!
+  paid_total: Float!
+  payment_id: String
+  payment_gateway: PaymentGatewayType!
+  altered_payment_gateway: String
+  coupon: Coupon @belongsTo
+  shop: Shop @belongsTo
+  discount: Float
+  delivery_fee: Float
+  delivery_time: String
+  products: [Product] @belongsToMany
+  created_at: DateTime
+  updated_at: DateTime
+  billing_address: UserAddress
+  shipping_address: UserAddress
+  note: String
 }
 
-type AddtocartProduct{
-    id: ID!
-    name: String!
-    price: Float
-    image: String!
-    slug: String!
-    created_at: DateTime
-    updated_at: DateTime
+type AddtocartProduct {
+  id: ID!
+  name: String!
+  price: Float
+  image: String!
+  slug: String!
+  created_at: DateTime
+  updated_at: DateTime
 }
 
-type AttachmentAddtocart{
-    id: ID
-    original: String
-    thumbnail: String
+type AttachmentAddtocart {
+  id: ID
+  original: String
+  thumbnail: String
 }
 
 input InputproductAddtocart {
-    productid:ID
+  productid: ID
 }
 
 input DateSelectionInput {
-    startdate:String!
-    enddate:String!
-    status:String!
+  startdate: String!
+  enddate: String!
+  status: String!
 }
 
-
-input DateSelectionInput {
-    startdate:String!
-    enddate:String!
-    status:String!
+input DateSelectionAllOrdersInput {
+  startdate: String!
+  enddate: String!
 }
+
 input DateSelectionShopInput {
-    shopid:String!
-    startdate:String!
-    enddate:String!
+  shopid: String!
+  startdate: String!
+  enddate: String!
 }
 type ShopFilterResponse {
-    orderCount:String!
-    productCount:String!
-    reviewCount:String!
-    refundsCount:String!
-    grossSalesCount:String!
-    pendingOrdersCount:String!
+  orderCount: String!
+  productCount: String!
+  reviewCount: String!
+  refundsCount: String!
+  grossSalesCount: String!
+  pendingOrdersCount: String!
 }
 
 type Review {
-    id: ID!
-    comment: String
-    rating: String
-    photos: [Attachment]
-    user: User @belongsTo
-    user_id: ID
-    order_id: ID
-    product: Product @belongsTo
-    product_id: ID
-    variation_option_id: ID
-    shop: Shop @belongsTo
-    shop_id: ID
-    feedbacks: [Feedback] @morphMany
-    positive_feedbacks_count: Int
-    negative_feedbacks_count: Int
-    abusive_reports_count: Int
-    abusive_reports: [AbusiveReport] @morphMany
-    my_feedback: Feedback
-    created_at: String
-    updated_at: String
+  id: ID!
+  comment: String
+  rating: String
+  photos: [Attachment]
+  user: User @belongsTo
+  user_id: ID
+  order_id: ID
+  product: Product @belongsTo
+  product_id: ID
+  variation_option_id: ID
+  shop: Shop @belongsTo
+  shop_id: ID
+  feedbacks: [Feedback] @morphMany
+  positive_feedbacks_count: Int
+  negative_feedbacks_count: Int
+  abusive_reports_count: Int
+  abusive_reports: [AbusiveReport] @morphMany
+  my_feedback: Feedback
+  created_at: String
+  updated_at: String
 }
 
 extend type Mutation {
-    isorderalert(id: ID): Sorderalert @field(resolver: "OrderMutator@isorderalert")
-    deleteOrder(id: ID!): Order @delete @can(ability: "super_admin")
-    createOrder(input: CreateOrderInput! @spread): Order
-        @field(resolver: "OrderMutator@store")
-    createOrderPayment(input: CreateOrderPaymentInput! @spread): Boolean
-        @field(resolver: "OrderMutator@createOrderPayment")
-    updateOrder(input: UpdateOrderInput! @spread): Order
-        @field(resolver: "OrderMutator@update")
-    generateOrderExportUrl(input: generateOrderExportUrlInput! @spread): String
-        @field(resolver: "AuthMutator@generateOrderExportUrl")
-    generateInvoiceDownloadUrl(
-        input: GenerateInvoiceDownloadUrlInput! @spread
-    ): String @field(resolver: "OrderMutator@generateInvoiceDownloadUrl")
+  isorderalert(id: ID): Sorderalert
+    @field(resolver: "OrderMutator@isorderalert")
+  deleteOrder(id: ID!): Order @delete @can(ability: "super_admin")
+  createOrder(input: CreateOrderInput! @spread): Order
+    @field(resolver: "OrderMutator@store")
+  createOrderPayment(input: CreateOrderPaymentInput! @spread): Boolean
+    @field(resolver: "OrderMutator@createOrderPayment")
+  updateOrder(input: UpdateOrderInput! @spread): Order
+    @field(resolver: "OrderMutator@update")
+  generateOrderExportUrl(input: generateOrderExportUrlInput! @spread): String
+    @field(resolver: "AuthMutator@generateOrderExportUrl")
+  generateInvoiceDownloadUrl(
+    input: GenerateInvoiceDownloadUrlInput! @spread
+  ): String @field(resolver: "OrderMutator@generateInvoiceDownloadUrl")
 
-    AddtocartProduct(input: InputproductAddtocart): String @field(resolver: "OrderMutator@AddtocartProduct")
-    AddtocartProductRemove(input: InputproductAddtocart): String @field(resolver: "OrderMutator@AddtocartProductRemove")
-    productAddtocart(id: ID!): RproductAddtocart @field(resolver: "OrderMutator@productAddtocart")
-    orderstatus(status: String): [Order] @field(resolver: "OrderMutator@orderstatus")
+  AddtocartProduct(input: InputproductAddtocart): String
+    @field(resolver: "OrderMutator@AddtocartProduct")
+  AddtocartProductRemove(input: InputproductAddtocart): String
+    @field(resolver: "OrderMutator@AddtocartProductRemove")
+  productAddtocart(id: ID!): RproductAddtocart
+    @field(resolver: "OrderMutator@productAddtocart")
+  orderstatus(status: String): [Order]
+    @field(resolver: "OrderMutator@orderstatus")
 
-    dateSelection(input: DateSelectionInput!): [Order] @field(resolver: "OrderMutator@dateSelection")
-    shopDateSelectionView(input: DateSelectionShopInput!): ShopFilterResponse @field(resolver: "OrderMutator@shopDateSelectionView")
-    reviewList(shopReviewId:ID!): [Review] @field(resolver:"OrderMutator@reviewList")
-    
-    cancelOrder(orderId:String!): Order @field(resolver:"OrderMutator@cancelOrder")
+  dateSelection(input: DateSelectionInput!): [Order]
+    @field(resolver: "OrderMutator@dateSelection")
+  dateSelectionAllOrders(input: DateSelectionAllOrdersInput!): [Order]
+    @field(resolver: "OrderMutator@dateSelectionAllOrders")
+  shopDateSelectionView(input: DateSelectionShopInput!): ShopFilterResponse
+    @field(resolver: "OrderMutator@shopDateSelectionView")
+  reviewList(shopReviewId: ID!): [Review]
+    @field(resolver: "OrderMutator@reviewList")
+
+  cancelOrder(orderId: String!): Order
+    @field(resolver: "OrderMutator@cancelOrder")
 }
