@@ -35,7 +35,7 @@ const OrdersWithStatus = ({ orderStatus }: { orderStatus: string }) => {
         <Loader showText={false} />
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
             {data?.ordersByStatus?.data?.map((order) => (
               <OrderCard order={order as Order} key={order?.id} />
             ))}

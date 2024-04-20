@@ -140,7 +140,7 @@ export default function ShopOrderInfoPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-9 -mx-2 pt-5">
+      <div className="grid grid-cols-4 xl:grid-cols-6 2xl:grid-cols-9 -mx-2 pt-5">
         <button
           key="all-orders"
           className={`mx-2 px-4 py-2 my-1 rounded ${
