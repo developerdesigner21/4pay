@@ -1,11 +1,14 @@
 import { LIMIT } from '@/utils/constants';
-import { Order } from '__generated__/__types__';
+import { Order, PaginatorInfo } from '__generated__/__types__';
 import ErrorMessage from '../ui/error-message';
 import NotFound from '../ui/not-found';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 import Loader from '../ui/loader/loader';
 import OrderCard from './card';
+import { memo } from 'react';
+import Button from '../ui/button';
+import Pagination from '../ui/pagination';
 
 interface Props {
   limit?: number;
@@ -18,9 +21,11 @@ interface Props {
   isLoadingMore?: boolean;
   hasMore?: boolean;
   className?: string;
+  paginatorInfo: PaginatorInfo | undefined;
+  handlePagination: (current: number) => void;
 }
 
-export function Grid({
+function Grid({
   className,
   orders,
   isLoading,
@@ -29,6 +34,8 @@ export function Grid({
   isLoadingMore,
   hasMore,
   limit = LIMIT,
+  paginatorInfo,
+  handlePagination,
 }: Props) {
   if (error) return <ErrorMessage message={error.message} />;
 
@@ -43,14 +50,17 @@ export function Grid({
 
   return (
     <div className={cn('w-full', className)}>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        {isLoading && !orders?.length ? (
-          <Loader showText={false} />
-        ) : (
-          orders?.map((order) => <OrderCard order={order} key={order.id} />)
-        )}
-      </div>
-      {/* {hasMore && (
+      {isLoading && !orders?.length ? (
+        <Loader showText={false} />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+          {orders?.map((order) => (
+            <OrderCard order={order} key={order.id} />
+          ))}
+        </div>
+      )}
+      {/* 
+      {hasMore && (
         <div className="flex justify-center mt-8 mb-4 sm:mb-6 lg:mb-2 lg:mt-12">
           <Button
             loading={isLoadingMore}
@@ -61,6 +71,18 @@ export function Grid({
           </Button>
         </div>
       )} */}
+      {!!paginatorInfo?.total && (
+        <div className="flex items-center justify-end">
+          <Pagination
+            total={paginatorInfo?.total}
+            current={paginatorInfo?.currentPage}
+            pageSize={paginatorInfo?.perPage}
+            onChange={handlePagination}
+          />
+        </div>
+      )}
     </div>
   );
 }
+
+export default Grid;

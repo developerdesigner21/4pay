@@ -14,46 +14,7 @@ import AllOrders from '@/components/orders/all-orders';
 import AllOrdersWithDateFilter from '@/components/orders/all-orders-with-date-filter';
 import OrdersWithStatus from '@/components/orders/orders-with-status';
 import OrdersWithStatusAndDateFilter from '@/components/orders/orders-with-date-filter';
-
-const tabs = [
-  { id: 1, title: 'All Orders', value: 'all' },
-  { id: 2, title: 'Pending', value: 'order-pending' },
-  {
-    id: 3,
-    title: 'Completed',
-    value: 'order-completed',
-  },
-  {
-    id: 4,
-    title: 'Cancelled',
-    value: 'order-cancelled',
-  },
-  {
-    id: 5,
-    title: 'Processing',
-    value: 'order-processing',
-  },
-  {
-    id: 6,
-    title: 'Refunded',
-    value: 'order-refunded',
-  },
-  {
-    id: 7,
-    title: 'Failed',
-    value: 'order-failed',
-  },
-  {
-    id: 8,
-    title: 'Out for Delivery',
-    value: 'order-out-for-delivery',
-  },
-  {
-    id: 9,
-    title: 'Local Facility',
-    value: 'order-at-local-facility',
-  },
-];
+import { ORDER_STATUS } from '@/utils/order-status';
 
 export default function ShopOrderInfoPage() {
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -65,14 +26,14 @@ export default function ShopOrderInfoPage() {
   const [isOrdersWithStatus, setOrdersWithStatus] = useState<boolean>(false);
   const [isOrdersWithStatusAndFilter, setOrdersWithStatusAndFilter] =
     useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const [activeTab, setActiveTab] = useState('all');
   const [orderStatus, setOrderStaus] = useState<string>('all');
   const [isActualizar, setIsActualizar] = useState(false);
   const [isDateRangeValid, setDateRangeValid] = useState(true);
 
-  const handleTabChange = (id: number, status: string) => {
-    setActiveTab(id);
-    setOrderStaus(status);
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    setOrderStaus(value);
   };
 
   useEffect(() => {
@@ -180,15 +141,24 @@ export default function ShopOrderInfoPage() {
       </div>
 
       <div className="grid grid-cols-9 -mx-2 pt-5">
-        {tabs.map((tab) => (
+        <button
+          key="all-orders"
+          className={`mx-2 px-4 py-2 my-1 rounded ${
+            activeTab === 'all' ? 'bg-accent text-white' : 'bg-gray-300'
+          }`}
+          onClick={() => handleTabChange('all')}
+        >
+          All
+        </button>
+        {ORDER_STATUS.map((tab) => (
           <button
-            key={tab.id}
+            key={tab.status}
             className={`mx-2 px-4 py-2 my-1 rounded ${
-              activeTab === tab.id ? 'bg-accent text-white' : 'bg-gray-300'
+              activeTab === tab.status ? 'bg-accent text-white' : 'bg-gray-300'
             }`}
-            onClick={() => handleTabChange(tab.id, tab.value)}
+            onClick={() => handleTabChange(tab.status)}
           >
-            {tab.title}
+            {tab.name.replace(/^Order\s/, '')}
           </button>
         ))}
       </div>

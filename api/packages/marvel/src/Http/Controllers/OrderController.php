@@ -579,25 +579,6 @@ class OrderController extends CoreController
         $datalist = Order::where('order_status','=',$request->status)->orderBy('id', 'DESC')->get();
         return $datalist;
     }
-    public function dateSelection(Request $request){
-        $startDate= [$request->get('input')['startdate']];
-        $endDate =  [$request->get('input')['enddate']];
-        $testdetail = Order::whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate])
-                   ->where('order_status', $request->input['status'])
-                   ->orderBy('id', 'DESC')
-                   ->get();
-    
-        return $testdetail;
-    } 
-    public function dateSelectionAllOrders(Request $request){
-        $startDate= [$request->get('input')['startdate']];
-        $endDate =  [$request->get('input')['enddate']];
-        $testdetail = Order::whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate])
-                   ->orderBy('id', 'DESC')
-                   ->get();
-    
-        return $testdetail;
-    } 
     
     public function fetchProducts(Request $request)
     {
@@ -731,6 +712,54 @@ class OrderController extends CoreController
             return $this->repository->with('children')->where('id', '!=', null)->whereBetween('created_at', [$startDate, $endDate]);
         }
     }
+
+    // Orders with status and date selection
+    public function fetchOrdersByDateSelection(Request $request){
+        $startDate = $request->start_date;
+        $endDate =  $request->end_date;
+
+        $startDates = strtotime($startDate);
+        $endDates = strtotime($endDate);
+        {
+            $user = $request->user();
+            if (!$user) {
+                throw new AuthorizationException(NOT_AUTHORIZED);
+            }
+            $Orderalertupdate = User::where('id','=',$user->id)->first();
+            if ($Orderalertupdate) {
+                $Orderalertupdate->orderalert = 0;
+                $Orderalertupdate->save();
+            }
+            return $this->repository->with('children')->where('id', '!=', null)->where('order_status','=',$request->status)->whereBetween('created_at', [$startDate, $endDate])->orderBy('id', 'DESC');
+        }
+    }
+
+    // Orders based on status
+    public function fetchOrdersByStatus(Request $request){
+        return $this->repository->with('children')->where('id', '!=', null)->where('order_status','=',$request->status)->orderBy('id', 'DESC');
+    }
+
+    // All orders with date selection
+    public function fetchAllOrdersByDateSelection(Request $request){
+        $startDate = $request->start_date;
+        $endDate =  $request->end_date;
+
+        $startDates = strtotime($startDate);
+        $endDates = strtotime($endDate);
+        {
+            $user = $request->user();
+            if (!$user) {
+                throw new AuthorizationException(NOT_AUTHORIZED);
+            }
+            $Orderalertupdate = User::where('id','=',$user->id)->first();
+            if ($Orderalertupdate) {
+                $Orderalertupdate->orderalert = 0;
+                $Orderalertupdate->save();
+            }
+            return $this->repository->with('children')->where('id', '!=', null)->whereBetween('created_at', [$startDate, $endDate])->orderBy('id', 'DESC');
+        }
+    } 
+
     public function cancelOrder(Request $request) {
 
         $CancelOrderdData = Order::where('tracking_number',$request->orderId)->first();

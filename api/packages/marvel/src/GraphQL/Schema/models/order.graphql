@@ -26,6 +26,32 @@ extend type Query {
       builder: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchDashboadOrders"
       defaultCount: 10
     )
+  dateSelection(
+    start_date: String
+    end_date: String
+    status: String
+    orderBy: String
+    sortedBy: String
+  ): [Order]
+    @paginate(
+      builder: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchOrdersByDateSelection"
+      defaultCount: 10
+    )
+  ordersByStatus(status: String, orderBy: String, sortedBy: String): [Order]
+    @paginate(
+      builder: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchOrdersByStatus"
+      defaultCount: 10
+    )
+  allOrdersByDateSelection(
+    start_date: String
+    end_date: String
+    orderBy: String
+    sortedBy: String
+  ): [Order]
+    @paginate(
+      builder: "Marvel\\GraphQL\\Queries\\OrderQuery@fetchAllOrdersByDateSelection"
+      defaultCount: 10
+    )
 }
 
 type PaymentIntentInfo {
@@ -85,6 +111,7 @@ input SyncProductOrderBelongsToMany {
 input ConnectCustomerBelongsTo {
   connect: ID! @rules(apply: ["exists:users,id"])
 }
+
 input ConnectCouponBelongsTo {
   connect: ID! @rules(apply: ["exists:coupons,id"])
 }
@@ -179,11 +206,13 @@ input PaymentInput {
   billing_address: UserAddressInput!
   shipping_address: UserAddressInput!
 }
+
 type PaymentData {
   id: String
   currency: String
   amount: Float
 }
+
 type PaymentResponse {
   order: PaymentData
   redirect_url: String
@@ -326,7 +355,6 @@ extend type Mutation {
   generateInvoiceDownloadUrl(
     input: GenerateInvoiceDownloadUrlInput! @spread
   ): String @field(resolver: "OrderMutator@generateInvoiceDownloadUrl")
-
   AddtocartProduct(input: InputproductAddtocart): String
     @field(resolver: "OrderMutator@AddtocartProduct")
   AddtocartProductRemove(input: InputproductAddtocart): String
@@ -335,16 +363,10 @@ extend type Mutation {
     @field(resolver: "OrderMutator@productAddtocart")
   orderstatus(status: String): [Order]
     @field(resolver: "OrderMutator@orderstatus")
-
-  dateSelection(input: DateSelectionInput!): [Order]
-    @field(resolver: "OrderMutator@dateSelection")
-  dateSelectionAllOrders(input: DateSelectionAllOrdersInput!): [Order]
-    @field(resolver: "OrderMutator@dateSelectionAllOrders")
   shopDateSelectionView(input: DateSelectionShopInput!): ShopFilterResponse
     @field(resolver: "OrderMutator@shopDateSelectionView")
   reviewList(shopReviewId: ID!): [Review]
     @field(resolver: "OrderMutator@reviewList")
-
   cancelOrder(orderId: String!): Order
     @field(resolver: "OrderMutator@cancelOrder")
 }

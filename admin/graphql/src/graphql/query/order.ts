@@ -1,19 +1,16 @@
 import { useOrdersQuery } from '../orders.graphql';
 import { NetworkStatus } from '@apollo/client';
 
-export function useOrders() {
+export function useOrders({ variables }: { variables: any }) {
   const {
     data,
     loading: isLoading,
     error,
     fetchMore,
     networkStatus,
+    refetch,
   } = useOrdersQuery({
-    variables: {
-      first: 10,
-      orderBy: 'updated_at',
-      sortedBy: 'DESC',
-    },
+    variables: variables,
     notifyOnNetworkStatusChange: true,
   });
 
@@ -28,13 +25,13 @@ export function useOrders() {
   }
 
   return {
-    orders: data?.orders?.data ?? [],
+    orders: data?.orders?.data,
     paginatorInfo: data?.orders?.paginatorInfo,
     isLoading,
-    isFetching: networkStatus === NetworkStatus.refetch,
     error,
     isLoadingMore: networkStatus === NetworkStatus.fetchMore,
     loadMore: handleLoadMore,
     hasMore: Boolean(data?.orders?.paginatorInfo?.hasMorePages),
+    refetch,
   };
 }

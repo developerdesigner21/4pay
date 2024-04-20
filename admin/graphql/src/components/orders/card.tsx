@@ -2,6 +2,12 @@ import { Order } from '__generated__/__types__';
 import Image from 'next/image';
 import icon from '@/assets/Frame (1).png';
 import icon2 from '@/assets/Vector.png';
+import { ORDER_STATUS } from '@/utils/order-status';
+import { useTranslation } from 'react-i18next';
+import Select from '../ui/select/select';
+import { useUpdateOrderMutation } from '@/graphql/orders.graphql';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 interface ProductCardProps {
   order: Order;
@@ -9,39 +15,56 @@ interface ProductCardProps {
 }
 
 const status: Record<string, string> = {
-  'order-pending': 'Pending',
-  'order-processing': 'Processing',
-  'order-completed': 'Completed',
-  'order-cancelled': 'Cancelled',
-  'order-refunded': 'Refunded',
-  'order-failed': 'Failed',
-  'order-out-for-delivery': 'Out For Delivery',
-  'order-at-local-facility': 'Local Facility',
+  'order-pending': 'Order Pending',
+  'order-processing': 'Order Processing',
+  'order-completed': 'Order Completed',
+  'order-cancelled': 'Order Cancelled',
+  'order-refunded': 'Order Refunded',
+  'order-failed': 'Order Failed',
+  'order-out-for-delivery': 'Order Out For Delivery',
+  'order-at-local-facility': 'Order At Local Facility',
 };
 
 const OrderCard: React.FC<ProductCardProps> = ({ order, className }) => {
+  const { t } = useTranslation();
+  const [updateOrder, { loading: updating }] = useUpdateOrderMutation({
+    onCompleted: () => {
+      toast.success(t('common:successfully-updated'));
+    },
+  });
+
+  const updateStatus = (id: string, status: string) => {
+    updateOrder({
+      variables: {
+        input: {
+          id: id,
+          order_status: status,
+        },
+      },
+    });
+  };
+
   return (
     <div
       key={order.id + '' + order?.created_at}
       className="bg-[#009F7F1A] p-5 rounded-lg"
     >
       <div className="flex justify-center items-center uppercase">
-        {/* <Avatar name={'SM'} /> */}
         <p className="text-2xl font-semibold">{order?.customer_name}</p>
-        {/* <MoreIcon className="h-4" /> */}
       </div>
+
       <div className="flex justify-around pt-5">
         {order?.customer_id && <p className="text-sm">{order?.customer_id}</p>}
-
         <p className="text-sm">{order?.created_at}</p>
       </div>
+
       <div>
         <p className="text-black font-semibold text-base border-b-2 border-[#DCDCDC] py-5 text-center">
           {order?.tracking_number}
         </p>
         {order?.order_status && (
           <p className="text-[#175B46] font-semibold border-b-2 border-[#DCDCDC] py-3 text-center">
-            {status[order?.order_status]}
+            {status[order?.order_status].replace(/^Order\s/, '')}
           </p>
         )}
 
@@ -55,6 +78,22 @@ const OrderCard: React.FC<ProductCardProps> = ({ order, className }) => {
         <div className="flex flex-row justify-between border-b-2 border-[#DCDCDC] py-3">
           <p className="text-sm">Preparation Time:</p>
           <p className="text-sm">1min</p>
+        </div>
+        <div className="flex flex-row items-center justify-between border-b-2 border-[#DCDCDC] py-3">
+          <p className="text-sm">Status</p>
+          <Select
+            name="order_status"
+            placeholder={t('form:input-placeholder-order-status')}
+            getOptionLabel={(option: any) => option.name}
+            getOptionValue={(option: any) => option.status}
+            options={ORDER_STATUS.slice(1, 6)}
+            onChange={(selected: any) =>
+              updateStatus(order.id, selected.status)
+            }
+            defaultInputValue={order?.order_status!}
+            blurInputOnSelect
+            isDisabled={updating}
+          />
         </div>
 
         {order?.products && order?.products?.length > 0 && (
