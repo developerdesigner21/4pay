@@ -123,6 +123,10 @@ type Variation {
     quantity: Int
     sold_quantity: Int
     options: [VariationOption]
+    height: String
+    length: String
+    width: String
+    weight: String
 }
 
 union Fileable = Product | Variation
@@ -271,6 +275,10 @@ input VariationInput {
     price: Float!
     quantity: Int!
     options: [VariationOptionInput]
+    height: String
+    length: String
+    width: String
+    weight: String
 }
 
 # input NewAttachmentInput {

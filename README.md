@@ -1,3 +1,5 @@
+https://knockknock.mx/
+
 FrontEnd:
 1. root file
 2. yarn
@@ -12,6 +14,8 @@ Backend
 
 php artisan storage:link
 
+
+https://pickbazar-doc.vercel.app/vps-server-manual#for-rest-api
 sudo chown -R www-data:www-data storage
 sudo chown -R www-data:www-data bootstrap/cache
 
