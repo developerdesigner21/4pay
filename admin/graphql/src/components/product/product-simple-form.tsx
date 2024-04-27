@@ -98,6 +98,13 @@ export default function SimpleProductForm({ initialValues }: IProps) {
           variant="outline"
           className="mb-5"
         />
+        <Input
+          label={t('form:input-label-weight')}
+          {...register('length')}
+          error={t(errors.length?.message!)}
+          variant="outline"
+          className="mb-5"
+        />
         <Checkbox
           {...register('is_digital')}
           id="is_digital"

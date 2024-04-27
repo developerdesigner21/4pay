@@ -434,6 +434,20 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
               className="mb-5"
               error={t(errors.address?.zip?.message!)}
             />
+            <Input
+              label={t('form:input-label-latitude')}
+              {...register('address.lat')}
+              variant="outline"
+              className="mb-5"
+              error={t(errors.address?.zip?.message!)}
+            />
+            <Input
+              label={t('form:input-label-longitude')}
+              {...register('address.lng')}
+              variant="outline"
+              className="mb-5"
+              error={t(errors.address?.zip?.message!)}
+            />
             <TextArea
               label={t('form:input-label-street-address')}
               {...register('address.street_address')}

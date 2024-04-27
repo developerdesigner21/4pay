@@ -24,6 +24,8 @@ input UserAddressInput {
     city: String
     state: String
     zip: String
+    lat: String
+    lng: String
 }
 
 type GoogleMapLocation {

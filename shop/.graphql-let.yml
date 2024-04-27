@@ -1,4 +1,4 @@
-schema: https://knockknock.mx/backend/graphql
+schema: http://localhost:8000/graphql
 # schema: https://4pay.ai/backend/graphql
 documents: ./src/framework/graphql/**/*.graphql
 plugins:
