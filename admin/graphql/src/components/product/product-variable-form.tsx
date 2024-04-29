@@ -225,6 +225,34 @@ export default function VariableProductForm({
                           variant="outline"
                           className="mb-5"
                         />
+                        <Input
+                          label={t('form:input-label-width')}
+                          {...register(`variation_options.${index}.width`)}
+                          error={t(errors.width?.message!)}
+                          variant="outline"
+                          className="mb-5"
+                        />
+                        <Input
+                          label={t('form:input-label-height')}
+                          {...register(`variation_options.${index}.height`)}
+                          error={t(errors.height?.message!)}
+                          variant="outline"
+                          className="mb-5"
+                        />
+                        <Input
+                          label={t('form:input-label-length')}
+                          {...register(`variation_options.${index}.length`)}
+                          error={t(errors.length?.message!)}
+                          variant="outline"
+                          className="mb-5"
+                        />
+                        <Input
+                          label={t('form:input-label-weight')}
+                          {...register(`variation_options.${index}.length`)}
+                          error={t(errors.length?.message!)}
+                          variant="outline"
+                          className="mb-5"
+                        />
                       </div>
 
                       <div>
