@@ -79,36 +79,36 @@ const ItemCard = ({ item, notAvailable }: Props) => {
 
   return (
     <div className="flex justify-between py-2 items-center">
-      <div className="flex items-center justify-between text-base">
+      <div className="">
         <span
           className={cn('text-sm', notAvailable ? 'text-red-500 flex' : 'text-body flex items-center')}
         >
-          <span
-            className={cn(
-              'text-sm font-bold',
-              notAvailable ? 'text-red-500' : 'text-heading'
-            )}
-          >
-            {/* {item.quantity} */}
-            {/* <div className="flex-shrink-0"> */}
-              <Counter
-                value={item.quantity}
-                onDecrement={handleRemoveClick}
-                onIncrement={handleIncrement}
-                variant="florine"
-                disabled={outOfStock}
-              />
-            {/* </div> */}
-          </span>
-          <span className="mx-2">x</span>
-          <span>{item.name}</span> | <span>{item.unit}</span>{' '}
+          <span>{item.name} | {item.unit}</span>{' '}
           <span> {item?.in_flash_sale ? '(On Sale)' : ''} </span>
         </span>
+        <span
+          className={cn('text-sm', notAvailable ? 'text-red-500' : 'text-body')}
+        >
+          {!notAvailable ? price : t('text-unavailable')}
+        </span>
       </div>
+      
       <span
-        className={cn('text-sm', notAvailable ? 'text-red-500 pl-2' : 'text-body pl-2')}
+        className={cn(
+          'text-sm font-bold',
+          notAvailable ? 'text-red-500' : 'text-heading'
+        )}
       >
-        {!notAvailable ? price : t('text-unavailable')}
+        {/* {item.quantity} */}
+        {/* <div className="flex-shrink-0"> */}
+          <Counter
+            value={item.quantity}
+            onDecrement={handleRemoveClick}
+            onIncrement={handleIncrement}
+            variant="florine"
+            disabled={outOfStock}
+          />
+        {/* </div> */}
       </span>
       <button
         className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted transition-all duration-200 hover:bg-gray-100 hover:text-red-600 focus:bg-gray-100 focus:text-red-600 focus:outline-0 ltr:ml-3 ltr:-mr-2 rtl:mr-3 rtl:-ml-2"
