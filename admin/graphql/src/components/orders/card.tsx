@@ -27,6 +27,7 @@ const status: Record<string, string> = {
 
 const OrderCard: React.FC<ProductCardProps> = ({ order, className }) => {
   const { t } = useTranslation();
+  const orderStatus=ORDER_STATUS.slice(1, 6)?.map((d)=>({label:d.name,value:d.status}))
   const [updateOrder, { loading: updating }] = useUpdateOrderMutation({
     onCompleted: () => {
       toast.success(t('common:successfully-updated'));
@@ -83,15 +84,18 @@ const OrderCard: React.FC<ProductCardProps> = ({ order, className }) => {
           <p className="text-sm">Status</p>
           <Select
             name="order_status"
+            value={orderStatus?.find((s)=>s.value==order?.order_status)}
+            // defaultValue={{label:order?.name!,value:order?.order_status!}}
             placeholder={t('form:input-placeholder-order-status')}
-            getOptionLabel={(option: any) => option.name}
-            getOptionValue={(option: any) => option.status}
-            options={ORDER_STATUS.slice(1, 6)}
-            onChange={(selected: any) =>
-              updateStatus(order.id, selected.status)
-            }
-            defaultInputValue={order?.order_status!}
-            blurInputOnSelect
+            // getOptionLabel={(option: any) => option.name}
+            // getOptionValue={(option: any) => option.status}
+            options={orderStatus}
+            onChange={(selected: any) =>{
+              updateStatus(order.id, selected.value)
+            }}
+            isSearchable={true}
+            // defaultInputValue={order?.order_status!}
+            // blurInputOnSelect
             isDisabled={updating}
           />
         </div>
