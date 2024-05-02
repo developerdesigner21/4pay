@@ -527,15 +527,16 @@ export default function CompactLayout({ variables }: HomePageProps) {
           }}
         >
           <SwiperSlide>
-            <div className="bg-[#E0EEF6] grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md">
+            {/* <div className="bg-[#E0EEF6] grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md"> */}
+            <div className="bg-[#E0EEF6] flex flex-col-reverse items-center md:flex-row sm:flex-col-reverse  gap-4 p-4 rounded-md">
               <div className="col-span-2 space-y-3">
-                <p className="text-2xl font-semibold">Entrega urgente</p>
-                <p className="text-gray-600	">
+                <p className="text-2xl font-semibold text-center md:text-left lg:text-left">Entrega urgente</p>
+                <p className="text-gray-600	text-center md:text-left lg:text-left">
                   Consulte su tienda cercana para recibir su pedido en 45
                   minutos
                 </p>
               </div>
-              <div>
+              <div className='text-center'>
                 <Image
                   className="h-auto max-w-lg lg:ms-auto m-auto"
                   src={DeliveryIcon}
@@ -547,10 +548,10 @@ export default function CompactLayout({ variables }: HomePageProps) {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="bg-[#BAE6D3]  grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md">
+            <div className="bg-[#BAE6D3] flex flex-col-reverse items-center md:flex-row sm:flex-col-reverse  gap-4 p-4 rounded-md">
               <div className="col-span-2 space-y-3">
-                <p className="text-2xl font-semibold">Mejores descuentos</p>
-                <p className="text-gray-600	">
+                <p className="text-2xl font-semibold text-center md:text-left lg:text-left">Mejores descuentos</p>
+                <p className="text-gray-600 text-center md:text-left lg:text-left">
                   Hasta 10 a 20% de descuento sobre la tarifa del mercado
                 </p>
                 {/* <button className='bg-white p-2 shadow-xl ' >
@@ -569,10 +570,10 @@ export default function CompactLayout({ variables }: HomePageProps) {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="bg-[#CDF1FF]  grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md">
+            <div className="bg-[#CDF1FF] flex flex-col-reverse items-center md:flex-row sm:flex-col-reverse  gap-4 p-4 rounded-md">
               <div className="col-span-2 space-y-3">
-                <p className="text-2xl font-semibold">Recompensas</p>
-                <p className="text-gray-600	">
+                <p className="text-2xl font-semibold text-center md:text-left lg:text-left">Recompensas</p>
+                <p className="text-gray-600 text-center md:text-left lg:text-left">
                   ¡Ofrecemos la mejor oferta para los clientes existentes!
                 </p>
                 {/* <button className='bg-white p-2 shadow-xl ' >
@@ -591,10 +592,10 @@ export default function CompactLayout({ variables }: HomePageProps) {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="bg-[#B4C0FE]   grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md">
+            <div className="bg-[#B4C0FE] flex flex-col-reverse items-center md:flex-row sm:flex-col-reverse  gap-4 p-4 rounded-md">
               <div className=" col-span-2 space-y-3">
-                <p className="text-2xl font-semibold">100% mejor calidad</p>
-                <p className="text-gray-600	">
+                <p className="text-2xl font-semibold text-center md:text-left lg:text-left">100% mejor calidad</p>
+                <p className="text-gray-600 text-center md:text-left lg:text-left">
                   Proporcionamos reembolso del 100% si el artículo está dañado.
                 </p>
                 {/* <button className='bg-white p-2 shadow-xl ' >
