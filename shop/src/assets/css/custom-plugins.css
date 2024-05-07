@@ -884,6 +884,10 @@ html[dir='rtl'] .react-tel-input .country-list .flag {
   }
 }
 
+.swiper-grid>.swiper-wrapper{
+  margin-left: 62px;
+}
+
 #productGallery > .swiper-wrapper {
   align-items: center;
 }
