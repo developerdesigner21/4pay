@@ -887,6 +887,19 @@ html[dir='rtl'] .react-tel-input .country-list .flag {
 .swiper-grid>.swiper-wrapper{
   margin-left: 62px;
 }
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.swiper-slider-width{
+  width: 80px !important;
+}
 
 #productGallery > .swiper-wrapper {
   align-items: center;
