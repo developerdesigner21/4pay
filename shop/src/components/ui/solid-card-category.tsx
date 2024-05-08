@@ -49,14 +49,14 @@ function SolidCardCategory({ items }: any) {
 
   const breakpoints = {
     320: {
-      slidesPerView: 4,
+      slidesPerView: 3,
       spaceBetween: 8,
       centeredSlides:true,
       centeredSlidesBounds:true
     },
 
     540: {
-      slidesPerView: 4,
+      slidesPerView: 3,
       spaceBetween: 8,
       centeredSlides:true,
       centeredSlidesBounds:true,
@@ -101,6 +101,7 @@ function SolidCardCategory({ items }: any) {
         }}
         modules={[Grid]}
         defaultValue={3}
+        scrollbar={true}
         // className="mySwiper"
       >
       {/* <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5 gap-6 gap-y-5 justify-center items-start'> */}
