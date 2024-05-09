@@ -147,7 +147,7 @@ export const ThumbsCarousel: React.FC<Props> = ({
           {gallery?.map((item: any) => (
             <SwiperSlide
               key={`product-thumb-gallery-${item.id}`}
-              className="!flex cursor-pointer items-center justify-center overflow-hidden rounded border border-border-200 border-opacity-75 hover:opacity-75"
+              className="!flex cursor-pointer items-center justify-center overflow-hidden rounded border border-border-200 border-opacity-75 hover:opacity-75 swiper-slider-width"
             >
               <div className="relative w-20 h-20">
                 <Image

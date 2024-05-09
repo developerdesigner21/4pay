@@ -665,11 +665,13 @@ const HeaderMinimal = ({ layout }: { layout: string }) => {
               <Image src={HeaderLogo} alt={''} height={20} width={100} sizes='(max-width: 768px) 100vw' />
             </div> */}
             <div>
-               <Logo
-                 className={`${
-                   !isMultiLangEnable ? 'mx-auto lg:mx-0' : 'ltr:ml-0 rtl:mr-0'
-                 }`}
-               />
+              {width > 1000 &&(
+                <Logo
+                  className={`${
+                    !isMultiLangEnable ? 'mx-auto lg:mx-0' : 'ltr:ml-0 rtl:mr-0'
+                  }`}
+                />
+              )}
              </div>
             {isMultiLangEnable ? (
               <div className="ltr:pr-4 rtl:pl-4 lg:hidden">

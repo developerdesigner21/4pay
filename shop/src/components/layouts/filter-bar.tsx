@@ -7,6 +7,7 @@ import GroupsDropdownMenu from './menu/groups-menu';
 import classNames from 'classnames';
 import { checkIsMaintenanceModeComing } from '@/lib/constants';
 import { twMerge } from 'tailwind-merge';
+import Logo from '@/components/ui/logo';
 
 export default function FilterBar({
   className,
@@ -26,7 +27,7 @@ export default function FilterBar({
           className,
           underMaintenanceIsComing
             ? 'top-[6.875rem]'
-            : 'top-[40px] lg:top-[84px]',
+            : 'top-[0px] lg:top-[84px]',
         ),
       )}
     >
@@ -39,6 +40,7 @@ export default function FilterBar({
         <HamBurger width="18" height="14" className="" />
         {/* {t('text-filter')} */}
       </button>
+      <Logo />
       <GroupsDropdownMenu />
     </div>
   );

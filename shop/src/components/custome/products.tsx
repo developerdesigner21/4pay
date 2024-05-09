@@ -32,22 +32,31 @@ export default function CustomeProductGrid({
     320: {
       slidesPerView: 2,
       spaceBetween: 16,
+      slidesPerGroup:2,
+      centeredSlides:true,
+      centeredSlidesBounds:true,
     },
     580: {
       slidesPerView: 3,
       spaceBetween: 16,
+      slidesPerGroup:2,
+      centeredSlides:true,
+      centeredSlidesBounds:true,
     },
     1024: {
       slidesPerView: 4,
       spaceBetween: 16,
+      slidesPerGroup:4,
     },
     1280: {
       slidesPerView: 5,
       spaceBetween: 24,
+      slidesPerGroup:5
     },
     1536: {
       slidesPerView: 6,
       spaceBetween: 24,
+      slidesPerGroup:6
     },
   };
   return (
@@ -61,7 +70,7 @@ export default function CustomeProductGrid({
               </h3>
             </div>
           )}
-          <Swiper
+          {/* <Swiper
             breakpoints={offerSliderBreakpoints}
             modules={[Navigation]}
             spaceBetween={30}
@@ -69,14 +78,27 @@ export default function CustomeProductGrid({
               prevEl: prevRef.current!,
               nextEl: nextRef.current!,
             }}
-          >
+            slidesPerView={'auto'}
+            direction={'horizontal'}
+            freeMode={{
+              enabled:true
+            }}
+            // scrollbar={{
+            //   el: '.swiper-scrollbar',
+            // }}
+            mousewheel={true}
+          > */}
+          <div className='flex overflow-x-auto overflow-y-visible no-scrollbar'>
             {productlist?.map((productitem: any) => (
-              <SwiperSlide key={productitem?.id}>
-                <ProductCard cardView={cardView} product={productitem} />
-              </SwiperSlide>
+              // <SwiperSlide key={productitem?.id}>
+              <div className='w-96 h-full'>
+                <ProductCard cardView={cardView} product={productitem} className="w-60 m-2 h-full" />
+              </div>
+              // </SwiperSlide>
             ))}
-          </Swiper>
-          <div
+          </div>
+          {/* </Swiper> */}
+          {/* <div
             ref={prevRef}
             className="absolute z-10 flex items-center  justify-center w-8 h-8 mt-10 rounded-full outline-none cursor-pointer category-slider-prev top-1/2 bg-light text-heading shadow-300 focus:outline-none ltr:-left-4 rtl:-right-4 md:-mt-5 md:h-9 md:w-9 ml-10"
           >
@@ -89,7 +111,7 @@ export default function CustomeProductGrid({
           >
             <span className="sr-only">{t('text-next')}</span>
             {isRTL ? <ArrowPrevIcon /> : <ArrowNextIcon />}
-          </div>
+          </div> */}
         </div>
       )}
     </>

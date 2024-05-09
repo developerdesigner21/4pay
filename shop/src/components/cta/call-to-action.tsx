@@ -52,7 +52,7 @@ const CallToAction = (props:any) => {
               <SwiperSlide>
                 <div className="relative flex w-full overflow-hidden rounded-xl  px-5">
                   <Image
-                    className="h-96 w-full rounded-lg "
+                    className="h-full w-full rounded-lg "
                     src={item.original}
                     alt={''}
                     width={1000}
