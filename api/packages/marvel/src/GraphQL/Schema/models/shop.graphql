@@ -48,11 +48,16 @@ type Shop {
 }
 
 type ShopSettings {
+  full_name: String
   socials: [ShopSocials]
   contact: String
+  email: String
   location: Location
   website: String
   notifications: Notifications
+  company_type: String
+  tax_id: String
+  reference_code: String
 }
 
 type Location {
@@ -132,11 +137,16 @@ input UpdateShopInput {
 }
 
 input ShopSettingsInput {
+  full_name: String
   socials: [ShopSocialInput]
   contact: String
+  email: String
   location: LocationInput
   website: String
   notifications: NotificationsInput
+  company_type: String
+  tax_id: String
+  reference_code: String
 }
 
 input NotificationsInput {
