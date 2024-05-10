@@ -118,13 +118,13 @@ const ItemCard = ({ item, notAvailable }: Props) => {
           />
         {/* </div> */}
       </span>
-      <button
+      {/* <button
         className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted transition-all duration-200 hover:bg-gray-100 hover:text-red-600 focus:bg-gray-100 focus:text-red-600 focus:outline-0 ltr:ml-2 ltr:-mr-2 rtl:mr-2 rtl:-ml-2"
         onClick={() => clearItemFromCart(item.id)}
       >
         <span className="sr-only">{t('text-close')}</span>
         <CloseIcon className="h-3 w-3" />
-      </button>
+      </button> */}
     </div>
   );
 };
