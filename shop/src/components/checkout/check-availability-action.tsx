@@ -6,6 +6,7 @@ import { useCart } from '@/store/quick-cart/cart.context';
 import classNames from 'classnames';
 import { useVerifyOrder } from '@/framework/order';
 import omit from 'lodash/omit';
+import { useEffect } from 'react'
 
 export const CheckAvailabilityAction: React.FC<{
   className?: string;
@@ -14,6 +15,10 @@ export const CheckAvailabilityAction: React.FC<{
   const [billing_address] = useAtom(billingAddressAtom);
   const [shipping_address] = useAtom(shippingAddressAtom);
   const { items, total, isEmpty } = useCart();
+
+  useEffect(()=>{
+    handleVerifyCheckout()
+  },[])
 
   const { mutate: verifyCheckout, isLoading: loading }: any = useVerifyOrder();
 
