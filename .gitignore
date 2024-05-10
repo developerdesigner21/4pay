@@ -43,3 +43,8 @@ __generated__
 # PWA
 workbox-*.js
 sw.js
+
+
+admin/graphql/.graphql-let.yml
+shop/.graphql-let.yml
+api/storage/logs/laravel.log
