@@ -9,7 +9,7 @@ import { useRef } from 'react';
 import { useIsRTL } from '@/lib/locals';
 import { ArrowNextIcon } from '@/components/icons/arrow-next';
 import { ArrowPrevIcon } from '@/components/icons/arrow-prev';
-import { Autoplay } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 
 interface BannerProps {
   banners: Banner[] | undefined;
@@ -59,14 +59,14 @@ const BannerWithPagination: React.FC<BannerProps> = ({ banners, slug }) => {
             ))}
           </Swiper>
         </div> */}
-        <div className="relative">
+        <div className="relative mt-4">
           <Swiper
             id="banner"
-            // loop={true}
+            loop={true}
             // modules={[Pagination]}
-            // resizeObserver={true}
+            resizeObserver={true}
             // allowTouchMove={false}
-            // // pagination={true}
+            pagination={true}
             // pagination={{
             //   bulletClass:
             //     'swiper-pagination-bullet !w-2.5 !h-2.5 !p-1 !rounded-full bg-gray-400 !border-0 !opacity-70',
@@ -75,10 +75,10 @@ const BannerWithPagination: React.FC<BannerProps> = ({ banners, slug }) => {
             //   clickable: true,
             slidesPerView={1}
             spaceBetween={30}
-            modules={[Navigation, Autoplay]}
+            modules={[Navigation, Autoplay,Pagination]}
             autoplay={{
               delay: 2500,
-              disableOnInteraction: false,
+              disableOnInteraction: false
             }}
             navigation={{
               // nextEl: '.next',
@@ -91,13 +91,13 @@ const BannerWithPagination: React.FC<BannerProps> = ({ banners, slug }) => {
             {reverseBanners?.map((banner, idx) => (
               <SwiperSlide key={idx}>
                 <Link href={`/${slug}${Routes.search}`}>
-                  <div className="relative h-full lg:h-[610px] w-full md:max-h-[610px]  ">
+                  <div className="relative h-full lg:h-[610px] w-full md:max-h-[610px] rounded-xl  px-5 ">
                     {/* <div className="relative h-full max-h-[240px] w-full md:max-h-[610px]  "> */}
                     <Image
-                      className="h-full w-full"
+                      className="h-full w-full rounded-lg"
                       src={banner?.image?.original ?? productPlaceholder}
                       alt={banner?.title ?? ''}
-                      width={1800}
+                      width={1000}
                       height={610}
                     />
                   </div>
@@ -105,7 +105,7 @@ const BannerWithPagination: React.FC<BannerProps> = ({ banners, slug }) => {
               </SwiperSlide>
             ))}
           </Swiper>
-          <div
+          {/* <div
             ref={prevRef}
             className="absolute z-10 flex items-center  justify-center w-8 h-8 -mt-4 rounded-full outline-none cursor-pointer category-slider-prev top-1/2 bg-light text-heading shadow-300 focus:outline-none ltr:-left-4 rtl:-right-4 md:-mt-5 md:h-9 md:w-9 ml-5"
           >
@@ -116,7 +116,7 @@ const BannerWithPagination: React.FC<BannerProps> = ({ banners, slug }) => {
             className="absolute z-10 flex items-center justify-center w-8 h-8 -mt-4 rounded-full outline-none cursor-pointer category-slider-next  top-1/2 bg-light text-heading shadow-300 focus:outline-none  ltr:-right-4 rtl:-left-4 md:-mt-5 md:h-9 md:w-9 mr-5"
           >
             {isRTL ? <ArrowPrevIcon /> : <ArrowNextIcon />}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
