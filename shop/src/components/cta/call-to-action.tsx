@@ -33,15 +33,27 @@ const CallToAction = (props:any) => {
      <div className="relative">
         <Swiper
           id="banner"
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-
+          loop={true}
+          // modules={[Pagination]}
+          resizeObserver={true}
+          // allowTouchMove={false}
+          pagination={true}
+          // pagination={{
+          //   bulletClass:
+          //     'swiper-pagination-bullet !w-2.5 !h-2.5 !p-1 !rounded-full bg-gray-400 !border-0 !opacity-70',
+          //   clickableClass: 'cursor-pointer',
+          //   bulletActiveClass: '!bg-accent',
+          //   clickable: true,
           slidesPerView={1}
           spaceBetween={30}
-          modules={[Navigation]}
+          modules={[Navigation, Autoplay,Pagination]}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false
+          }}
           navigation={{
+            // nextEl: '.next',
+            // prevEl: '.prev',
             prevEl: prevRef.current!,
             nextEl: nextRef.current!,
           }}
@@ -64,7 +76,7 @@ const CallToAction = (props:any) => {
           })}
 
         </Swiper>
-        <div
+        {/* <div
           ref={prevRef}
           className="absolute z-10 flex items-center  justify-center w-8 h-8 mt-10 rounded-full outline-none cursor-pointer category-slider-prev top-1/2 bg-light text-heading shadow-300 focus:outline-none ltr:-left-4 rtl:-right-4 md:-mt-5 md:h-9 md:w-9 ml-10"
         >
@@ -75,7 +87,7 @@ const CallToAction = (props:any) => {
           className="absolute z-10 flex items-center justify-center w-8 h-8 -mt-4 rounded-full outline-none cursor-pointer category-slider-next  top-1/2 bg-light text-heading shadow-300 focus:outline-none  ltr:-right-4 rtl:-left-4 md:-mt-5 md:h-9 md:w-9 mr-10"
         >
           {isRTL ? <ArrowPrevIcon /> : <ArrowNextIcon />}
-        </div>
+        </div> */}
       </div>
     </SectionBlock>
   );
