@@ -358,10 +358,10 @@ import cn from 'classnames';
 import { ArrowNext, ArrowPrev } from '../icons';
 import Image from 'next/image';
 
-import DeliveryIcon from '@/assets/express-delivery 1.png';
-import DiscountIcon from '@/assets/promotion 1.png';
-import RewardIcon from '@/assets/presenter 1.png';
-import HoursIcon from '@/assets/24-hours-support 1.png';
+import DeliveryIcon from '@/assets/Frame-1.png';
+import DiscountIcon from '@/assets/Frame-2.png';
+import RewardIcon from '@/assets/Frame-3.png';
+import HoursIcon from '@/assets/Frame-4.png';
 
 import { useCategories } from '@/framework/category';
 import StaticMenu from './menu/static-menu';
@@ -430,19 +430,23 @@ export default function CompactLayout({ variables }: HomePageProps) {
 
   const PromotinalSliderBreakpoints = {
     320: {
-      slidesPerView: 1,
+      slidesPerView: "2",
       spaceBetween: 16,
+      centeredSlides:true,
+      centeredSlidesBounds:true
     },
     580: {
-      slidesPerView: 2,
+      slidesPerView: "2",
       spaceBetween: 16,
+      centeredSlides:true,
+      centeredSlidesBounds:true
     },
     1024: {
-      slidesPerView: 3,
+      slidesPerView: 4,
       spaceBetween: 16,
     },
     1280: {
-      slidesPerView: 3,
+      slidesPerView: 4,
       spaceBetween: 16,
     },
     1920: {
@@ -516,7 +520,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
 
   const PromotinalSlider = (item: any) => {
     return (
-      <div className="p-6 relative" key={item}>
+      <div className="relative pl-0 sm:pl-5" key={item}>
         <Swiper
           breakpoints={PromotinalSliderBreakpoints}
           modules={[Navigation]}
@@ -525,109 +529,122 @@ export default function CompactLayout({ variables }: HomePageProps) {
             prevEl: prevRef.current!,
             nextEl: nextRef.current!,
           }}
+          freeMode={{
+            enabled:true
+          }}
         >
           <SwiperSlide>
+            <Image
+              className="block object-fit product-image cursor-pointer"
+              src={DeliveryIcon}
+              alt={''}
+              sizes='(max-width: 768px) 120vw'
+            />
             {/* <div className="bg-[#E0EEF6] grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 rounded-md"> */}
-            <div className="bg-[#E0EEF6] flex flex-col-reverse items-center md:flex-row sm:flex-col-reverse  gap-4 p-4 rounded-md">
+            {/* <div className="bg-[#E0EEF6] flex flex-row-reverse items-center md: sm:  gap-4 p-4 rounded-md">
               <div className="col-span-2 space-y-3">
-                <p className="text-2xl font-semibold text-center md:text-left lg:text-left">Entrega urgente</p>
-                <p className="text-gray-600	text-center md:text-left lg:text-left">
+                <p className="text-2xl font-semibold text-sm md:text-left lg:text-left">Entrega urgente</p>
+                <p className="text-gray-600 text-xs md:text-sm md:text-left lg:text-left">
                   Consulte su tienda cercana para recibir su pedido en 45
                   minutos
                 </p>
               </div>
               <div className='text-center'>
                 <Image
-                  className="h-auto max-w-lg lg:ms-auto m-auto"
+                  className="h-2/4 max-w-lg lg:ms-auto m-auto"
                   src={DeliveryIcon}
                   alt={''}
-                  width={75}
-                  height={20}
+                  width={65}
+                  height={15}
                 />
               </div>
-            </div>
+            </div> */}
           </SwiperSlide>
           <SwiperSlide>
-            <div className="bg-[#BAE6D3] flex flex-col-reverse items-center md:flex-row sm:flex-col-reverse  gap-4 p-4 rounded-md">
+            <Image
+              className="block object-fit product-image cursor-pointer"
+              src={DiscountIcon}
+              alt={''}
+              sizes='(max-width: 768px) 100vw'
+            />
+            {/* <div className="bg-[#BAE6D3] flex flex-row-reverse items-center md: sm:  gap-4 p-4 rounded-md">
               <div className="col-span-2 space-y-3">
-                <p className="text-2xl font-semibold text-center md:text-left lg:text-left">Mejores descuentos</p>
-                <p className="text-gray-600 text-center md:text-left lg:text-left">
+                <p className="text-2xl font-semibold text-sm md:text-left lg:text-left">Mejores descuentos</p>
+                <p className="text-gray-600 text-xs md:text-sm md:text-left lg:text-left">
                   Hasta 10 a 20% de descuento sobre la tarifa del mercado
-                </p>
+                </p> */}
                 {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
                 </button > */}
-              </div>
+              {/* </div>
               <div>
                 <Image
                   className="h-auto max-w-lg lg:ms-auto m-auto"
                   src={DiscountIcon}
                   alt={''}
-                  width={75}
-                  height={20}
+                  width={65}
+                  height={15}
                 />
               </div>
-            </div>
+            </div>  */}
           </SwiperSlide>
           <SwiperSlide>
-            <div className="bg-[#CDF1FF] flex flex-col-reverse items-center md:flex-row sm:flex-col-reverse  gap-4 p-4 rounded-md">
+            {/* <div className="bg-[#CDF1FF] flex flex-row-reverse items-center md: sm:  gap-4 p-4 rounded-md">
               <div className="col-span-2 space-y-3">
-                <p className="text-2xl font-semibold text-center md:text-left lg:text-left">Recompensas</p>
-                <p className="text-gray-600 text-center md:text-left lg:text-left">
+                <p className="text-2xl font-semibold text-sm md:text-left lg:text-left">Recompensas</p>
+                <p className="text-gray-600 text-xs md:text-sm md:text-left lg:text-left">
                   ¡Ofrecemos la mejor oferta para los clientes existentes!
-                </p>
+                </p> */}
                 {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
                 </button> */}
-              </div>
-              <div>
+              {/* </div>
+              <div> */}
                 <Image
-                  className="h-auto max-w-lg lg:ms-auto m-auto"
+                  className="block object-fit product-image cursor-pointer"
                   src={RewardIcon}
                   alt={''}
-                  width={75}
-                  height={20}
+                  sizes='(max-width: 768px) 100vw'
                 />
-              </div>
-            </div>
+              {/* </div>
+            </div> */}
           </SwiperSlide>
           <SwiperSlide>
-            <div className="bg-[#B4C0FE] flex flex-col-reverse items-center md:flex-row sm:flex-col-reverse  gap-4 p-4 rounded-md">
+            {/* <div className="bg-[#B4C0FE] flex flex-row-reverse items-center md: sm:  gap-4 p-4 rounded-md">
               <div className=" col-span-2 space-y-3">
-                <p className="text-2xl font-semibold text-center md:text-left lg:text-left">100% mejor calidad</p>
-                <p className="text-gray-600 text-center md:text-left lg:text-left">
+                <p className="text-2xl font-semibold text-sm md:text-left lg:text-left">100% mejor calidad</p>
+                <p className="text-gray-600 text-xs md:text-sm md:text-left lg:text-left">
                   Proporcionamos reembolso del 100% si el artículo está dañado.
-                </p>
+                </p> */}
                 {/* <button className='bg-white p-2 shadow-xl ' >
                   <p className='text-[#009F7F] font-semibold'>Order Now</p>
                 </button > */}
-              </div>
-              <div>
+              {/* </div>
+              <div> */}
                 <Image
-                  className="h-auto max-w-lg lg:ms-auto m-auto "
+                  className="block object-fit product-image cursor-pointer"
                   src={HoursIcon}
                   alt={''}
-                  width={75}
-                  height={20}
+                  sizes='(max-width: 768px) 100vw'
                 />
-              </div>
-            </div>
+              {/* </div>
+            </div> */}
           </SwiperSlide>
         </Swiper>
-        <div
+        {/* <div
           ref={prevRef}
-          className="absolute z-10 flex items-center  justify-center w-8 h-8 -mt-2 rounded-full outline-none cursor-pointer category-slider-prev top-1/2 bg-light text-heading shadow-300 focus:outline-none ltr:-left-4 rtl:-right-4 md:-mt-5 md:h-9 md:w-9 ml-10"
+          className="absolute z-10 flex items-center  justify-center w-8 h-8 -mt-2 rounded-full outline-none cursor-pointer category-slider-prev top-1/2 bg-light text-heading shadow-300 focus:outline-none ltr:-left-8 rtl:-right-4 md:-mt-5 md:h-9 md:w-9 ml-10"
         >
           <span className="sr-only">{t('text-previous')}</span>
           {isRTL ? <ArrowNextIcon /> : <ArrowPrevIcon />}
         </div>
         <div
           ref={nextRef}
-          className="absolute z-10 flex items-center justify-center w-8 h-8 -mt-2  rounded-full outline-none cursor-pointer category-slider-next  top-1/2 bg-light text-heading shadow-300 focus:outline-none  ltr:-right-4 rtl:-left-4 md:-mt-5 md:h-9 md:w-9 mr-10"
+          className="absolute z-10 flex items-center justify-center w-8 h-8 -mt-2  rounded-full outline-none cursor-pointer category-slider-next  top-1/2 bg-light text-heading shadow-300 focus:outline-none  ltr:-right-8 rtl:-left-4 md:-mt-5 md:h-9 md:w-9 mr-10"
         >
           <span className="sr-only">{t('text-next')}</span>
           {isRTL ? <ArrowPrevIcon /> : <ArrowNextIcon />}
-        </div>
+        </div> */}
       </div>
     );
   };
@@ -827,7 +844,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
         className="top-16 lg:hidden"
         variables={variables.categories}
       />
-      <main className="flex flex-col gap-10 w-full">
+      <main className="flex flex-col gap-6 w-full">
         <div className="justify-center bg-light w-full lg:mt-20 mb-0 ">
           <ul className="hidden xl:flex justify-center items-center rtl:space-x-reverse 2xl:space-x-10 ">
             <StaticMenu categories={categories} />

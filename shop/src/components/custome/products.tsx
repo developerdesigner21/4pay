@@ -7,6 +7,7 @@ import { useRef } from 'react';
 import { useIsRTL } from '@/lib/locals';
 import { ArrowNextIcon } from '../icons/arrow-next';
 import { ArrowPrevIcon } from '../icons/arrow-prev';
+import { FreeMode, Scrollbar, Mousewheel } from 'swiper/modules';
 
 interface Props {
   className?: string;
@@ -72,27 +73,28 @@ export default function CustomeProductGrid({
           )}
           {/* <Swiper
             breakpoints={offerSliderBreakpoints}
-            modules={[Navigation]}
+            direction={'horizontal'}
+            slidesPerView={'auto'}
+            freeMode={true}
+            scrollbar={true}
+            mousewheel={true}
+            modules={[FreeMode, Mousewheel]}
             spaceBetween={30}
             navigation={{
               prevEl: prevRef.current!,
               nextEl: nextRef.current!,
             }}
-            slidesPerView={'auto'}
-            direction={'horizontal'}
-            freeMode={{
-              enabled:true
-            }}
             // scrollbar={{
             //   el: '.swiper-scrollbar',
             // }}
-            mousewheel={true}
+            // mousewheel={true}
+            className='product-swiper'
           > */}
           <div className='flex overflow-x-auto overflow-y-visible no-scrollbar'>
             {productlist?.map((productitem: any) => (
               // <SwiperSlide key={productitem?.id}>
               <div className='w-96 h-full'>
-                <ProductCard cardView={cardView} product={productitem} className="w-60 m-2 h-full" />
+                <ProductCard cardView={cardView} product={productitem} className="w-36 sm:w-64 m-1 h-full" />
               </div>
               // </SwiperSlide>
             ))}

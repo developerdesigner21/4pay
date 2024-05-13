@@ -361,7 +361,7 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
       <Link
         href={Routes.product(product.slug)}
         className={cn(
-          'relative flex h-48 w-auto items-center justify-center sm:h-64',
+          'relative flex h-36 w-auto items-center justify-center sm:h-64',
           query?.pages
             ? query?.pages?.includes('medicine')
               ? 'm-4 mb-0'
@@ -432,10 +432,10 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
           </div>
         </Link>
 
-        <div className="grid grid-cols-2 px-3 mb-5">
+        <div className="flex justify-between m-2">
           <div className="grid justify-items-start">
             <button
-              className="flex items-center justify-center gap-x-2 py-2 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start px-3 "
+              className="flex items-center justify-center gap-x-2 py-1 text-sm font-semibold transition-colors duration-300 border-2 rounded-full border-border-100 bg-light text-accent hover:border-accent hover:bg-accent hover:text-light focus:border-accent focus:bg-accent focus:text-light focus:outline-0 sm:order-4 sm:justify-start px-2 "
               onClick={handleProductQuickView}
             >
               <EyeIcon height={20} width={20} className="cursor-pointer" />

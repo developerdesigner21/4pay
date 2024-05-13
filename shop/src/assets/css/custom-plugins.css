@@ -897,6 +897,10 @@ html[dir='rtl'] .react-tel-input .country-list .flag {
   scrollbar-width: none;  /* Firefox */
 }
 
+.product-swiper>.swiper-wrapper>.swiper-slide{
+  width: fit-content !important;
+}
+
 .swiper-slider-width{
   width: 80px !important;
 }
