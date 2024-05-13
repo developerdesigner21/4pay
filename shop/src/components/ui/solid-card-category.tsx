@@ -20,14 +20,14 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ item }) => {
   return (
     <div className="cursor-pointer text-center">
       <Link className='flex items-center justify-center' href={Routes.category(item?.type?.slug, item.slug)}>
-        <div className='flex-col justify-center items-center'>
+        <div className='flex-col justify-center items-center w-full'>
           <div className='w-full'>
             <Image
               src={item?.image?.original! ?? productPlaceholder}
               alt={item?.name!}
               width={200}
               height={240}
-              className="rounded-md"
+              className="rounded-md w-full"
             />
             {/* <span className="mt-2 block font-semibold transition-colors group-hover:text-orange-500 ltr:text-center rtl:text-right text-xs md:text-heading">
               {item.name}
@@ -101,7 +101,6 @@ function SolidCardCategory({ items }: any) {
         }}
         modules={[Grid]}
         defaultValue={3}
-        scrollbar={true}
         // className="mySwiper"
       >
       {/* <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5 gap-6 gap-y-5 justify-center items-start'> */}
