@@ -182,15 +182,18 @@ export default function OrderDetailsPage() {
       dataIndex: 'name',
       key: 'name',
       align: alignLeft,
-      render: (name: string, item: any) => (
-        <div>
-          <span>{name}</span>
-          <span className="mx-2">x</span>
-          <span className="font-semibold text-heading">
-            {item.pivot.order_quantity}
-          </span>
-        </div>
-      ),
+      render: (name: string, item: any) => {
+        let varient=item.variation_options.find((d:any)=>d.id==item?.pivot?.variation_option_id)
+        return(
+          <div>
+            <span>{name}{' '}{varient?varient?.title:""}</span>
+            <span className="mx-2">x</span>
+            <span className="font-semibold text-heading">
+              {item.pivot.order_quantity}
+            </span>
+          </div>
+        )
+      }
     },
     {
       title: t('table:table-item-total'),

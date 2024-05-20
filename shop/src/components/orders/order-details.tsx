@@ -121,7 +121,8 @@ const OrderDetails = ({ order, loadingStatus }: Props) => {
           {tracking_number}
         </h2>
         <div className="flex items-center">
-          {order?.payment_gateway !== 'CASH_ON_DELIVERY' &&
+          {
+          // order?.payment_gateway !== 'CASH_ON_DELIVERY' &&
           order?.payment_status !==
             PaymentStatus?.FAILED?.toLocaleLowerCase() &&
           order?.payment_status !==
