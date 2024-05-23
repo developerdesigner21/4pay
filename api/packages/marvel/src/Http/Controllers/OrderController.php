@@ -543,15 +543,25 @@ class OrderController extends CoreController
                 throw new AuthorizationException(NOT_AUTHORIZED);
             }
 
-            $addtocart = Addtocart::where('user_id',$user->id)->where('product_id',$request->get('input')['productid'])->first();
-            if (!$addtocart) {
+            $addtocart = Addtocart::where('user_id',$user->id)
+                ->where('product_id',$request->get('input')['productid'])
+                ->first();
+            if (empty($addtocart) || ($addtocart->variation_option_id ?? '')!=($request->get('input')['variation_option_id'] ?? '')) {
                 $addtocart = new Addtocart();
                 $addtocart->user_id = $user->id;
                 $addtocart->product_id = $request->get('input')['productid'];
+                $addtocart->variation_option_id  = $request->get('input')['variation_option_id'] ?? '';
+                $addtocart->order_quantity  = $request->get('input')['order_quantity'] ?? 1;
+                $addtocart->unit_price  = $request->get('input')['unit_price'] ?? '';
+                $addtocart->subtotal  = $request->get('input')['subtotal'] ?? '';
                 $addtocart->save();
                 return 'Success';
+            }else{
+                $addtocart->order_quantity  = $request->get('input')['order_quantity'] ?? 1;
+                $addtocart->unit_price  = $request->get('input')['unit_price'] ?? '';
+                $addtocart->subtotal  = $request->get('input')['subtotal'] ?? '';
+                return 'Success';
             }
-            
             return 'ok';
         } catch (MarvelException $e) {
             throw new MarvelException(SOMETHING_WENT_WRONG, $e->getMessage());
@@ -564,7 +574,9 @@ class OrderController extends CoreController
                 throw new AuthorizationException(NOT_AUTHORIZED);
             }
 
-            $addtocart = AddToCart::where('user_id', $user->id)->where('product_id', $request->get('input')['productid'])->first();
+            $addtocart = AddToCart::where('user_id', $user->id)
+                ->where('product_id', $request->get('input')['productid'])
+                ->first();
             if ($addtocart) {
                 $addtocart->delete();
                 return 'Success';
