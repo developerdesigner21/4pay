@@ -291,7 +291,7 @@ type AttachmentAddtocart {
 input InputproductAddtocart {
   productid: ID
   variation_option_id: String
-  order_quantity: Integer
+  order_quantity: Int
   unit_price: String
   subtotal: String
 }

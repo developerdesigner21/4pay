@@ -528,7 +528,7 @@ class OrderController extends CoreController
         $orderdata = Order::where('customer_id', $request->get('id'))->get();
         $wishlists = Wishlist::select('products.*', 'wishlists.user_id AS wuser', 'wishlists.product_id AS wproid')
         ->leftJoin('products', 'products.id', '=', 'wishlists.product_id')->having('wishlists.user_id', '=', $request->get('id'))->get();
-        $addtocart = Addtocart::select('products.*', 'addtocart.user_id AS wuser', 'addtocart.product_id AS wproid')
+        $addtocart = Addtocart::select('products.*', 'addtocart.user_id AS wuser', 'addtocart.product_id AS wproid', 'addtocart.order_quantity AS order_quantity','addtocart.variation_option_id  AS order_variation_option_id','addtocart.unit_price  AS order_unit_price', 'addtocart.unit_price AS order_subtotal')
         ->leftJoin('products', 'products.id', '=', 'addtocart.product_id')->having('addtocart.user_id', '=', $request->get('id'))->get();
         return [
             "order"=>$orderdata,
