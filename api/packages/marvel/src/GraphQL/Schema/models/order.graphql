@@ -274,10 +274,13 @@ type AddtocartOrder {
 
 type AddtocartProduct {
   id: ID!
+  order_quantity: Int
   name: String!
   price: Float
   image: String!
   slug: String!
+  unit_price: String
+  subtotal: String
   created_at: DateTime
   updated_at: DateTime
 }
