@@ -11,13 +11,14 @@ import { toast } from 'react-toastify';
 const ProductDeleteView = () => {
   const { t } = useTranslation();
   const [deleteProductById, { loading }] = useDeleteProductMutation({
-    update(cache, { data: deleteProduct }) {
+    //@ts-ignore
+    update(cache, { data: { deleteProduct } }) {
       cache.modify({
         fields: {
           products(existingProductRefs, { readField }) {
             return existingProductRefs.data.filter(
               (productRef: any) =>
-                deleteProduct?.deleteProduct?.id !== readField('id', productRef)
+                deleteProduct?.id !== readField('id', productRef)
             );
           },
         },
