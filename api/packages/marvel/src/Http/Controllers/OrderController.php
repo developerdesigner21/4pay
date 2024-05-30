@@ -542,24 +542,26 @@ class OrderController extends CoreController
             if (!$user) {
                 throw new AuthorizationException(NOT_AUTHORIZED);
             }
+            $user_id = $user->id;
 
-            $addtocart = Addtocart::where('user_id',$user->id)
+            $addtocart = Addtocart::where('user_id',$user_id)
                 ->where('product_id',$request->get('input')['productid'])
                 ->first();
             if (empty($addtocart) || ($addtocart->variation_option_id ?? '')!=($request->get('input')['variation_option_id'] ?? '')) {
                 $addtocart = new Addtocart();
-                $addtocart->user_id = $user->id;
+                $addtocart->user_id = $user_id;
                 $addtocart->product_id = $request->get('input')['productid'];
-                $addtocart->variation_option_id  = $request->get('input')['variation_option_id'] ?? '';
+                $addtocart->variation_option_id  = $request->get('input')['variation_option_id'] ?? null;
                 $addtocart->order_quantity  = $request->get('input')['order_quantity'] ?? 1;
-                $addtocart->unit_price  = $request->get('input')['unit_price'] ?? '';
-                $addtocart->subtotal  = $request->get('input')['subtotal'] ?? '';
+                $addtocart->unit_price  = $request->get('input')['unit_price'] ?? 0;
+                $addtocart->subtotal  = $request->get('input')['subtotal'] ?? 0;
                 $addtocart->save();
                 return 'Success';
             }else{
                 $addtocart->order_quantity  = $request->get('input')['order_quantity'] ?? 1;
-                $addtocart->unit_price  = $request->get('input')['unit_price'] ?? '';
-                $addtocart->subtotal  = $request->get('input')['subtotal'] ?? '';
+                $addtocart->unit_price  = $request->get('input')['unit_price'] ?? $addtocart->unit_price;
+                $addtocart->subtotal  = $request->get('input')['subtotal'] ?? $addtocart->subtotal;
+                $addtocart->save();
                 return 'Success';
             }
             return 'ok';
