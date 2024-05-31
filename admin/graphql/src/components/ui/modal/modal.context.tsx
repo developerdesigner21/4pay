@@ -2,6 +2,7 @@ import React from 'react';
 
 export type MODAL_VIEWS =
   | 'DELETE_PRODUCT'
+  | 'DELETE_GROUP'
   | 'DELETE_TYPE'
   | 'DELETE_ATTRIBUTE'
   | 'DELETE_CATEGORY'
@@ -57,7 +58,6 @@ export type MODAL_VIEWS =
   | 'REMINDER'
   | 'WHATSAPP_MARKETING';
 
-
 interface State {
   view?: MODAL_VIEWS;
   data?: any;
@@ -74,7 +74,7 @@ const initialState: State = {
 };
 
 function modalReducer(state: State, action: Action): State {
-  console.log("state", action)
+  console.log('state', action);
   switch (action.type) {
     case 'open':
       return {

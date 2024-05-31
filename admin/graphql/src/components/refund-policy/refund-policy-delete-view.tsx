@@ -16,7 +16,12 @@ const RefundPolicyDeleteView = () => {
       cache.modify({
         fields: {
           refundReasons(existingRefs, { readField }) {
-            return existingRefs.filter(
+            return existingRefs?.data?.filter(
+              (ref: any) => deleteRefundPolicy.id !== readField('id', ref)
+            );
+          },
+          refundPolicies(existingRefs, { readField }) {
+            return existingRefs?.data?.filter(
               (ref: any) => deleteRefundPolicy.id !== readField('id', ref)
             );
           },

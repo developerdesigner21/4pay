@@ -4,20 +4,21 @@ import {
   useModalState,
 } from '@/components/ui/modal/modal.context';
 import { useRemoveStaffMutation } from '@/graphql/shops.graphql';
+import { useDeleteStaffMutation } from '@/graphql/user.graphql';
 import { getErrorMessage } from '@/utils/form-error';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 const StaffDeleteView = () => {
   const { t } = useTranslation();
-  const [removeStaffByID, { loading }] = useRemoveStaffMutation({
-    update(cache, { data: removeStaff }) {
+  const [deleteStaffById, { loading }] = useDeleteStaffMutation({
+    //@ts-ignore
+    update(cache, { data: { deleteStaff } }) {
       cache.modify({
         fields: {
-          staffs(existingRefs, { readField }) {
+          usersByPermission(existingRefs, { readField }) {
             return existingRefs?.data?.filter(
-              (ref: any) =>
-                removeStaff?.removeStaff?.id !== readField('id', ref)
+              (ref: any) => deleteStaff.id !== readField('id', ref)
             );
           },
         },
@@ -30,10 +31,9 @@ const StaffDeleteView = () => {
   const { closeModal } = useModalAction();
   async function handleDelete() {
     try {
-      await removeStaffByID({
+      await deleteStaffById({
         variables: { id: modalData as string },
       });
-      toast.success(t('common:successfully-deleted'));
       closeModal();
     } catch (error) {
       closeModal();
