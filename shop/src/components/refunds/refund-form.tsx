@@ -69,10 +69,7 @@ const CreateRefund = () => {
         {t('text-add-new')} {t('text-refund')}
       </h1>
 
-      <Form<FormValues>
-        onSubmit={handleRefundRequest}
-        validationSchema={refundFormSchema}
-      >
+      <Form onSubmit={handleRefundRequest} validationSchema={refundFormSchema}>
         {({ register, control, formState: { errors } }) => (
           <>
             <Controller
