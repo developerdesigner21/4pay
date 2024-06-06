@@ -290,6 +290,7 @@ type AddtocartProduct {
   order_quantity: Int
   name: String!
   variation_option_id: Int
+  productVariation: ProductVariation
   price: Float
   image: String!
   slug: String!
@@ -299,7 +300,17 @@ type AddtocartProduct {
   updated_at: DateTime
 }
 
+type ProductVariation{
+  id : ID!
+  title : String!
+  image: [ProductVariationImage]
+}
 
+type ProductVariationImage{
+  id : ID
+  original: String
+  thumbnail: String
+}
 
 type AttachmentAddtocart {
   id: ID
