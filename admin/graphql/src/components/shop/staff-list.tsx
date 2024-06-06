@@ -384,28 +384,12 @@ const StaffList = ({ staffs, onPagination, refetch }: IProps) => {
       dataIndex: 'id',
       key: 'id',
       align: alignRight,
-      // render: (id: string, slug: any, record: any, data: any) => {
-      //   return (
-      //     <>
-      //       <div className='flex flex-row justify-between'>
-      //         {/* staffView */}
-      //         {/* <Link href={`${Routes.user.details(id)}`}> */}
-      //         {/* Routes.test */}
-      //         <Link href={`/${shop}/editstaff?id=${id}`}>
-      //           <EditIcon height={15} width={15} className='' />
-      //         </Link>
-      //         <ActionButtons id={id} deleteModalView="DELETE_STAFF" />
-      //       </div>
-      //     </>
-      //   )
-
-      // },
       render: (id: string, record: Permission.Staff) => {
         return (
           <LanguageSwitcher
             slug={id}
             record={record}
-            deleteModalView="DELETE_TYPE"
+            deleteModalView="DELETE_STAFF"
             routes={Routes.user}
           />
         );

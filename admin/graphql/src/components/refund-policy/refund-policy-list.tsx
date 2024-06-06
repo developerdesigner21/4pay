@@ -150,19 +150,12 @@ const RefundPolicyList = ({
       key: 'actions',
       align: 'right' as AlignType,
       render: (slug: string, record: RefundPolicy) => (
-        <div className="inline-flex w-auto items-center gap-3">
-          <ActionButtons
-            id={slug}
-            detailsUrl={`${Routes.refundPolicies.details(slug)}`}
-            previewUrl={`${Routes.refundPolicies.details(slug)}`}
-          />
-          <LanguageSwitcher
-            slug={slug}
-            record={record}
-            deleteModalView="DELETE_REFUND_POLICY"
-            routes={Routes?.refundPolicies}
-          />
-        </div>
+        <LanguageSwitcher
+          slug={slug}
+          record={record}
+          deleteModalView="DELETE_REFUND_POLICY"
+          routes={Routes?.refundPolicies}
+        />
       ),
     },
   ];
