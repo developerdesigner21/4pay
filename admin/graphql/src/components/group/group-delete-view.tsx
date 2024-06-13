@@ -6,7 +6,6 @@ import {
 import { getErrorMessage } from '@/utils/form-error';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useDeleteStaffMutation } from '@/graphql/user.graphql';
 import { useDeleteTypeMutation } from '@/graphql/type.graphql';
 
 const GroupDeleteView = () => {
@@ -14,14 +13,14 @@ const GroupDeleteView = () => {
   const { closeModal } = useModalAction();
   const { t } = useTranslation();
 
-  const [deleteStaffById, { loading }] = useDeleteTypeMutation({
+  const [deleteGroupById, { loading }] = useDeleteTypeMutation({
     //@ts-ignore
-    update(cache, { data: { deleteStaff } }) {
+    update(cache, { data: { deleteGroup } }) {
       cache.modify({
         fields: {
           types(existingRefs, { readField }) {
             return existingRefs?.data?.filter(
-              (ref: any) => deleteStaff.id !== readField('id', ref)
+              (ref: any) => deleteGroup.id !== readField('id', ref)
             );
           },
         },
@@ -32,7 +31,7 @@ const GroupDeleteView = () => {
 
   async function handleDelete() {
     try {
-      await deleteStaffById({
+      await deleteGroupById({
         variables: { id: modalData as string },
       });
       closeModal();

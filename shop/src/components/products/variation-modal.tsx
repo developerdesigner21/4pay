@@ -25,7 +25,7 @@ const Variation = ({ product }: Props) => {
         {product?.name}
       </h3>
       <div className="">
-        {product.variation_options.map((item: any, i: number) => {
+        {product?.variation_options?.map((item: any, i: number) => {
           return (
             <>
               <div className="flex items-center border-b border-solid border-border-200 border-opacity-75 px-4 py-4 text-sm sm:px-6 ">
@@ -39,7 +39,9 @@ const Variation = ({ product }: Props) => {
                 </div>
                 <div>
                   <h3 className="font-bold text-heading">{item.title} </h3>
-                  <p className="my-2.5 font-semibold text-accent">${item.price}</p>
+                  <p className="my-2.5 font-semibold text-accent">
+                    ${item.price}
+                  </p>
                 </div>
                 <div className="ltr:ml-auto rtl:mr-auto">
                   <AddToCart data={product} variation={item} variant="single" />
