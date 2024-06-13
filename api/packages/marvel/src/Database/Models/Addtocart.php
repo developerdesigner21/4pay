@@ -28,4 +28,10 @@ class Addtocart extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+    public function productVariation()
+    {
+        return $this->belongsTo(Variation::class,'variation_option_id');
+    }
 }

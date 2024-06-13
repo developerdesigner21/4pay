@@ -232,7 +232,7 @@ type Sorderalert {
 
 type RproductAddtocart {
   order: [AddtocartOrder]
-  wishlist: [AddtocartProduct]
+  wishlist: [WishListProduct]
   addtocart: [AddtocartProduct]
 }
 
@@ -272,7 +272,7 @@ type AddtocartOrder {
   note: String
 }
 
-type AddtocartProduct {
+type WishListProduct{
   id: ID!
   order_quantity: Int
   name: String!
@@ -283,6 +283,33 @@ type AddtocartProduct {
   subtotal: String
   created_at: DateTime
   updated_at: DateTime
+}
+
+type AddtocartProduct {
+  id: ID!
+  order_quantity: Int
+  name: String!
+  variation_option_id: Int
+  productVariation: ProductVariation
+  price: Float
+  image: String!
+  slug: String!
+  unit_price: String
+  subtotal: String
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+type ProductVariation{
+  id : ID!
+  title : String!
+  image: [ProductVariationImage]
+}
+
+type ProductVariationImage{
+  id : ID
+  original: String
+  thumbnail: String
 }
 
 type AttachmentAddtocart {
