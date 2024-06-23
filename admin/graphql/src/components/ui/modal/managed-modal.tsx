@@ -158,8 +158,6 @@ function renderModal(view: MODAL_VIEWS | undefined, data: any) {
   switch (view) {
     case 'DELETE_PRODUCT':
       return <ProductDeleteView />;
-    case 'DELETE_GROUP':
-      return <ProductDeleteView />;
     case 'DELETE_TYPE':
       return <TypeDeleteView />;
     case 'DELETE_ATTRIBUTE':

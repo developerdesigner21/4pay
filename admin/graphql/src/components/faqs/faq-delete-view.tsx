@@ -16,24 +16,24 @@ const FaqsDeleteView = () => {
       cache.modify({
         fields: {
           faqs(existingRefs, { readField }) {
-            return existingRefs.data.filter(
+            return existingRefs?.data?.filter(
               (ref: any) => deleteFaq.id !== readField('id', ref)
             );
           },
         },
       });
-      toast.success(t('common:successfully-deleted'));
     },
   });
 
   const { data: modalData } = useModalState();
   const { closeModal } = useModalAction();
 
-  function handleDelete() {
+  async function handleDelete() {
     try {
-      deleteFaqById({
+      await deleteFaqById({
         variables: { id: modalData as string },
       });
+      toast.success(t('common:successfully-deleted'));
       closeModal();
     } catch (error) {
       closeModal();

@@ -6,8 +6,7 @@ import {
 import { useDeleteFaqsMutation } from '@/data/faqs';
 
 const FaqsDeleteView = () => {
-  const { mutate: deleteFaq, isLoading: loading } =
-    useDeleteFaqsMutation();
+  const { mutate: deleteFaq, isLoading: loading } = useDeleteFaqsMutation();
 
   const { data } = useModalState();
   const { closeModal } = useModalAction();
