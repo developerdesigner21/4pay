@@ -394,7 +394,7 @@ export default function CompactLayout({ variables }: HomePageProps) {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        'https://knockknock.mx/backend/all/flashSale',
+        'https://api.knockknock.mx/backend/all/flashSale',
       );
       const repo = await response.json();
       setFlashLength(repo.length);

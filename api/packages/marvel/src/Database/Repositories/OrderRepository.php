@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Marvel\Database\Models\Addtocart;
 use Marvel\Database\Models\Balance;
 use Marvel\Database\Models\Coupon;
 use Marvel\Database\Models\Order;
@@ -228,7 +229,7 @@ class OrderRepository extends BaseRepository
         }
 
         event(new OrderProcessed($order));
-
+        Addtocart::where('user_id', $user->id)->delete();
         return $order;
     }
 
