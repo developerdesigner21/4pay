@@ -375,7 +375,7 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
           alt={name}
           fill
           sizes="(max-width: 768px) 100vw"
-          className="block object-fit product-image cursor-pointer"
+          className="block object-fit product-image cursor-pointer object-contain"
         />
         {discount && (
           <div className="absolute top-3 rounded-full bg-yellow-500 px-1.5 text-xs font-semibold leading-6 text-light ltr:right-3 rtl:left-3 sm:px-2 md:top-4 md:px-2.5 ltr:md:right-4 rtl:md:left-4">
